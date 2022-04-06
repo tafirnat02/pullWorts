@@ -56,7 +56,7 @@ const wortObj ={
 }
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(){
+function getWort(doc){
     newWort = wortObj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
