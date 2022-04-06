@@ -1,7 +1,7 @@
-
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
+var wortesArr=[];
 
 var wort_Obj ={
   "wrt": {
@@ -55,7 +55,6 @@ var wort_Obj ={
   "perfektTbl": ""
 }
 
-
 //verbformdan ilgili kelime sayfasindan fetch ile kelime özellikleri alinir ve sayfa hrml'i doc degiskenine atanir
 const loadDoc = async (url) => {
   await fetch(url, { mode: "no-cors" })
@@ -67,14 +66,16 @@ const loadDoc = async (url) => {
     .then(function (html) {
       var parser = new DOMParser();
       doc= parser.parseFromString(html, "text/html");
-      console.log(doc)
-      getWort().then(console.log(newWort))
-      
+      getWort()
+        console.log("getWort yürütüldü...")
+      console.log(wortesArr)
     })
     .catch(function (err) {
       console.warn("Something went wrong.", err);
     });
 };
+
+//loadDoc("https://www.verbformen.de/?w=gehen")
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(){
@@ -99,7 +100,7 @@ function getWort(){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    return newWort
+    wortesArr.push(newWort);
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
@@ -277,5 +278,3 @@ function setStatus(ele, verb) {
 function checkEl(e) {
   return e === null ? false : true;
 }
-
-    
