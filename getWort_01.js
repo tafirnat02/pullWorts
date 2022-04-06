@@ -67,7 +67,9 @@ const loadDoc = async (url) => {
     .then(function (html) {
       var parser = new DOMParser();
       doc= parser.parseFromString(html, "text/html");
-      getWort()
+      console.log(doc)
+      getWort().then(console.log(newWort))
+      
     })
     .catch(function (err) {
       console.warn("Something went wrong.", err);
