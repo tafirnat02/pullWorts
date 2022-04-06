@@ -1,5 +1,5 @@
 
-var newWort = {
+{
   wrt: {
     wort: "",
     plural: "",
@@ -50,3 +50,5 @@ var newWort = {
   prateriumTbl: "",
   perfektTbl: "",
 };
+
+/*var newWort = */
