@@ -21,7 +21,8 @@ function getWort(wrtObj){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-
+    console.log("getWort running....")
+    console.log(newWort)
     return newWort
 }
 /****::: Sub function****** */
