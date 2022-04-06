@@ -3,7 +3,7 @@ const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
 
-const wortObj ={
+var wort_Obj ={
   "wrt": {
     "wort": "",
     "plural": "",
@@ -57,7 +57,7 @@ const wortObj ={
 doc = document
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(){
-    newWort = wortObj
+    newWort = wort_Obj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
     /***Kelimenin tanimlanmasi */
