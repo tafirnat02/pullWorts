@@ -54,7 +54,7 @@ var wort_Obj ={
   "prateriumTbl": "",
   "perfektTbl": ""
 }
-
+/*
 //verbformdan ilgili kelime sayfasindan fetch ile kelime özellikleri alinir ve sayfa hrml'i doc degiskenine atanir
 const loadDoc = async (url) => {
   await fetch(url, { mode: "no-cors" })
@@ -72,6 +72,7 @@ const loadDoc = async (url) => {
       console.warn("Something went wrong.", err);
     });
 };
+*/
 
 //loadDoc("https://www.verbformen.de/?w=gehen")
 
@@ -98,7 +99,8 @@ function getWort(){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    wortesArr.push(newWort);
+    //wortesArr.push(newWort);
+    return newWort
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
