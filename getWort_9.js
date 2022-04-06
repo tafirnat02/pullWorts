@@ -54,7 +54,26 @@ var wort_Obj ={
   "prateriumTbl": "",
   "perfektTbl": ""
 }
-doc = document
+
+
+//verbformdan ilgili kelime sayfasindan fetch ile kelime özellikleri alinir ve sayfa hrml'i doc degiskenine atanir
+const loadDoc = async (url) => {
+  await fetch(url, { mode: "no-cors" })
+    .then(function (response) {
+      console.log(response);
+      console.log("durum: " + response.status);
+      return response.text();
+    })
+    .then(function (html) {
+      var parser = new DOMParser();
+      doc= parser.parseFromString(html, "text/html");
+      getWort()
+    })
+    .catch(function (err) {
+      console.warn("Something went wrong.", err);
+    });
+};
+
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(){
     newWort = wort_Obj
