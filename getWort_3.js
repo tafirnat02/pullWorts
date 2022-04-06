@@ -8,7 +8,7 @@ function getWort(wrtObj){
       "body > article > div:nth-child(1) > nav.rKrml.rKln.rInf > a:nth-child(2)"
     ).innerText;
     /**Üst kisimdaki kelimeye dair gramatik bilgiler */
-    getTitle("headTitle");
+    getTitle("headTitle")
     /***sub Title: Keliemenin cogulu, verben halleri ve diger cekimler bulunur***/
     getTitle("subCode");
     /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
@@ -21,6 +21,8 @@ function getWort(wrtObj){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
+
+    return newWort
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
