@@ -1,5 +1,6 @@
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(){
+function getWort(wrtObj){
+    newWort = wrtObj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
     /***Kelimenin tanimlanmasi */
