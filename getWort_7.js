@@ -54,9 +54,9 @@ const wortObj ={
   "prateriumTbl": "",
   "perfektTbl": ""
 }
-
+doc = document
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(doc){
+function getWort(){
     newWort = wortObj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
