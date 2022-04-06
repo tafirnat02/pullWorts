@@ -1,6 +1,63 @@
+
+const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
+const brExp = /·/g;
+const empty = "";
+
+const wortObj ={
+  "wrt": {
+    "wort": "",
+    "plural": "",
+    "prefix": "",
+    "suffix": "",
+    "artikel": ""
+  },
+  "fall": {
+    "Dativobjekt": "",
+    "Akkusativobjekt": "",
+    "Reflexivpronomen": "",
+    "Other": "",
+    "wechsel": [
+      "'an'",
+      "'in'",
+      "'über'",
+      "'auf'",
+      "'neben'",
+      "'hinter'",
+      "'unter'",
+      "'vor'"
+    ]
+  },
+  "status": {
+    "Deklination": "",
+    "Zertifikat": "",
+    "Substantiv": "",
+    "Adjektiv": "",
+    "Plural": "",
+    "Positiv": "",
+    "Genus": "",
+    "gesteigert": "",
+    "Komparativ": "",
+    "regelmäßige": "",
+    "Artikel": "",
+    "starke": "",
+    "Pronomen": "",
+    "Other": ""
+  },
+  "theme": "",
+  "source": "",
+  "main_Html": "",
+  "main_Sound": "",
+  "sub_Html": "",
+  "sub_Sound": "",
+  "lang_TR": "",
+  "prasensTbl": "",
+  "prateriumTbl": "",
+  "perfektTbl": ""
+}
+
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(wrtObj){
-    newWort = wrtObj
+function getWort(){
+    newWort = wortObj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
     /***Kelimenin tanimlanmasi */
@@ -21,8 +78,6 @@ function getWort(wrtObj){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    console.log("getWort running....")
-    console.log(newWort)
     return newWort
 }
 /****::: Sub function****** */
