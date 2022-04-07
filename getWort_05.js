@@ -2,7 +2,7 @@ const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
 var wortesArr=[];
-
+var doc =""
 var wort_Obj ={
   "wrt": {
     "wort": "",
@@ -77,8 +77,9 @@ const loadDoc = async (url) => {
 //loadDoc("https://www.verbformen.de/?w=gehen")
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(){
-    newWort = wort_Obj
+function getWort(html){
+   doc = html
+   newWort = wort_Obj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
     /***Kelimenin tanimlanmasi */

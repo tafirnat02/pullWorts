@@ -1,13 +1,67 @@
+//kalinilan YER--- promis objeden veriler alinmali....
+
+
+var parser = new DOMParser();
+doc= parser.parseFromString(docs[0], "text/html");
+ console.log(doc.querySelector("body"))
+ <body>​[object Promise]​</body>​
+
+
+
+
+
+ //newWortArr
+var wortObj =[],newWort = "",wortList = "",docs;
+
+const delayLoop = (fn, delay) => {
+ if(fn =="getWorts") docs =[]
+  return (item, i) => {
+    setTimeout(() => {
+      fn(item);
+    }, i * delay);
+  }
+};
+
+const getWorts = (wort) => {
+    let url = `https://www.verbformen.de/?w=${wort}`   
+    console.log(url)
+    fetch(url, { mode: "no-cors" })
+    .then(response => {
+        console.log(response);
+        console.log("durum: " + response.status);
+        docs.push( response.text())
+        /*return response.text(); */ }) // or .json()
+        /*
+    .then(html => {
+        blankaS(html)})
+*/
+    .catch(err => {
+        console.log(err)
+    });
+};
+
+/*** once alttaki ile sayfalar alinip 2. ile de bu sayfalar cözülerek bilgiler alinmalidir... */
+//newWortArr.forEach(delayLoop(getWorts, 300))
+
+docs.forEach(delayLoop(blankaS, 500))
+
+function blankaS(page){
+              var parser = new DOMParser();
+              doc= parser.parseFromString(page, "text/html");
+               console.log(doc.querySelector("body"))
+              // wortObj.push(getWort())
+             // console.log(getWort())
+}
+
 /****************
  * Öncelikle sayfaya 
  *    -calisacak scripti ve 
  *    -kelime listesini 
  * dahil ederiz....
  */
-
-//getWort scrpti yüklenir...
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_03.js";
-const wortListUrl="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList.json";
+//Önce sayfaya getWort scrpti yüklenir...
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_04.js"
+const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList.json";
 var newWortArr = []
 let oldScript = document.querySelector("head").lastChild  
 
