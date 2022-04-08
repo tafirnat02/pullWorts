@@ -90,6 +90,7 @@ function getWort(html){
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
    // console.log(JSON.stringify(newWort))
+   console.log(newWort.fall.wechsel)
     delete newWort.fall.wechsel
     wortesArr.push(JSON.stringify(newWort));
     nextDoc()
