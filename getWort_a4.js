@@ -55,9 +55,11 @@ var wort_Obj ={
 }
 
 function nextHtml(wrtOj){
+  console.log(wrtOj.wrt)
+  console.log(wrtOj.fall)
+  console.log(wrtOj.status)
   wortesArr.push(wrtOj)
-  console.log(wrtOj.wrt.wort)
- // console.log(wrtOj)
+  console.log("______________________")
   //kosnoldaki fonksiyon isleme tekrar sokulur
   nextDoc()
 }
