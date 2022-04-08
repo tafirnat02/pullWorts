@@ -1,7 +1,7 @@
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
-var newWort, doc, wortesArr=[];
+var newWort, doc, wortesArr=[], wObjTest=[];
 var wort_Obj ={
   "wrt": {
     "wort": "",
@@ -56,8 +56,7 @@ var wort_Obj ={
 
 function nextHtml(wrtOj){
   console.log(wrtOj.wrt)
-  console.log(wrtOj.fall)
-  console.log(wrtOj.status)
+  wObjTest.push(wrtOj.wrt)
   wortesArr.push(wrtOj)
   console.log("______________________")
   //kosnoldaki fonksiyon isleme tekrar sokulur
