@@ -1,7 +1,7 @@
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
-var wortesArr=[];
+var doc, wortesArr=[];
 var wort_Obj ={
   "wrt": {
     "wort": "",
@@ -82,7 +82,8 @@ function nextHtml(wortObj){
 }
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(doc){
+function getWort(html){
+  doc = html 
   console.log("---<<w>>---")
    newWort = wort_Obj
     /**kelimenin alinmasi */
