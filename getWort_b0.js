@@ -56,9 +56,9 @@ var wort_Obj ={
 
 function nextHtml(wrtOj){
   console.log(wrtOj.wrt)
+  console.log(JSON.stringify(wrtOj))
   Object.keys(wrtOj).forEach(key => {
   console.log(key, wrtOj[key]);
-  console.log(JSON.stringify(wrtOj))
 })
   
   console.log("______________________")
