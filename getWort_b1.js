@@ -89,8 +89,9 @@ function getWort(html){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    //wortesArr.push(newWort);
-    nextHtml(newWort)
+    wortesArr.push(JSON.stringify(wrtOj));
+    nextDoc()
+    //nextHtml(newWort)
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
