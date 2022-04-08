@@ -182,9 +182,9 @@ newWort.fall.Other = subFall
 } 
 /***** cogul ve sifatlarin derecelerini almak icin kullanilir */
 function setWortText(head) {
+  ele = head.querySelector("p.vStm");
   if (newWort.status.Adjektiv !="") {
     //sifat dereceleri alinir
-    ele = head.querySelector("p.vStm");
     ele.childNodes.forEach((n) => {
       if (n.innerText) {
         let txt = n.innerText.replace(rpRegExp, empty).trim();
