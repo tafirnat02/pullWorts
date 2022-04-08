@@ -54,9 +54,10 @@ var wort_Obj ={
   "perfektTbl": ""
 }
 
-function nextHtml(wortObj){
-  console.log(wortObj.wrt.wort)
-  console.log(wortObj)
+function nextHtml(wrtOj){
+  wortesArr.push(newWort)
+  console.log(wrtOj.wrt.wort)
+ // console.log(wrtOj)
   //kosnoldaki fonksiyon isleme tekrar sokulur
   nextDoc()
 }
