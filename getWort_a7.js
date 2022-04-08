@@ -57,9 +57,7 @@ var wort_Obj ={
 function nextHtml(wrtOj){
   console.log(wrtOj.wrt)
   Object.keys(wrtOj).forEach(key => {
-    wort1[key] = 
   console.log(key, wrtOj[key]);
-    i++
 })
   
   console.log("______________________")
