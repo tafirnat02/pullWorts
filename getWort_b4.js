@@ -89,7 +89,7 @@ function getWort(html){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    console.log(JSON.stringify(newWort))
+   // console.log(JSON.stringify(newWort))
     wortesArr.push(JSON.stringify(newWort));
     nextDoc()
     //nextHtml(newWort)
