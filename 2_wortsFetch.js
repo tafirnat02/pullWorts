@@ -1,42 +1,45 @@
-//newWortArr
-var wortObj =[],newWort = "",wortList = "",docs =[];
+//newWortArr 
+var wortObj =[],newWort = "",wortList = "",docs =[], i_no=0;
+var newTimeOut, myArr=[]  
 
-const delayLoop = (fn, delay) => {
-  return (wort, i) => {
-    setTimeout(() => {
-      fn(wort);
-    }, i * delay);
-  }
-};
+const runApp = (len="") =>{
+    myArr = [...newWortArr]
+    if(len!=""){
+      maxlen = myArr.length
+      myArr = myArr.slice(len,maxlen)
+      i_no=len
+    }
+    nextWort()
+}
+
+const nextWort = () =>{
+    if(myArr.length>0){
+       let wort  = myArr.shift();
+       getWorts(wort)
+    }
+}
 
 const getWorts = (wort) => {
-    let url = `https://www.verbformen.de/?w=${wort}`   
-    console.log(url)
+    let url = `https://www.verbformen.de/?w=${wort}` 
     fetch(url, { mode: "no-cors" })
     .then(response => {
-        console.log(response);
-        console.log("durum: " + response.status);
-        return response.text();})   // or .json()
+     if (response.status != 200) {throw Error("Hata Kodu: " + response.status);}
+      console.log(response);
+      console.log("durum: " + response.status);
+      docs.push( response.text())
+        /*return response.text(); */ }) // or .json()
     .then(html => {
-        var parser = new DOMParser();
-    	doc = parser.parseFromString(html, 'text/html');
-        docs.push( doc)
+         i_no++
+         nextWort() 
+    }) 
     .catch(err => {
+        console.log("---> " + wort)
+        console.log(`Wort Listeki kalinan öge no:${i_no} `) 
+        console.log("Alinan Kelime: " + newWortArr[i_no])
         console.log(err)
     });
-    });   
 };
 
-newWortArr.forEach(delayLoop(getWorts, 300))
+runApp(95)
 
-/**
- *
- function blankaS(page){
-    setTimeout(()=>{
-              var parser = new DOMParser();
-              doc= parser.parseFromString(page, "text/html");
-              // wortObj.push(getWort())
-              console.log(getWort())
-    },1000);
-}
- */
+
