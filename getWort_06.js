@@ -2,7 +2,6 @@ const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
 var wortesArr=[];
-var doc =""
 var wort_Obj ={
   "wrt": {
     "wort": "",
@@ -76,9 +75,14 @@ const loadDoc = async (url) => {
 
 //loadDoc("https://www.verbformen.de/?w=gehen")
 
+function nextHtml(wortObj){
+  console.log(wortObj)
+  //kosnoldaki fonksiyon isleme tekrar sokulur
+  nextDoc()
+}
+
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(html){
-   doc = html
+function getWort(doc){
    newWort = wort_Obj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
@@ -101,7 +105,7 @@ function getWort(html){
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
     //wortesArr.push(newWort);
-    return newWort
+    nextHtml(newWort)
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
