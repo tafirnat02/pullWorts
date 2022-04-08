@@ -53,40 +53,17 @@ var wort_Obj ={
   "prateriumTbl": "",
   "perfektTbl": ""
 }
-/*
-//verbformdan ilgili kelime sayfasindan fetch ile kelime özellikleri alinir ve sayfa hrml'i doc degiskenine atanir
-const loadDoc = async (url) => {
-  await fetch(url, { mode: "no-cors" })
-    .then(function (response) {
-      console.log(response);
-      console.log("durum: " + response.status);
-      return response.text();
-    })
-    .then(function (html) {
-      var parser = new DOMParser();
-      doc= parser.parseFromString(html, "text/html");
-      getWort()
-    })
-    .catch(function (err) {
-      console.warn("Something went wrong.", err);
-    });
-};
-*/
-
-//loadDoc("https://www.verbformen.de/?w=gehen")
 
 function nextHtml(wortObj){
+  console.log(wortObj.wrt.wort)
   console.log(wortObj)
   //kosnoldaki fonksiyon isleme tekrar sokulur
   nextDoc()
 }
 
-
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html){
-  doc=""
-  doc = html 
-   newWort = wort_Obj
+  doc="",newWort="", doc = html, newWort = wort_Obj
     /**kelimenin alinmasi */
     newWort.wrt.wort = doc.querySelector("form>div>input").value;
     /***Kelimenin tanimlanmasi */
