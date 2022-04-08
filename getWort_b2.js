@@ -1,7 +1,7 @@
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";
-var newWort, doc, wortesArr=[], wObjTest=[];
+var newWort, doc, wortesArr=[];
 var wort_Obj ={
   "wrt": {
     "wort": "",
@@ -89,7 +89,7 @@ function getWort(html){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    wortesArr.push(JSON.stringify(wrtOj));
+    wortesArr.push(JSON.stringify(newWort));
     nextDoc()
     //nextHtml(newWort)
 }
