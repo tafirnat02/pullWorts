@@ -1,6 +1,8 @@
 // https://rapidapi.com/  -> fsenel0634@gmail.com
+// https://rapidapi.com/  -> fsenel0634@gmail.com
 const encodedParams = new URLSearchParams();
-encodedParams.append("q", "jeder");  //<< kelime girisi yapilir
+var req = "Aachener234234ersfsf"
+encodedParams.append("q", req);  //<< kelime girisi yapilir
 encodedParams.append("target", "tr");
 encodedParams.append("source", "de");
 
@@ -19,10 +21,14 @@ fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
 	.then(response => response.json())//.then(response => console.log(response))
     .then(data => {
         console.log(data)
-        console.log(data.data['translations'][0].translatedText);
+        let res = data.data['translations'][0].translatedText 
+        if(req==res){
+            console.log("cevap alinamadi")
+        }else{
+               console.log(res) 
+        }
     })
 	.catch(err => console.error(err));
-
 
     // 2. kaynak API | -> tafirnat02+myapp1@gmail.com
     const encodedParams = new URLSearchParams();

@@ -91,14 +91,13 @@ function getWort(html){
     getTitle("Tbls")
     /***kelimenin TR anlami akinir */
      getLang(GoogleAPIwait,newWort)
-   // console.log(JSON.stringify(newWort))
- 
-    //nextHtml(newWort)
+    return
 }
 
 /***Google Translate API callback islemi beklenemesi icin bu kod araya yazildi */
 function GoogleAPIwait(wtr){
   delete wtr.fall.wechsel
+  //stringe gönüstürülür ve dizine alinir
   wortesArr.push(JSON.stringify(wtr));
   nextDoc()
 }
