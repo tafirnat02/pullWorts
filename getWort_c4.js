@@ -98,8 +98,8 @@ function getWort(html){
 
 /***Google Translate API callback islemi beklenemesi icin bu kod araya yazildi */
 function GoogleAPIwait(wtr){
-  delete newWort.fall.wechsel
-  wortesArr.push(JSON.stringify(newWort));
+  delete wtr.fall.wechsel
+  wortesArr.push(JSON.stringify(wtr));
   nextDoc()
 }
 
