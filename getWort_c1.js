@@ -270,13 +270,13 @@ function setStatus(ele, verb) {
 }
 /**** kelimenin TR karsiligi alinir */
 function getLang(){
-  let srcL1 ="", srcL2=""
+  let srcL1 ="", srcL2="", res=""
    srcL1 = doc.querySelector('span[lang="tr"]')
    srcL2 = doc.querySelector('dd[lang="tr"]')
   if(checkEl(srcL1)){
-       wort_Obj.lang_TR = srcL1.innerText
+       wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
   }else if(checkEl(srcL2)){
-       wort_Obj.lang_TR = srcL2.innerText
+       wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty)
   }else{
         let encodedParams = new URLSearchParams();
         encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
@@ -295,7 +295,7 @@ function getLang(){
         fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
         	.then(response => response.json())//.then(response => console.log(response))
             .then(data => {
-              let res = data.data['translations'][0].translatedText
+               res = data.data['translations'][0].translatedText
                if( newWort.wrt.wort != res){
                  wort_Obj.lang_TR = res + " @G" //eger ayni kelime dönerse cevap bulunmadi....
                }
