@@ -90,7 +90,7 @@ function getWort(html){
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
     /***kelimenin TR anlami akinir */
-     getLang(GoogleAPIwait(newWort))
+     getLang(GoogleAPIwait,newWort)
    // console.log(JSON.stringify(newWort))
  
     //nextHtml(newWort)
@@ -275,13 +275,13 @@ function setStatus(ele, verb) {
   newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
 }
 /**** kelimenin TR karsiligi alinir */
-function getLang(callback){
+function getLang(callback, wrt){
   let srcL1 ="", res=""
   srcL1 = doc.querySelector('span[lang="tr"]')
       
   if (checkEl(srcL1)) {
       wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
-      callback()
+      callback(wrt)
   }else{
       let encodedParams = new URLSearchParams();
       encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
@@ -310,10 +310,10 @@ function getLang(callback){
                   res=""
               }
               wort_Obj.lang_TR =res
-              callback()
+              callback(wrt)
           })
           .catch(err => {
-              callback()
+              callback(wrt)
               console.log("Google API sorunu: \n" + err)
           });
   }
