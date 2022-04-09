@@ -303,7 +303,7 @@ function getLang(callback, wrt){
               callback(wrt)
           })
           .catch(err => {
-            console.log("%Google Translate API Hatasi\ncKelime: " +  newWort.wrt.wort ,"color: yellow;  font-size: 13px");
+            console.log("%cGoogle Translate API Hatasi\ncKelime: " +  newWort.wrt.wort ,"color: yellow;  font-size: 13px");
               //console.log("Google Translate API Hatasi:\n"+  err)
               callback(wrt)
           });
