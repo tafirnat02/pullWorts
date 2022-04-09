@@ -270,13 +270,10 @@ function setStatus(ele, verb) {
 }
 /**** kelimenin TR karsiligi alinir */
 function getLang(){
-  let srcL1 ="", srcL2="", res=""
+  let srcL1 ="", res=""
    srcL1 = doc.querySelector('span[lang="tr"]')
-   srcL2 = doc.querySelector('dd[lang="tr"]')
   if(checkEl(srcL1)){
-       wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
-  }else if(checkEl(srcL2)){
-       wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty)
+      res = srcL1.innerText
   }else{
         let encodedParams = new URLSearchParams();
         encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
@@ -296,12 +293,15 @@ function getLang(){
         	.then(response => response.json())//.then(response => console.log(response))
             .then(data => {
                res = data.data['translations'][0].translatedText
-               if( newWort.wrt.wort != res){
-                 wort_Obj.lang_TR = res + " @G" //eger ayni kelime dönerse cevap bulunmadi....
+               if( newWort.wrt.wort != res && res !=""){
+                 res += " @G" //eger ayni kelime dönerse cevap bulunmadi....
+               }else{
+                 res=""
                }
             })
         	.catch(err => console.error(err));
           }
+    wort_Obj.lang_TR = res!=""? res.replace(rpRegExp, empty):""
 }
 /**Genel Kullanimdaki Diger Fonksiyonlar */
 /***** DOM Element Checker*********/
