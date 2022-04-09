@@ -90,13 +90,19 @@ function getWort(html){
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
     /***kelimenin TR anlami akinir */
-     getLang()
+     getLang(GoogleAPIwait(newWort))
    // console.log(JSON.stringify(newWort))
-    delete newWort.fall.wechsel
-    wortesArr.push(JSON.stringify(newWort));
-    nextDoc()
+ 
     //nextHtml(newWort)
 }
+
+/***Google Translate API callback islemi beklenemesi icin bu kod araya yazildi */
+function GoogleAPIwait(wtr){
+  delete newWort.fall.wechsel
+  wortesArr.push(JSON.stringify(newWort));
+  nextDoc()
+}
+
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
 function getTitle(tit) {
@@ -269,39 +275,48 @@ function setStatus(ele, verb) {
   newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
 }
 /**** kelimenin TR karsiligi alinir */
-function getLang(){
+function getLang(callback){
   let srcL1 ="", res=""
-   srcL1 = doc.querySelector('span[lang="tr"]')
-  if(checkEl(srcL1)){
-      res = srcL1.innerText
+  srcL1 = doc.querySelector('span[lang="tr"]')
+      
+  if (checkEl(srcL1)) {
+      wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
+      callback()
   }else{
-        let encodedParams = new URLSearchParams();
-        encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
-        encodedParams.append("target", "tr");
-        encodedParams.append("source", "de");
-        let options = {
-        	method: 'POST',
-        	headers: {
-        		'content-type': 'application/x-www-form-urlencoded',
-        		'Accept-Encoding': 'application/gzip',
-        		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
-        		'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
-        	},
-        	body: encodedParams
-        };
-        fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
-        	.then(response => response.json())//.then(response => console.log(response))
-            .then(data => {
-               res = data.data['translations'][0].translatedText
-               if( newWort.wrt.wort != res && res !=""){
-                 res += " @G" //eger ayni kelime dönerse cevap bulunmadi....
-               }else{
-                 res=""
-               }
-            })
-        	.catch(err => console.error(err));
-          }
-    wort_Obj.lang_TR = res!=""? res.replace(rpRegExp, empty):""
+      let encodedParams = new URLSearchParams();
+      encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
+      encodedParams.append("target", "tr");
+      encodedParams.append("source", "de");
+      let options = {
+          method: 'POST',
+          headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Accept-Encoding': 'application/gzip',
+          'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
+          'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
+      },
+          body: encodedParams
+      };
+          fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+          .then(response => response.json())//.then(response => console.log(response))
+          .then(data => {
+              console.log(data)
+              console.log(data.data['translations'][0].translatedText)
+              res = data.data['translations'][0].translatedText
+              console.log(newWort.wrt.wort != res && res !="")
+              if( newWort.wrt.wort != res && res !=""){
+                  res = res.replace(rpRegExp, empty) + " @G" //eger ayni kelime dönerse cevap bulunmadi....
+              }else{
+                  res=""
+              }
+              wort_Obj.lang_TR =res
+              callback()
+          })
+          .catch(err => {
+              callback()
+              console.log("Google API sorunu: \n" + err)
+          });
+  }
 }
 /**Genel Kullanimdaki Diger Fonksiyonlar */
 /***** DOM Element Checker*********/
