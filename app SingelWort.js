@@ -72,6 +72,7 @@ function nextHtml(wrtOj){
 getWort(document)
 
 function outPut(nwrt){
+delete nwrt.fall.wechsel
 var jsonData = JSON.stringify(nwrt)
 console.log (jsonData )// HTML düzenlemesi icin cikti formati
 console.log (nwrt)//ankiye veri aktarimi icin cikti formati
@@ -101,11 +102,11 @@ function getWort(html){
     getTitle("fall")
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
-    /***Kelimenin Türkcesi alinir*/
-    getLang()
+    /***kelimenin TR anlami akinir */
+    getLang(outPut,newWort)
    // console.log(JSON.stringify(newWort))
-    delete newWort.fall.wechsel
-    outPut(newWort)
+    //delete newWort.fall.wechsel
+   // outPut(newWort)
     return
     /* tekil alinmasi icin editlenen kod blogu */
     wortesArr.push(JSON.stringify(newWort));
@@ -272,39 +273,55 @@ function setStatus(ele, verb) {
   newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
 }
 /**** kelimenin TR karsiligi alinir */
-function getLang(){
-  let srcL1 = document.querySelector('span[lang="tr"]')
-  let srcL2 = document.querySelector('dd[lang="tr"]')
-  if(checkEl(srcL1)){
-       wort_Obj.lang_TR = srcL1.innerText
-  }else if(checkEl(srcL2)){
-       wort_Obj.lang_TR = srcL2.innerText
-  }else{
+function getLang(callback,wrt){
+    let srcL1 ="",srcL2="", res=""
+    srcL1 = doc.querySelector('span[lang="tr"]')
+    srcL2 = doc.querySelector("form > span.rNobr>a")
+    if (checkEl(srcL1)) {
+        wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
+        callback(wrt)  }
+    else if(checkEl(srcL2)){
+        wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty)
+        callback(wrt)  }
+    else{
         let encodedParams = new URLSearchParams();
         encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
         encodedParams.append("target", "tr");
         encodedParams.append("source", "de");
         let options = {
-        	method: 'POST',
-        	headers: {
-        		'content-type': 'application/x-www-form-urlencoded',
-        		'Accept-Encoding': 'application/gzip',
-        		'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
-        		'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
-        	},
-        	body: encodedParams
+            method: 'POST',
+            headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'application/gzip',
+            'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
+            'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
+        },
+            body: encodedParams
         };
-        fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
-        	.then(response => response.json())//.then(response => console.log(response))
+            fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+            .then(response => response.json())//.then(response => console.log(response))
             .then(data => {
                 console.log(data)
-                console.log(data.data['translations'][0].translatedText);
-                wort_Obj.lang_TR = data.data['translations'][0].translatedText + " @G"
+                console.log(data.data['translations'][0].translatedText)
+                res = data.data['translations'][0].translatedText
+                console.log(newWort.wrt.wort != res && res !="")
+                if( newWort.wrt.wort != res && res !=""){
+                    res = res.replace(rpRegExp, empty) + " @G" //eger ayni kelime dönerse cevap bulunmadi....
+                }else{
+                    res=""
+                }
+                wort_Obj.lang_TR =res
+                callback(wrt)
             })
-        	.catch(err => console.error(err));
-          }
-           
+            .catch(err => {
+                callback(wrt)
+                console.log("Google API sorunu: \n" + err)
+            });
+    }
 }
+
+
+
 /**Genel Kullanimdaki Diger Fonksiyonlar */
 /***** DOM Element Checker*********/
 function checkEl(e) {

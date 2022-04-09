@@ -263,13 +263,16 @@ function setStatus(ele, verb) {
 }
 /**** kelimenin TR karsiligi alinir */
 function getLang(callback, wrt){
-  let srcL1 ="", res=""
-  srcL1 = doc.querySelector('span[lang="tr"]')
-      
-  if (checkEl(srcL1)) {
-      wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
-      callback(wrt)
-  }else{
+  let srcL1 ="",srcL2="", res=""
+    srcL1 = doc.querySelector('span[lang="tr"]')
+    srcL2 = doc.querySelector("form > span.rNobr>a")
+    if (checkEl(srcL1)) {
+        wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty)
+        callback(wrt)  }
+    else if(checkEl(srcL2)){
+        wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty)
+        callback(wrt)  }
+   else{
       let encodedParams = new URLSearchParams();
       encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
       encodedParams.append("target", "tr");
