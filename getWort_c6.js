@@ -139,21 +139,9 @@ function getTitle(tit) {
 }
 /**** kelimenin Türkcesini objeye atar. */
 function setTbls(){
-    let newTbl,tbl 
-    tbl = doc.querySelector("a[href*='indikativ/praesens']");
-    newTbl = tbl.parentElement.parentElement.cloneNode(true);
-    newTbl.querySelector("span").remove()
-    newWort.prasensTbl = newTbl.innerHTML
-   
-    tbl = doc.querySelector("a[href*='indikativ/praeteritum']");
-    newTbl = tbl.parentElement.parentElement.cloneNode(true);
-    newTbl.querySelector("span").remove()
-    newWort.prateriumTbl = newTbl.innerHTML
-    
-    tbl = doc.querySelector("a[href*='indikativ/perfekt']");
-    newTbl = tbl.parentElement.parentElement.cloneNode(true);
-    newTbl.querySelector("span").remove()
-    newWort.perfektTbl = newTbl.innerHTML
+  newWort.prasensTbl =doc.querySelector("a[href*='indikativ/praesens']").parentNode.nextElementSibling.innerHTML
+  newWort.prateriumTbl =  doc.querySelector("a[href*='indikativ/praeteritum']").parentNode.nextElementSibling.innerHTML
+  newWort.perfektTbl = doc.querySelector("a[href*='indikativ/perfekt']").parentNode.nextElementSibling.innerHTML
 }
 function setLang(head){
     ele = head.querySelector("span[lang='tr']")
