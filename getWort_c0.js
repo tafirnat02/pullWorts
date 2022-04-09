@@ -270,8 +270,9 @@ function setStatus(ele, verb) {
 }
 /**** kelimenin TR karsiligi alinir */
 function getLang(){
-  let srcL1 = doc.querySelector('span[lang="tr"]')
-  let srcL2 = doc.querySelector('dd[lang="tr"]')
+  let srcL1 ="", srcL2=""
+   srcL1 = doc.querySelector('span[lang="tr"]')
+   srcL2 = doc.querySelector('dd[lang="tr"]')
   if(checkEl(srcL1)){
        wort_Obj.lang_TR = srcL1.innerText
   }else if(checkEl(srcL2)){
