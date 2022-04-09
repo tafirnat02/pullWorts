@@ -303,8 +303,8 @@ function getLang(callback, wrt){
               callback(wrt)
           })
           .catch(err => {
-              console.log("Hata Olusan Kelime: " + newWort.wrt.wort)
-              console.log("Google API sorunu: \n" + err)
+              console.log("Kelime: "+  newWort.wrt.wort ,"color: yellow; font-family:sans-serif; font-size: 12px");
+              console.log("Google Translate API Hatasi:\n"+  err)
               callback(wrt)
           });
   }
