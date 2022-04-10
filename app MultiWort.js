@@ -1,6 +1,8 @@
-"use strict"
-/*------------- [ 1. Kisim / Degiskenler ] -------------*/
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_b8.js"
+"use strict"/*
+    Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
+    [ Hata Durumu: linkleri kontrol et!]
+*//*------------- [ 1. Kisim / Degiskenler ] -------------*/
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_d04.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 var newWortArr, docs =[], myArr, clnDocs, i_no=0, maxlen;
@@ -31,8 +33,9 @@ const loadWortList = (indexNo) => {
         setTimeout(()=>{ //sonraki kisim kodu yürütülür...
         //console.log(document.querySelector("head").lastChild.src)
         //console.log(newWortArr)
+        console.log("kod yürütülüyor...")
         runApp(indexNo)
-      }, 300);
+      }, 500);
     })
     .catch(err => {
         console.log("Kelime listesi allinirken bir hata olustu!\n", error);
