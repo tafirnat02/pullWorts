@@ -1,3 +1,16 @@
+/****
+ * setMainEl(head) bu fonksiyon düzeltilmeli....
+ * nomen ise artkel icin...
+ *      document.querySelector("#x8f684Box > p.vGrnd.rCntr > img").nextSibling
+ * adj ise kod calisir ama "am" durumunda "am" alinmalidir
+ * 
+ * verben eger tek kelimeden olusuyor ise calisiyor
+ * verb eger trennbar ise bu durumda ikinci <b> etiketide alinmalidir..
+ * bunun icin 2. kisimdaki kod 
+ *      ele.querySelectorAll('b')
+ * olarak elie alinip dizin uzunluhuna göre islem yapilabilir innerHTML icin
+ */
+
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
 const brExp = /·/g;
 const empty = "";

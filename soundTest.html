@@ -17,18 +17,13 @@
 
 
       <script>
-          /*
-var audio = document.getElementById('audio');
-audio.addEventListener('error', function(e) {
-   console.log('never fired'); 
-});
-*/
+//ses doyasindaki hatayi tespit eder...
 document.getElementById('mp3').addEventListener('error', function(e) {
+
     console.error('MP3 file error: ',e.name);
     document.getElementById('mp3text').innerText = 'MP3 error: audio.error' +  audio.error;
-    console.log(audio)
-    console.error('MP3 file error: ',e);
     
+
 });
       </script>
 </body>

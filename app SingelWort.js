@@ -221,11 +221,8 @@ function setWortText(head) {
 /*****kelimenin ana gövdesini ve sound linkini objeye atar */
 function setMainEl(head) {
   ele = head.querySelector("p.vGrnd.rCntr");
-  newWort.main_Sound = ele.lastChild.href;
-  let mainHtml = ele.cloneNode(true);
-  mainHtml.lastChild.remove();
-  mainHtml.querySelector("img").remove();
-  newWort.main_Html = mainHtml.innerHTML.replace(rpRegExp, empty);
+  newWort.main_Sound =  ele.querySelector('a[href][onclick^="Stimme"]').href
+  newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
 }
 /***** altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler */
 function setSubEl(head) {
