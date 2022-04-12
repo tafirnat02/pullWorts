@@ -112,24 +112,20 @@ if (typeof(window.Persistence) === 'undefined') {
   function b_Persistence(cmd, veri = "") {
     if (window.Persistence.isAvailable()) {
       switch (cmd) {
-        case a_el.set:
-          //storagee aktarilan veri gönderilir...
+        case a_el.set://storagee aktarilan veri gönderilir...
           if (!!veri) {
             window.Persistence.setItem(veri);
           } else {
             console.log("veri bulunamadi!");
           }
           break;
-        case a_el.get:
-          //storagee aktarilan veri alinir...
+        case a_el.get://storagee aktarilan veri alinir...
           return window.Persistence.getItem();
           break;
         case a_el.remove:
-          window.Persistence.removeItem(null);
-          //yeni deger girisi icin kayitli veri temizlenir...
+          window.Persistence.removeItem(null);//yeni deger girisi icin kayitli veri temizlenir...
           break;
-        default: //e.clear
-          //yeni deger girisi icin kayitli veri temizlenir...
+        default: //yeni deger girisi icin kayitli veri temizlenir...
           window.Persistence.clear();
           break;
       }
