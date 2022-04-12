@@ -102,7 +102,7 @@ if (typeof(window.Persistence) === 'undefined') {
   }
 
 
-  const e = {
+  var a_el = {
     set: "setItem",
     get: "getItem",
     remove: "removeItem",
@@ -112,7 +112,7 @@ if (typeof(window.Persistence) === 'undefined') {
   function b_Persistence(cmd, veri = "") {
     if (window.Persistence.isAvailable()) {
       switch (cmd) {
-        case e.set:
+        case a_el.set:
           //storagee aktarilan veri gönderilir...
           if (!!veri) {
             window.Persistence.setItem(veri);
@@ -120,11 +120,11 @@ if (typeof(window.Persistence) === 'undefined') {
             console.log("veri bulunamadi!");
           }
           break;
-        case e.get:
+        case a_el.get:
           //storagee aktarilan veri alinir...
           return window.Persistence.getItem();
           break;
-        case e.remove:
+        case a_el.remove:
           window.Persistence.removeItem(null);
           //yeni deger girisi icin kayitli veri temizlenir...
           break;
