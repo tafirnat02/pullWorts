@@ -1,19 +1,4 @@
-/****
- * setMainEl(head) bu fonksiyon düzeltilmeli....
- * nomen ise artkel icin...
- *      document.querySelector("#x8f684Box > p.vGrnd.rCntr > img").nextSibling
- * adj ise kod calisir ama "am" durumunda "am" alinmalidir
- * 
- * verben eger tek kelimeden olusuyor ise calisiyor
- * verb eger trennbar ise bu durumda ikinci <b> etiketide alinmalidir..
- * bunun icin 2. kisimdaki kod 
- *      ele.querySelectorAll('b')
- * olarak elie alinip dizin uzunluhuna göre islem yapilabilir innerHTML icin
- * 
- * tablo kismindaki () ve ^5 kaldirilmali
- */
-
- const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
+const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
 const brExp = /·/g;
 const empty = "";
 var newWort, doc, wortesArr=[];
@@ -64,22 +49,36 @@ var wort_Obj ={
   "sub_Html": "",
   "sub_Sound": "",
   "lang_TR": "",
+  "lang_DE":"",
   "prasensTbl": "",
   "prateriumTbl": "",
   "perfektTbl": ""
 }
 
+/* Tekil islem icin bloklanan kod grubu ------ 
 function nextHtml(wrtOj){
   console.log(wrtOj.wrt)
   console.log(JSON.stringify(wrtOj))
   Object.keys(wrtOj).forEach(key => {
   console.log(key, wrtOj[key]);
-})
-  
   console.log("______________________")
   //kosnoldaki fonksiyon isleme tekrar sokulur
   nextDoc()
+})
 }
+  Kod grubunun sonu  ------------------------*/
+
+/*tekil alinmasi icin editlenen kod blogu */
+                             
+getWort(document)
+
+function outPut(nwrt){
+delete nwrt.fall.wechsel
+var jsonData = JSON.stringify(nwrt)
+console.log (jsonData )// HTML düzenlemesi icin cikti formati
+console.log (nwrt)//ankiye veri aktarimi icin cikti formati
+}
+/*tekil alinmasi icin editlenen kod blogu SONU */
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html){
@@ -105,24 +104,25 @@ function getWort(html){
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls")
     /***kelimenin TR anlami akinir */
-     getLang(GoogleAPIwait,newWort)
+    getLang(outPut,newWort)
+    /***kelimenin DE tanimi alinir */
+    getLangDe()
+   // console.log(JSON.stringify(newWort))
+    //delete newWort.fall.wechsel
+   // outPut(newWort)
     return
+    /* tekil alinmasi icin editlenen kod blogu */
+    wortesArr.push(JSON.stringify(newWort));
+    nextDoc()
+    /* tekil alinmasi icin editlenen kod blogu  SONU */
 }
-
-/***Google Translate API callback islemi beklenemesi icin bu kod araya yazildi */
-function GoogleAPIwait(wtr){
-  delete wtr.fall.wechsel
-  //stringe gönüstürülür ve dizine alinir
-  wortesArr.push(JSON.stringify(wtr));
-  nextDoc()
-}
-
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
 function getTitle(tit) {
   let head, ele, verb;
   verb = newWort.status.Deklination == "Konjugation" ? true : false;
-  head = doc.querySelector("div.rAbschnitt>div>section");
+  //head = doc.querySelector("div.rAbschnitt>div>section");
+  head = doc.querySelector("section.rBox.rBoxWht");  
   switch (tit) {
     case "headTitle":
       if (verb) {
@@ -147,16 +147,16 @@ function getTitle(tit) {
     case "fall":
         if(verb) setFall(head);
         break;
-      case "Tbls":
+    case "Tbls":
         if(verb) setTbls()
     break;
   }
 }
 /**** kelimenin Türkcesini objeye atar. */
 function setTbls(){
-  newWort.prasensTbl =doc.querySelector("a[href*='indikativ/praesens']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
-  newWort.prateriumTbl =  doc.querySelector("a[href*='indikativ/praeteritum']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
-  newWort.perfektTbl = doc.querySelector("a[href*='indikativ/perfekt']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
+    newWort.prasensTbl =doc.querySelector("a[href*='indikativ/praesens']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
+    newWort.prateriumTbl =  doc.querySelector("a[href*='indikativ/praeteritum']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
+    newWort.perfektTbl = doc.querySelector("a[href*='indikativ/perfekt']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
 }
 function setLang(head){
     ele = head.querySelector("span[lang='tr']")
@@ -224,9 +224,17 @@ function setWortText(head) {
 }
 /*****kelimenin ana gövdesini ve sound linkini objeye atar */
 function setMainEl(head) {
-  ele = head.querySelector("p.vGrnd.rCntr");
+  let ele = head.querySelector("p.vGrnd.rCntr");
   newWort.main_Sound =  ele.querySelector('a[href][onclick^="Stimme"]').href
-  newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
+  //newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
+  
+let grundArr = ele.querySelectorAll('b')
+    if(grundArr.length>1){
+         grundEl=grundArr[0].outerHTML+'·'+grundArr[1].outerHTML
+    }else{
+         grundEl=grundArr[0].outerHTML
+    }
+ newWort.main_Html = grundEl
 }
 /***** altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler */
 function setSubEl(head) {
@@ -274,8 +282,8 @@ function setStatus(ele, verb) {
   newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
 }
 /**** kelimenin TR karsiligi alinir */
-function getLang(callback, wrt){
-  let srcL1 ="",srcL2="", res=""
+function getLang(callback,wrt){
+    let srcL1 ="",srcL2="", res=""
     srcL1 = doc.querySelector('span[lang="tr"]')
     srcL2 = doc.querySelector("form > span.rNobr>a")
     if (checkEl(srcL1)) {
@@ -284,46 +292,55 @@ function getLang(callback, wrt){
     else if(checkEl(srcL2)){
         wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty)
         callback(wrt)  }
-   else{
-      let encodedParams = new URLSearchParams();
-      encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
-      encodedParams.append("target", "tr");
-      encodedParams.append("source", "de");
-      let options = {
-          method: 'POST',
-          headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Accept-Encoding': 'application/gzip',
-          'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
-          'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
-      },
-          body: encodedParams
-      };
-          fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
-          .then(response => response.json())//.then(response => console.log(response))
-          .then(data => {
-              console.log(data)
-              console.log(data.data['translations'][0].translatedText)
-              res = data.data['translations'][0].translatedText
-              console.log(newWort.wrt.wort != res && res !="")
-              if( newWort.wrt.wort != res && res !=""){
-                  res = res.replace(rpRegExp, empty) + " @G" //eger ayni kelime dönerse cevap bulunmadi....
-              }else{
-                  res=""
-              }
-              wort_Obj.lang_TR =res
-              callback(wrt)
-          })
-          .catch(err => {
-            console.log("Google Translate API Hatasi\nKelime: %c" +  newWort.wrt.wort ,"color: Lime;  font-size: 12px");
-              //console.log("Google Translate API Hatasi:\n"+  err)
-              callback(wrt)
-          });
-          
-  }
+    else{
+        let encodedParams = new URLSearchParams();
+        encodedParams.append("q",  newWort.wrt.wort);  //<< kelime girisi yapilir
+        encodedParams.append("target", "tr");
+        encodedParams.append("source", "de");
+        let options = {
+            method: 'POST',
+            headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'application/gzip',
+            'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
+            'X-RapidAPI-Key': '315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da'
+        },
+            body: encodedParams
+        };
+            fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', options)
+            .then(response => response.json())//.then(response => console.log(response))
+            .then(data => {
+                console.log(data)
+                console.log(data.data['translations'][0].translatedText)
+                res = data.data['translations'][0].translatedText
+                console.log(newWort.wrt.wort != res && res !="")
+                if( newWort.wrt.wort != res && res !=""){
+                    res = res.replace(rpRegExp, empty) + " @G" //eger ayni kelime dönerse cevap bulunmadi....
+                }else{
+                    res=""
+                }
+                wort_Obj.lang_TR =res
+                callback(wrt)
+            })
+            .catch(err => {
+                callback(wrt)
+                console.log("Google API sorunu: \n" + err)
+            });
+    }
 }
+
+//kelimenin varsa Almanca taninimi alinir
+function getLangDe(){
+    let dEl = doc.querySelector('p.rInf>i')
+    if(checkEl(dEl)){
+        wort_Obj.lang_DE = dEl.innerText
+    }
+}
+
 /**Genel Kullanimdaki Diger Fonksiyonlar */
 /***** DOM Element Checker*********/
 function checkEl(e) {
   return e === null ? false : true;
 }
+
+
