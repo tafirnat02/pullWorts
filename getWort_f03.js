@@ -109,8 +109,6 @@ function getWort(html) {
           newWort[key] = "";
       }
   });
-
-  console.log("newWort >> " + newWort.wrt.wort);
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
   /***Kelimenin tanimlanmasi */
