@@ -94,7 +94,21 @@ function nextHtml(wrtOj) {
 
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  (doc = ""), (newWort = ""), (doc = html), (newWort = wort_Obj);
+  (doc = ""), (doc = html);
+
+  newWort = Object.assign({}, wort_Obj);
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] == "object") {
+      Object.keys(obj[key]).forEach((s_key) => {
+        if (s_key != "wechsel") {
+          obj[key][s_key] = "";
+        }
+      });
+    } else {
+      obj[key] = "";
+    }
+  });
+
   console.log("newWort >> " + newWort.wrt.wort);
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
@@ -168,18 +182,17 @@ function getTitle(tit) {
   }
 }
 /**** kelimenin Türkcesini objeye atar. */
+
 function setTbls() {
-  if (verb) {
-    newWort.tbl.prasens = doc
-      .querySelector("a[href*='indikativ/praesens']")
-      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-    newWort.tbl.praterium = doc
-      .querySelector("a[href*='indikativ/praeteritum']")
-      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-    newWort.tbl.perfekt = doc
-      .querySelector("a[href*='indikativ/perfekt']")
-      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-  }
+  newWort.tbl.prasens = doc
+    .querySelector("a[href*='indikativ/praesens']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  newWort.tbl.praterium = doc
+    .querySelector("a[href*='indikativ/praeteritum']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  newWort.tbl.perfekt = doc
+    .querySelector("a[href*='indikativ/perfekt']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
 }
 function setLang(head) {
   ele = head.querySelector("span[lang='tr']");
