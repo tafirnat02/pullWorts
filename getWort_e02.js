@@ -96,6 +96,7 @@ function nextHtml(wrtOj) {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   (doc = ""), (newWort = ""), (doc = html), (newWort = wort_Obj);
+  console.log("newWort >> " + newWort.wrt.wort)
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
   /***Kelimenin tanimlanmasi */
