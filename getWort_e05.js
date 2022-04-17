@@ -97,15 +97,15 @@ function getWort(html) {
   (doc = ""), (doc = html);
 
   newWort = Object.assign({}, wort_Obj);
-  Object.keys(obj).forEach((key) => {
-    if (typeof obj[key] == "object") {
-      Object.keys(obj[key]).forEach((s_key) => {
+  Object.keys(newWort).forEach((key) => {
+    if (typeof newWort[key] == "object") {
+      Object.keys(newWort[key]).forEach((s_key) => {
         if (s_key != "wechsel") {
-          obj[key][s_key] = "";
+          newWort[key][s_key] = "";
         }
       });
     } else {
-      obj[key] = "";
+      newWort[key] = "";
     }
   });
 
