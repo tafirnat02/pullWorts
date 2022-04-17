@@ -21,9 +21,8 @@ elArr.forEach(r => console.log(r))
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
 const brExp = /·/g;
 const empty = "";
-var newWort,
-  doc,
-  wortesArr = [];
+var newWort, doc, verb;
+wortesArr = [];
 var wort_Obj = {
   wrt: {
     wort: "",
@@ -96,7 +95,7 @@ function nextHtml(wrtOj) {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   (doc = ""), (newWort = ""), (doc = html), (newWort = wort_Obj);
-  console.log("newWort >> " + newWort.wrt.wort)
+  console.log("newWort >> " + newWort.wrt.wort);
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
   /***Kelimenin tanimlanmasi */
@@ -136,7 +135,7 @@ function GoogleAPIwait(wtr) {
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
 function getTitle(tit) {
-  let head, ele, verb;
+  let head, ele;
   verb = newWort.status.Deklination == "Konjugation" ? true : false;
   head = doc.querySelector("section.rBox.rBoxWht");
   switch (tit) {
@@ -170,15 +169,17 @@ function getTitle(tit) {
 }
 /**** kelimenin Türkcesini objeye atar. */
 function setTbls() {
-  newWort.tbl.prasens = doc
-    .querySelector("a[href*='indikativ/praesens']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-  newWort.tbl.praterium = doc
-    .querySelector("a[href*='indikativ/praeteritum']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-  newWort.tbl.perfekt = doc
-    .querySelector("a[href*='indikativ/perfekt']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  if (verb) {
+    newWort.tbl.prasens = doc
+      .querySelector("a[href*='indikativ/praesens']")
+      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+    newWort.tbl.praterium = doc
+      .querySelector("a[href*='indikativ/praeteritum']")
+      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+    newWort.tbl.perfekt = doc
+      .querySelector("a[href*='indikativ/perfekt']")
+      .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  }
 }
 function setLang(head) {
   ele = head.querySelector("span[lang='tr']");
