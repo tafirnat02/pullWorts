@@ -1,4 +1,13 @@
 "use strict"/*
+//import ederek kodu yürütmek icin: Sayfaya dahil edildiginde yürütülür.
+//Yeniden yürütmek icin sayfa yenilendirken sonra bu kod tekrar yürütülmelidir.
+
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/app%20MultiWort_2.js";
+document.head.appendChild(script);
+
+
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/

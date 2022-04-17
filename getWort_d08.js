@@ -2,7 +2,7 @@
  * setMainEl(head) bu fonksiyon düzeltilmeli....
  * nomen ise artkel icin...
  *      document.querySelector("#x8f684Box > p.vGrnd.rCntr > img").nextSibling
- * adj ise kod calisir ama "am" durumunda "am" alinmalidir
+ * adj ise kod calisir ama "am" durumunda "am" alinmalidir  [ok...tamamlandi]
  *
  * verben eger tek kelimeden olusuyor ise calisiyor
  * verb eger trennbar ise bu durumda ikinci <b> etiketide alinmalidir..
@@ -53,6 +53,8 @@ var wort_Obj = {
     Zertifikat: "",
     Substantiv: "",
     Adjektiv: "",
+    Superlativ: "",
+    Komparativ: "",
     Plural: "",
     Positiv: "",
     Genus: "",
@@ -132,7 +134,7 @@ function GoogleAPIwait(wtr) {
 function getTitle(tit) {
   let head, ele, verb;
   verb = newWort.status.Deklination == "Konjugation" ? true : false;
-  head =  doc.querySelector("section.rBox.rBoxWht");  
+  head = doc.querySelector("section.rBox.rBoxWht");
   switch (tit) {
     case "headTitle":
       if (verb) {
@@ -242,16 +244,23 @@ function setWortText(head) {
 /*****kelimenin ana gövdesini ve sound linkini objeye atar */
 function setMainEl(head) {
   let ele = head.querySelector("p.vGrnd.rCntr");
-  newWort.main_Sound =  ele.querySelector('a[href][onclick^="Stimme"]').href
+  newWort.main_Sound = ele.querySelector('a[href][onclick^="Stimme"]').href;
   //newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
-  
-let grundEl,grundArr = ele.querySelectorAll('b')
-    if(grundArr.length>1){
-         grundEl=grundArr[0].outerHTML+'·'+grundArr[1].outerHTML
-    }else{
-         grundEl=grundArr[0].outerHTML
-    }
- newWort.main_Html = grundEl
+
+  let grundArr = ele.querySelectorAll("b");
+  if (grundArr.length > 1) {
+    grundEl = grundArr[0].outerHTML + "·" + grundArr[1].outerHTML;
+  } else {
+    grundEl = grundArr[0].outerHTML;
+  }
+
+  let txtEl = ele.querySelector('img[alt="Deutsch"]').nextSibling;
+  if (checkEl(txtEl) && txtEl.nodeName == "#text") {
+    grundEl = txtEl.textContent + grundEl;
+    grundEl = grundEl.replace(rpRegExp, empty);
+  }
+
+  newWort.main_Html = grundEl;
 }
 /***** altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler */
 function setSubEl(head) {
