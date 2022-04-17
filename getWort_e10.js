@@ -110,7 +110,6 @@ function getWort(html) {
       }
   });
 
-  
   console.log("newWort >> " + newWort.wrt.wort);
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
@@ -127,14 +126,13 @@ function getWort(html) {
   /*** worte dair text bilgileri olusturulur */
   getTitle("wortText");
   /*****Türkcesi */
-  getTitle("lang");
-  /***kelimenin DE tanimi alinir */
-  getLangDe();
+  getTitle("lang");;
   /**** Akkusativ/Dativ kullanimlarini neseye alma** */
-  console.log();
   getTitle("fall");
   /***Konjugation Tablolarina dair HTML'ler */
   getTitle("Tbls");
+    /***kelimenin DE tanimi alinir */
+    getLangDe()
   /***kelimenin TR anlami akinir */
   getLang(GoogleAPIwait, newWort);
   return;
@@ -390,9 +388,10 @@ function getLang(callback, wrt) {
 
 //kelimenin varsa Almanca taninimi alinir
 function getLangDe() {
-  let dEl = doc.querySelector("p.rInf>i");
+  let deutsch = doc.querySelector("p.rInf>i");
   if (checkEl(dEl)) {
-    wort_Obj.lang_DE = dEl.innerText;
+    wort_Obj.lang_DE = deutsch.textContent;
+    console.log(deutsch)
   }
 }
 /**Genel Kullanimdaki Diger Fonksiyonlar */
