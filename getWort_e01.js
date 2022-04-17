@@ -74,9 +74,11 @@ var wort_Obj = {
   sub_Sound: "",
   lang_TR: "",
   lang_DE: "",
-  prasensTbl: "",
-  prateriumTbl: "",
-  perfektTbl: "",
+  tbl: {
+    prasens: "",
+    praterium: "",
+    perfekt: "",
+  },
 };
 
 function nextHtml(wrtOj) {
@@ -113,10 +115,10 @@ function getWort(html) {
   /***kelimenin DE tanimi alinir */
   getLangDe();
   /**** Akkusativ/Dativ kullanimlarini neseye alma** */
+  console.log();
   getTitle("fall");
   /***Konjugation Tablolarina dair HTML'ler */
   getTitle("Tbls");
-
   /***kelimenin TR anlami akinir */
   getLang(GoogleAPIwait, newWort);
   return;
@@ -167,13 +169,13 @@ function getTitle(tit) {
 }
 /**** kelimenin Türkcesini objeye atar. */
 function setTbls() {
-  newWort.prasensTbl = doc
+  newWort.tbl.prasens = doc
     .querySelector("a[href*='indikativ/praesens']")
     .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-  newWort.prateriumTbl = doc
+  newWort.tbl.praterium = doc
     .querySelector("a[href*='indikativ/praeteritum']")
     .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
-  newWort.perfektTbl = doc
+  newWort.tbl.perfekt = doc
     .querySelector("a[href*='indikativ/perfekt']")
     .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
 }
