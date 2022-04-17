@@ -389,7 +389,7 @@ function getLang(callback, wrt) {
 //kelimenin varsa Almanca taninimi alinir
 function getLangDe() {
   let deutsch = doc.querySelector("p.rInf>i");
-  if (checkEl(dEl)) {
+  if (checkEl(deutsch)) {
     wort_Obj.lang_DE = deutsch.textContent;
     console.log(deutsch)
   }
