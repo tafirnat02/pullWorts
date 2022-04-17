@@ -95,8 +95,8 @@ function nextHtml(wrtOj) {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   (doc = ""), (doc = html);
-
   newWort = Object.assign({}, wort_Obj);
+  /*
   Object.keys(newWort).forEach((key) => {
     if (typeof newWort[key] == "object") {
       Object.keys(newWort[key]).forEach((s_key) => {
@@ -108,7 +108,7 @@ function getWort(html) {
       newWort[key] = "";
     }
   });
-
+  */
   console.log("newWort >> " + newWort.wrt.wort);
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
