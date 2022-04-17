@@ -11,7 +11,7 @@ document.head.appendChild(script);
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_d07.js"
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_d08.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
