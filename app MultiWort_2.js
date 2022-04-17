@@ -4,7 +4,8 @@
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_d07.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
-const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
+//const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
+const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
 var newWortArr, docs =[], myArr, clnDocs, i_no=0, maxlen;
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
