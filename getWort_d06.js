@@ -13,7 +13,7 @@
  * tablo kismindaki () ve ^5 kaldirilmali
  */
 
-const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
+ const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
 const brExp = /·/g;
 const empty = "";
 var newWort, doc, wortesArr=[];
