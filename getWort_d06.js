@@ -9,6 +9,8 @@
  * bunun icin 2. kisimdaki kod 
  *      ele.querySelectorAll('b')
  * olarak elie alinip dizin uzunluhuna göre islem yapilabilir innerHTML icin
+ * 
+ * tablo kismindaki () ve ^5 kaldirilmali
  */
 
 const rpRegExp = /⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\n/g;
@@ -152,9 +154,9 @@ function getTitle(tit) {
 }
 /**** kelimenin Türkcesini objeye atar. */
 function setTbls(){
-  newWort.prasensTbl =doc.querySelector("a[href*='indikativ/praesens']").parentNode.nextElementSibling.innerHTML
-  newWort.prateriumTbl =  doc.querySelector("a[href*='indikativ/praeteritum']").parentNode.nextElementSibling.innerHTML
-  newWort.perfektTbl = doc.querySelector("a[href*='indikativ/perfekt']").parentNode.nextElementSibling.innerHTML
+  newWort.prasensTbl =doc.querySelector("a[href*='indikativ/praesens']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
+  newWort.prateriumTbl =  doc.querySelector("a[href*='indikativ/praeteritum']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
+  newWort.perfektTbl = doc.querySelector("a[href*='indikativ/perfekt']").parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty)
 }
 function setLang(head){
     ele = head.querySelector("span[lang='tr']")
