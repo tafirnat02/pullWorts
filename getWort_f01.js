@@ -390,7 +390,7 @@ function getLang(callback, wrt) {
 function getLangDe() {
   let deutsch = doc.querySelector("p.rInf>i");
   if (checkEl(deutsch)) {
-    wort_Obj.lang_DE = deutsch.textContent;
+    wort_Obj.lang_DE = deutsch;
     console.log(deutsch)
   }
 }
