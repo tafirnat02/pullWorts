@@ -111,13 +111,12 @@ function getWort(html) {
   /*****Türkcesi */
   getTitle("lang");
 
-  if (verb) {
+  
     /**** Akkusativ/Dativ kullanimlarini neseye alma** */
     getTitle("fall");
     /***Konjugation Tablolarina dair HTML'ler */
     getTitle("Tbls");
-  }
-
+  
   /***kelimenin TR anlami akinir */
   getLang(GoogleAPIwait, newWort);
   /***kelimenin DE tanimi alinir */
