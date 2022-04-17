@@ -110,17 +110,15 @@ function getWort(html) {
   getTitle("wortText");
   /*****Türkcesi */
   getTitle("lang");
-
-  
-    /**** Akkusativ/Dativ kullanimlarini neseye alma** */
-    getTitle("fall");
-    /***Konjugation Tablolarina dair HTML'ler */
-    getTitle("Tbls");
-  
-  /***kelimenin TR anlami akinir */
-  getLang(GoogleAPIwait, newWort);
   /***kelimenin DE tanimi alinir */
   getLangDe();
+  /**** Akkusativ/Dativ kullanimlarini neseye alma** */
+  getTitle("fall");
+  /***Konjugation Tablolarina dair HTML'ler */
+  getTitle("Tbls");
+
+  /***kelimenin TR anlami akinir */
+  getLang(GoogleAPIwait, newWort);
   return;
 }
 
