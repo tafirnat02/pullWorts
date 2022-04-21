@@ -95,19 +95,19 @@ function nextHtml(wrtOj) {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   (doc = ""), (doc = html);
-  
+
   //obje kolonlanir ve daha sonra obje icerigi sifirlanir
   newWort = Object.assign({}, wort_Obj);
   Object.keys(newWort).forEach((key) => {
-      if (typeof newWort[key] == "object") {
-          Object.keys(newWort[key]).forEach((s_key) => {
-              if (s_key != "wechsel") {
-                  newWort[key][s_key] = "";
-              }
-          });
-      } else {
-          newWort[key] = "";
-      }
+    if (typeof newWort[key] == "object") {
+      Object.keys(newWort[key]).forEach((s_key) => {
+        if (s_key != "wechsel") {
+          newWort[key][s_key] = "";
+        }
+      });
+    } else {
+      newWort[key] = "";
+    }
   });
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
@@ -124,13 +124,13 @@ function getWort(html) {
   /*** worte dair text bilgileri olusturulur */
   getTitle("wortText");
   /*****Türkcesi */
-  getTitle("lang");;
+  getTitle("lang");
   /**** Akkusativ/Dativ kullanimlarini neseye alma** */
   getTitle("fall");
   /***Konjugation Tablolarina dair HTML'ler */
   getTitle("Tbls");
-    /***kelimenin DE tanimi alinir */
-    getLangDe()
+  /***kelimenin DE tanimi alinir */
+  getLangDe();
   /***kelimenin TR anlami akinir */
   getLang(GoogleAPIwait, newWort);
   return;
@@ -284,7 +284,7 @@ function setSubEl(head) {
   newWort.sub_Sound = ele.lastChild.href;
   let subHtml = ele.cloneNode(true);
   subHtml.lastChild.remove();
-  let inHtml = "";
+
   nomen = newWort.status.Substantiv == "Substantiv" ? true : false;
   if (nomen) {
     subHtml.querySelector("b").remove();
@@ -296,7 +296,10 @@ function setSubEl(head) {
 
   newWort.sub_Html = subHtml.innerHTML.replace(rpRegExp, empty);
   newWort.sub_Html = nomen
-    ? newWort.sub_Html.replace("·", "die ")
+    ? newWort.sub_Html.replace(
+        "·",
+        newWort.sub_Html.includes("-") ? "" : "die "
+      )
     : newWort.sub_Html.replace(brExp, "<br>");
 }
 /**** objenin status keyinde tutulan verileri head bardan alir */
