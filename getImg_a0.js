@@ -11,12 +11,11 @@ function getImg(){
      return true
    }
   
-  var anhtr =[["43ee39fa4cfa0400a",'fsenel0634_1'],["c23b05fa4f69a434e", 'fsenel0634_2'],["a63f41cf66d614e56", 'tafirnat'],["729623ca31d534c37", '//ra.saykoza'],["e6415d6a998894840", '//rifat6arslan'],["81559b9a5542844f0", '//taslaner0634'],["009bd2355a51b4179", '//tayfuna0634']]
+  var anhtr =["43ee39fa4cfa0400a","c23b05fa4f69a434e","a63f41cf66d614e56","729623ca31d534c37","e6415d6a998894840", "81559b9a5542844f0", "009bd2355a51b4179"]
   var myObj = {};
    var queryWort =newWort.wrt.wort
         function loadClient() {
-          //gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
-          gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
+          gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); 
           return gapi.client
             .load(
               "https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest"
@@ -34,7 +33,7 @@ function getImg(){
         function execute() {
           return gapi.client.search.cse
             .list({
-              cx: anhtr[0][0],
+              cx: anhtr[0],
               q: queryWort +  ' symbol -stock',
               cr: "countryDE",
               gl: "de",
