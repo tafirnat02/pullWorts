@@ -1,0 +1,566 @@
+const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
+const brExp = /·/g;
+const empty = "";
+var newWort,
+  doc,
+  wortesArr = [],
+  myObj = {},
+  troy,
+  qTxt,
+  wort_Obj = {
+    wrt: {
+      wort: "",
+      plural: "",
+      prefix: "",
+      suffix: "",
+      artikel: "",
+    },
+    fall: {
+      Dativobjekt: "",
+      Akkusativobjekt: "",
+      Reflexivpronomen: "",
+      Other: "",
+      wechsel: [
+        "'an'",
+        "'in'",
+        "'über'",
+        "'auf'",
+        "'neben'",
+        "'hinter'",
+        "'unter'",
+        "'vor'",
+      ],
+    },
+    status: {
+      Situation: ["", "Durumu"],
+      Zertifikat: ["", "Kelime Seviyesi"],
+      Substantiv: ["", "Isim"],
+      Adjektiv: ["", "Sifat"],
+      Superlativ: ["", "Superlative: en..."],
+      Komparativ: ["", "Komparativ: -e göre..."],
+      Plural: ["", "Cogul eki"],
+      Positiv: ["", "Pozitif"],
+      Genus: ["", "Cinsiyet"],
+      regelmäßige: ["", "Düzenli Cekim Durumu"],
+      Artikel: ["", "Artikel"],
+      starke: ["", "Güclü"],
+      Pronomen: ["", "Zamir"],
+      dekliniert: ["", "Cekimlenme Durumu"],
+      Prädikativ: ["", "Tahmine Dayali Kullanim"],
+      gesteigert: ["", "Sifat Derecelendirilmesi"],
+      Indefinitpronomen: ["", "Belirsiz Zamir"],
+      Other: ["", ""],
+    },
+    adj: {
+      Positiv: "",
+      Komparativ: "",
+      Superlativ: "",
+    },
+    theme: "",
+    source: "",
+    main_Html: "",
+    main_Sound: "",
+    sub_Html: "",
+    sub_Sound: "",
+    lang_TR: "",
+    lang_DE: "",
+    lang_En: "",
+    tbl: {
+      prasens: "",
+      praterium: "",
+      perfekt: "",
+    },
+    zB: [],
+    img: [],
+  };
+
+/* Tekil islem icin bloklanan kod grubu ------ 
+function nextHtml(wrtOj){
+  console.log(wrtOj.wrt)
+  console.log(JSON.stringify(wrtOj))
+  Object.keys(wrtOj).forEach(key => {
+  console.log(key, wrtOj[key]);
+  console.log("______________________")
+  //kosnoldaki fonksiyon isleme tekrar sokulur
+  nextDoc()
+})
+}
+  Kod grubunun sonu  ------------------------*/
+
+/*tekil alinmasi icin editlenen kod blogu */
+getAPI();
+console.log("---gapi icin bekleniyor--");
+
+setTimeout(() => {
+  getWort(document);
+}, 500);
+
+function outPut(nwrt) {
+  delete nwrt.fall.wechsel;
+  var jsonData = JSON.stringify(nwrt);
+  console.log(jsonData); // HTML düzenlemesi icin cikti formati
+  console.log(nwrt); //ankiye veri aktarimi icin cikti formati
+}
+/*tekil alinmasi icin editlenen kod blogu SONU */
+
+//buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
+function getWort(html) {
+  //img-->load first gApi
+  (doc = html), (newWort = Object.assign({}, wort_Obj));
+  /**kelimenin alinmasi */
+  newWort.wrt.wort = doc.querySelector("form>div>input").value;
+  /***Kelimenin tanimlanmasi */
+  newWort.status.Situation[0] = doc.querySelector(
+    "article>div>nav>a[href]"
+  ).nextElementSibling.textContent;
+  /**Üst kisimdaki kelimeye dair gramatik bilgiler */
+  getTitle("headTitle");
+  /***sub Title: Keliemenin cogulu, verben halleri ve diger cekimler bulunur***/
+  getTitle("subCode");
+  /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
+  getTitle("subMain");
+  /*** worte dair text bilgileri olusturulur */
+  getTitle("wortText");
+  /*****Türkcesi */
+  getTitle("lang");
+  /**** Akkusativ/Dativ kullanimlarini neseye alma** */
+  getTitle("fall");
+  /***Konjugation Tablolarina dair HTML'ler */
+  getTitle("Tbls");
+  /***örnek cümleleralinir */
+  getSatze();
+  /***almanca tanimi */
+  getLangDe();
+  //dil durumu kontrol edilir ve callback ile görsel durumuna gecilir...
+  getLang(getImg); //calback->getImg
+
+  return;
+  /* tekil alinmasi icin editlenen kod blogu */
+  wortesArr.push(JSON.stringify(newWort));
+  nextDoc();
+  /* tekil alinmasi icin editlenen kod blogu  SONU */
+}
+/****::: Sub function****** */
+/***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
+function getTitle(tit) {
+  let head, ele, verb;
+  verb = newWort.status.Situation[0] == "Konjugation" ? true : false;
+  //head = doc.querySelector("div.rAbschnitt>div>section");
+  head = doc.querySelector("section.rBox.rBoxWht");
+  switch (tit) {
+    case "headTitle":
+      if (verb) {
+        ele = head.querySelector("p");
+      } else {
+        ele = head.querySelector("header>p");
+      }
+      setStatus(ele, verb);
+      break;
+    case "subCode":
+      setSubEl(head);
+      break;
+    case "subMain":
+      setMainEl(head);
+      break;
+    case "wortText":
+      if (!verb) getAdj();
+      break;
+    case "lang":
+      setLang(head);
+      break;
+    case "fall":
+      if (verb) setFall(head);
+      break;
+    case "Tbls":
+      if (verb) setTbls();
+      break;
+  }
+}
+/**** kelimenin Türkcesini objeye atar. */
+function setTbls() {
+  newWort.tbl.prasens = doc
+    .querySelector("a[href*='indikativ/praesens']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  newWort.tbl.praterium = doc
+    .querySelector("a[href*='indikativ/praeteritum']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+  newWort.tbl.perfekt = doc
+    .querySelector("a[href*='indikativ/perfekt']")
+    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+}
+function setLang(head) {
+  ele = head.querySelector("span[lang='tr']");
+  if (checkEl(ele)) {
+    newWort.lang_TR = ele.innerText.trim();
+  }
+}
+/******Fillerin dativ akkusativ kullanimlarinin tespiti */
+function setFall(head) {
+  let subFall = "",
+    ele = doc.querySelectorAll("#vVdBx>div>div>p");
+  ele.forEach((row) => {
+    row.childNodes.forEach((n) => {
+      if (n.nodeName == "SPAN") {
+        Object.keys(newWort.fall).forEach((f) => {
+          let tit = n.title;
+          if (tit.includes(f)) {
+            newWort.fall[f] = n.innerText;
+          } else {
+            if (f == "wechsel") {
+              //console.log(Object.values(newWort.fall[f]))
+              Object.values(newWort.fall[f]).forEach((w) => {
+                if (tit.includes(w)) {
+                  subFall = subFall + n.innerText + " ";
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+  subFall = subFall.split(" -§- ").sort().join(" ").trim();
+  newWort.fall.Other = subFall;
+}
+/***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
+function getAdj() {
+  if (newWort.status.Adjektiv[0] != "") {
+    //sifat dereceleri alinir
+    let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
+    newWort.adj.Positiv = adjTbl[0].innerText;
+    newWort.adj.Komparativ = adjTbl[1].innerText;
+    newWort.adj.Superlativ = adjTbl[2].innerText;
+  }
+}
+/*****kelimenin ana gövdesini ve sound linkini objeye atar */
+function setMainEl(head) {
+  let ele = head.querySelector("p.vGrnd.rCntr");
+  newWort.main_Sound = ele.querySelector('a[href][onclick^="Stimme"]').href;
+  //newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
+
+  let grundArr = ele.querySelectorAll("b");
+  if (grundArr.length > 1) {
+    grundEl = grundArr[0].outerHTML + "·" + grundArr[1].outerHTML;
+  } else {
+    grundEl = grundArr[0].outerHTML;
+  }
+
+  let txtEl = ele.querySelector('img[alt="Deutsch"]').nextSibling;
+  if (checkEl(txtEl) && txtEl.nodeName == "#text") {
+    grundEl = txtEl.textContent + grundEl;
+    grundEl = grundEl.replace(rpRegExp, empty);
+  }
+
+  newWort.main_Html = grundEl;
+}
+/*****  Kelimenin artikeli ve cogul durumu ve ayrica
+        altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler ****/
+function setSubEl(head) {
+  ele = head.querySelector("p.vStm.rCntr");
+  newWort.sub_Sound = ele.lastChild.href;
+  let subHtml = ele.cloneNode(true);
+  subHtml.lastChild.remove();
+  //isim/sifat cekimleri sitiliyle beraber almakta
+  nomen = newWort.status.Substantiv[0] == "Substantiv" ? true : false;
+  if (nomen) {
+    let s_p = document.querySelectorAll('th[title="Nominativ"]');
+    newWort.wrt.artikel = s_p[0].nextElementSibling.textContent;
+    newWort.wrt.plural = s_p[1].nextElementSibling.nextElementSibling
+      ? s_p[1].nextElementSibling.nextElementSibling.textContent.replace(
+          rpRegExp,
+          empty
+        )
+      : "-";
+    if (newWort.wrt.plural == "-") {
+      newWort.sub_Html = ""; //ohne Plural
+    } else {
+      newWort.sub_Html =
+        s_p[1].nextElementSibling.nextElementSibling.innerHTML.replace(
+          rpRegExp,
+          empty
+        );
+    }
+  } else {
+    //adjektiv ve Konjugation  durumu
+    newWort.sub_Html = subHtml.innerHTML
+      .replace(rpRegExp, empty)
+      .replace(brExp, "<br>");
+  }
+}
+/**** objenin status keyinde tutulan verileri head bardan alir */
+function setStatus(ele, verb) {
+  let arr = ele.innerText.split("·");
+  ele.childNodes.forEach((t) => {
+    switch (t.childNodes.length) {
+      case 0:
+        break;
+      default:
+        if (verb) {
+          if (checkEl(t.querySelector("span").title)) {
+            newWort.status.Zertifikat[0] = arr[0].replace(rpRegExp, empty);
+            arr.shift();
+          }
+        } else {
+          Object.keys(newWort.status).forEach((k) => {
+            if (t.title.includes(k)) {
+              newWort.status[k][0] =
+                newWort.status[k][0] == ""
+                  ? t.innerText.replace(rpRegExp, empty)
+                  : newWort.status[k][0].replace(rpRegExp, empty);
+            }
+          });
+        }
+        break;
+    }
+  });
+  newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
+}
+/**** kelimenin TR karsiligi alinir */
+function getLang(callback) {
+  let srcL1 = "",
+    srcL2 = "",
+    res = "";
+  srcL1 = doc.querySelector('span[lang="tr"]');
+  srcL2 = doc.querySelector("form > span.rNobr>a");
+  if (checkEl(srcL1)) {
+    wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
+    callback();
+  } else if (checkEl(srcL2)) {
+    wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
+    callback();
+  } else {
+    let encodedParams = new URLSearchParams();
+    encodedParams.append("q", newWort.wrt.wort); //<< kelime girisi yapilir
+    encodedParams.append("target", "tr");
+    encodedParams.append("source", "de");
+    let options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "application/gzip",
+        "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+        "X-RapidAPI-Key": "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+      },
+      body: encodedParams,
+    };
+    fetch(
+      "https://google-translate1.p.rapidapi.com/language/translate/v2",
+      options
+    )
+      .then((response) => response.json()) //.then(response => console.log(response))
+      .then((data) => {
+        console.log(data);
+        console.log(data.data["translations"][0].translatedText);
+        res = data.data["translations"][0].translatedText;
+        console.log(newWort.wrt.wort != res && res != "");
+        if (newWort.wrt.wort != res && res != "") {
+          res = res.replace(rpRegExp, empty) + " @G"; //eger ayni kelime dönerse cevap bulunmadi....
+        } else {
+          res = "";
+        }
+        wort_Obj.lang_TR = res;
+        callback();
+      })
+      .catch((err) => {
+        callback();
+        console.log("Google API sorunu: \n" + err);
+      });
+  }
+}
+
+//varsa kelimeye dair örnekler alinir
+function getSatze() {
+  let zBel, zB;
+  zBel = document.querySelectorAll(".vBsp>ul");
+  zBel.forEach((z) => {
+    zB = z.cloneNode(true);
+    let lis = zB.querySelectorAll("li");
+    lis.forEach((e) => {
+      if (!!e.querySelector("a")) {
+        e.querySelector("a").remove();
+        newWort.zB.push(e.innerHTML.replace(rpRegExp, empty));
+      }
+    });
+  });
+}
+
+//varsa kelimenin almanca tanimlari alinir
+function getLangDe() {
+  let allHeader = document.querySelectorAll("header>h2");
+  let zB, bDe;
+
+  allHeader.forEach((header) => {
+    let head = header.textContent;
+    if (head.includes("Bedeutungen")) {
+      bDe = header.parentNode.nextElementSibling
+        .querySelector("ul")
+        .cloneNode(true);
+      let lis = bDe.querySelectorAll("li");
+      lis.forEach((e) => {
+        newWort.lang_DE += e.innerHTML.replace(/»|\n/g, "") + "<br>";
+      });
+    }
+  });
+}
+
+/***************** Görsel Icin Yapilan Düzenlemeler ********************/
+//ugulamanin basinda api sayfaya dahil edilir
+//--> callback ile en son cikti basilmali  <---
+function getImg() {
+  //image sources
+  var webs = [
+    "wordpress.org",
+    "de.wiktionary.org",
+    "freeimages.com",
+    "Unsplash.com",
+    "pexels.com",
+    "pixabay.com",
+    "picjumbo.com",
+    "freepik.com",
+    "flickr.com",
+    "visualhunt.com",
+    "pikwizard.com",
+    "lifeofpix.com",
+    "gratisography.com",
+    "kaboompics.com",
+    "stocksnap.io",
+    "canva.com",
+    "stock.adobe.com",
+    "gettyimages.de",
+    "shutterstock.com",
+    "de.depositphotos.com",
+    "www.istockphoto.com",
+  ];
+  //arama icin ingilizce kelimler
+  newWort.lang_En = checkEl(document.querySelector('dd[lang="en"]'))
+    ? document.querySelector('dd[lang="en"]').innerText
+    : "";
+  //sorgu texti TR>EN>DE siralamasi
+  if (newWort.lang_TR) {
+    qTxt = `"${newWort.wrt.wort}" OR ${newWort.lang_TR
+      .split(",")
+      .join(" OR ")} OR ${webs.join(" OR ")} -verbformen`;
+  } else if (newWort.lang_En) {
+    qTxt = `"${newWort.wrt.wort}" OR ${newWort.lang_En
+      .split(",")
+      .join(" OR ")} OR ${webs.join(" OR ")} -verbformen`;
+  } else {
+    qTxt = `"${newWort.wrt.wort}" OR ${webs.join(" OR ")} -verbformen.de`;
+  }
+
+  troy = [
+    "43ee39fa4cfa0400a",
+    "c23b05fa4f69a434e",
+    "a63f41cf66d614e56",
+    "729623ca31d534c37",
+    "e6415d6a998894840",
+    "81559b9a5542844f0",
+    "009bd2355a51b4179",
+  ];
+  loadClient();
+}
+//istemci yürütülür...
+function loadClient() {
+  //gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
+  gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
+  return gapi.client
+    .load(
+      "https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest"
+    )
+    .then(
+      function () {
+        execute();
+      },
+      function (err) {
+        console.error("Error loading GAPI client for API", err);
+      }
+    );
+}
+// Make sure the client is loaded before calling this method.
+function execute() {
+  return gapi.client.search.cse
+    .list({
+      cx: troy[0],
+      q: qTxt, //queryWort +  '  -stock -istockphoto', //wikipedia symbol
+      cr: "countryDE",
+      gl: "de",
+      hl: "de",
+      lr: "lang_de",
+      safe: "active",
+      searchType: "image",
+    })
+    .then(
+      function (response) {
+        // Handle the results here (response.result has the parsed body).
+        myObj = Object.assign({}, response);
+        if (!!!myObj.result.items) {
+          console.log("görsel bulunmadi!");
+          return;
+        }
+        
+        myObj.result.items.forEach((itm) => {
+          newWort.img.push(itm.image.thumbnailLink);
+        });
+        outPut(newWort);
+      },
+      function (err) {
+        console.error("Execute error", err);
+        outPut(newWort);
+      }
+    );
+}
+
+/*------------- import gAPI-------------*/
+function getAPI() {
+  //api import
+  if (cGapi()) {
+    //api öncelikle sayfaya en basta yüklenir
+    checkAPI();
+    return;
+  } else {
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/api.js";
+    //document.head.appendChild(script);
+    let bdy = document.querySelector("body");
+    bdy.insertBefore(script, bdy.firstChild);
+    checkAPI();
+  }
+}
+
+function checkAPI(lc = 0) {
+  //yükleme durumu kontrol edilir ve daha sonra  gapi.load() cagrilir
+  lc++;
+  if (lc > 10) {
+    console.log("image: gapi yükleneme timeout...");
+  } else if (!cGapi) {
+    setTimeout(() => {
+      checkAPI(lc);
+    }, 100);
+  } else {
+    setTimeout(() => {
+      gapi.load("client");
+    }, 200);
+  }
+}
+
+function cGapi() {
+  //ögenin sayfada olup olmadigi  kontrol edilir
+  !!document.querySelectorAll(
+    'script[type="text/javascript"][src*="apis.googl"]'
+  ).length
+    ? () => {
+        return true;
+      }
+    : () => {
+        return false;
+      };
+}
+/***************** Görsel Icin Yapilan Düzenlemeler Sonu ********************/
+//kelimeye dair görsel alinmasi
+
+/**Genel Kullanimdaki Diger Fonksiyonlar */
+/***** DOM Element Checker*********/
+function checkEl(e) {
+  return e === null ? false : true;
+}

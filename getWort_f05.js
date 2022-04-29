@@ -204,7 +204,7 @@ function setFall(head) {
   subFall = subFall.split(" -§- ").sort().join(" ").trim();
   newWort.fall.Other = subFall;
 }
-/***** cogul ve sifatlarin derecelerini almak icin kullanilir */
+/***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
 function setWortText(head) {
   ele = head.querySelector("p.vStm");
   if (newWort.status.Adjektiv != "") {
@@ -220,18 +220,6 @@ function setWortText(head) {
           newWort.wrt.Superlativ = txt;
         }
       }
-    });
-  } else {
-    //plural alinir
-    ele.childNodes.forEach((n) => {
-      if (n.innerText)
-        newWort.wrt.plural = n.innerText.replace(rpRegExp, empty).trim();
-      //artikel
-      ele = head.querySelector("p.vGrnd");
-      ele.childNodes.forEach((n) => {
-        if (n.data)
-          newWort.wrt.artikel = n.data.replace(rpRegExp, empty).trim();
-      });
     });
   }
 }
@@ -256,28 +244,37 @@ function setMainEl(head) {
 
   newWort.main_Html = grundEl;
 }
-/***** altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler */
+/*****  Kelimenin artikeli ve cogul durumu ve ayrica
+        altta yer alan cogul, konj vs kisimin Html'ini ve soundunu objeye ekler ****/
 function setSubEl(head) {
   ele = head.querySelector("p.vStm.rCntr");
   newWort.sub_Sound = ele.lastChild.href;
   let subHtml = ele.cloneNode(true);
   subHtml.lastChild.remove();
+  //isim/sifat cekimleri sitiliyle beraber almakta
   nomen = newWort.status.Substantiv == "Substantiv" ? true : false;
   if (nomen) {
-    subHtml.querySelector("b").remove();
-    let plural = newWort.status.Plural;
-    if (plural.includes(",")) {
-      newWort.status.Plural = plural.split(",")[1].trim();
+    let s_p = document.querySelectorAll('th[title="Nominativ"]');
+    newWort.wrt.artikel = s_p[0].nextElementSibling.textContent;
+    newWort.wrt.plural = s_p[1].nextElementSibling.nextElementSibling
+      ? s_p[1].nextElementSibling.nextElementSibling.textContent.replace(
+          rpRegExp,
+          empty
+        )
+      : "-";
+    if (newWort.wrt.plural == "-") {
+      newWort.sub_Html = ""; //ohne Plural
+    } else {
+      newWort.sub_Html =
+        s_p[1].nextElementSibling.nextElementSibling.innerHTML.replace(
+          rpRegExp,
+          empty
+        );
     }
+  } else {
+    //adjektiv durumu
+    newWort.sub_Html = subHtml.innerHTML.replace(rpRegExp, empty);
   }
-
-  newWort.sub_Html = subHtml.innerHTML.replace(rpRegExp, empty);
-  newWort.sub_Html = nomen
-    ? newWort.sub_Html.replace(
-        "·",
-        newWort.sub_Html.includes("-") ? "<small>ohne Plural</small>" : "die "
-      )
-    : newWort.sub_Html.replace(brExp, "<br>");
 }
 /**** objenin status keyinde tutulan verileri head bardan alir */
 function setStatus(ele, verb) {
