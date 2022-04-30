@@ -312,7 +312,7 @@ function setSubEl(head) {
 }
 /**** objenin status keyinde tutulan verileri head bardan alir */
 function setStatus(ele, verb) {
-  debugger
+
   let arr = ele.innerText.split("·");
   ele.childNodes.forEach((t) => {
     switch (t.childNodes.length) {
