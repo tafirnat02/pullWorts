@@ -111,8 +111,8 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
+  try {
   //img-->load first gApi
-  
   (doc = html), (newWort = Object.assign({}, wort_Obj));
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
@@ -147,6 +147,9 @@ function getWort(html) {
   wortesArr.push(JSON.stringify(newWort));
   nextDoc();
   return;
+  } catch (err) {
+    console.log('getWort (Multi) Error:\n',err) 
+  }
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
