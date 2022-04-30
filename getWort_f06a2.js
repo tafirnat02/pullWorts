@@ -95,10 +95,18 @@ function nextHtml(wrtOj){
 }
 
 
+/**
+ *   ÖNEMELI
+ * image düzenleme islem kontrolü icin devre disi birakildi tekrar 
+ * calisma durumu sonrasi tekrar devreye alinmali
+ 
+
 //image icin gapi js'in sayfaya dahil edilmesi
 getAPI();//--->document doc olarak atanir ve isleme doc üzerinden devam edilir
 //gapi.load fonksiyonunun sayfaya dahili ve kodun yürütülmesi
 timeOutGapi(getWort,true) 
+
+*/
 
 /******* nesnenin ekrana bastirilmasi islemi ********/
 function outPut() {
@@ -299,6 +307,7 @@ function setSubEl(head) {
 }
 /**** objenin status keyinde tutulan verileri head bardan alir */
 function setStatus(ele, verb) {
+  debugger
   let arr = ele.innerText.split("·");
   ele.childNodes.forEach((t) => {
     switch (t.childNodes.length) {
