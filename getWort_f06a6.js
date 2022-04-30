@@ -106,6 +106,9 @@ getAPI();//--->document doc olarak atanir ve isleme doc üzerinden devam edilir
 //gapi.load fonksiyonunun sayfaya dahili ve kodun yürütülmesi
 timeOutGapi(getWort,true) 
 
+
+getImg() fonksiyonu da devreye alinmali...
+
 */
 
 /******* nesnenin ekrana bastirilmasi islemi ********/
@@ -491,6 +494,11 @@ function getLangDe() {
 //ugulamanin basinda api sayfaya dahil edilir
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
+
+
+  //kondtol icin devre disi birakildi
+  return false
+
   //image sources
   //arama icin ingilizce kelimler
   let rRgx = new RegExp(/,|;|\.|\//g);
