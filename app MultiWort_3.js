@@ -11,10 +11,11 @@ document.head.appendChild(script);
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f04.js"
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f05a6.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
-const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
+//const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
+const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test.json"
 var newWortArr, docs =[], myArr, clnDocs, i_no=0, maxlen;
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
@@ -68,13 +69,13 @@ const runApp = (len="") =>{
 const nextWort = () =>{
     if(myArr.length>0){
        let wort  = myArr.shift();
-       getWorts(wort)
+       getWrtDoc(wort)
     }
 }
 
 //siteden fetch ile body kismini alinir sonra
 //getWort() fonksiyonu ile kelime objesi olustururlur 
-const getWorts = (wort) => {
+const getWrtDoc = (wort) => {
     let url = `https://www.verbformen.de/?w=${wort}` 
     fetch(url, { mode: "no-cors" })
     .then(response => {
