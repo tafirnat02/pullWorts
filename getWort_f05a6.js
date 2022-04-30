@@ -233,10 +233,12 @@ function setFall(head) {
 }
 /***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
 function getAdj() {
+  debugger
   console.log('getAdj kismindan...', doc)
   if (newWort.status.Adjektiv[0] != "") {
     //sifat dereceleri alinir
     let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
+    console.log(adjTbl)
     newWort.adj.Positiv = adjTbl[0].innerText;
     newWort.adj.Komparativ = adjTbl[1].innerText;
     newWort.adj.Superlativ = adjTbl[2].innerText;
