@@ -151,12 +151,10 @@ function getWort(html) {
   //dil durumu kontrol edilir ve callback ile görsel durumuna gecilir...
   //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
   getLang(getImg); //calback->getImg
-
-  return;
-  /* tekil alinmasi icin editlenen kod blogu */
+  //multiple icin sonraki doc isleme alinir...
   wortesArr.push(JSON.stringify(newWort));
   nextDoc();
-  /* tekil alinmasi icin editlenen kod blogu  SONU */
+
 }
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
