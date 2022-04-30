@@ -238,7 +238,7 @@ function getAdj() {
   if (newWort.status.Adjektiv[0] != "") {
     //sifat dereceleri alinir
     let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
-    console.log(adjTbl)
+    console.log('uzunluk ', adjTbl.length)
     try {
       newWort.adj.Positiv = adjTbl[0].innerText;
     newWort.adj.Komparativ = adjTbl[1].innerText;
