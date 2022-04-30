@@ -10,6 +10,7 @@ var newWort,
   loCnt = false,
   loopCount = 0,
   timeoutId,
+  sil_____________TestElement,
   wort_Obj = {
     wrt: {
       wort: "",
@@ -111,7 +112,7 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  debugger
+
   try {
   //img-->load first gApi
   (doc = html), (newWort = Object.assign({}, wort_Obj));
@@ -239,6 +240,8 @@ function getAdj() {
     //sifat dereceleri alinir
     let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
     console.log('uzunluk ', adjTbl.length)
+    sil_____________TestElement = doc
+    console.log(sil_____________TestElement)
     try {
       newWort.adj.Positiv = adjTbl[0].innerText;
     newWort.adj.Komparativ = adjTbl[1].innerText;
