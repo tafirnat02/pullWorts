@@ -112,7 +112,7 @@ function outPut() {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   //img-->load first gApi
-  debugger
+  
   (doc = html), (newWort = Object.assign({}, wort_Obj));
   /**kelimenin alinmasi */
   newWort.wrt.wort = doc.querySelector("form>div>input").value;
