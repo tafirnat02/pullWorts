@@ -111,6 +111,7 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
+  debugger
   try {
   //img-->load first gApi
   (doc = html), (newWort = Object.assign({}, wort_Obj));
