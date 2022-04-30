@@ -126,8 +126,8 @@ function getWort(html) {
   getTitle("subCode");
   /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
   getTitle("subMain");
-  /*** worte dair text bilgileri olusturulur */
-  getTitle("wortText");
+  /*** adjektif islemleri yapilir */
+  getAdj();
   /*****Türkcesi */
   getTitle("lang");
   /**** Akkusativ/Dativ kullanimlarini neseye alma** */
@@ -172,9 +172,6 @@ function getTitle(tit) {
       break;
     case "subMain":
       setMainEl(head);
-      break;
-    case "wortText":
-      if (!verb) getAdj();
       break;
     case "lang":
       setLang(head);
@@ -235,6 +232,7 @@ function setFall(head) {
 }
 /***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
 function getAdj() {
+  console.log('getAdj kismindan...', doc)
   if (newWort.status.Adjektiv[0] != "") {
     //sifat dereceleri alinir
     let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
