@@ -239,9 +239,13 @@ function getAdj() {
     //sifat dereceleri alinir
     let adjTbl = document.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
     console.log(adjTbl)
-    newWort.adj.Positiv = adjTbl[0].innerText;
+    try {
+      newWort.adj.Positiv = adjTbl[0].innerText;
     newWort.adj.Komparativ = adjTbl[1].innerText;
     newWort.adj.Superlativ = adjTbl[2].innerText;
+    } catch (err) {
+      console.log('getAdj (Multi) Error:\n',err) 
+    }
   }
 }
 /*****kelimenin ana gövdesini ve sound linkini objeye atar */
