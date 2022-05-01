@@ -11,11 +11,11 @@ document.head.appendChild(script);
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f06a7.js"
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class04.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
-const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test.json"
+const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test1.json"
 var newWortArr, docs =[], myArr, clnDocs, i_no=0, maxlen;
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
