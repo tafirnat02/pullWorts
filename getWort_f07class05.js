@@ -126,9 +126,18 @@ function outPut() {
 function getWort(html) {
   try {
       //img-->load first gApi
-  (doc = html), (newWort = new Wort);
-  /**kelimenin alinmasi */
-  newWort.wrt.wort = doc.querySelector("form>div>input").value;
+  (doc = html)
+    /**kelimenin alinmasi */
+    let cWrt = doc.querySelector("form>div>input").value;
+    //kelime kontrolü yapilir
+    if(!checkEl(doc.querySelector('section.rBox'))){
+      consoleMsg(msgTyp.error,`"${newWort.wrt.wort}"`, ' Kelime gecerli degil!')
+      //multiple icin sonraki doc isleme alinir...
+      nextDoc();
+      return false}
+   //kelime icin obje olusturulur ve kelime atanir
+    (newWort = new Wort());
+     newWort.wrt.wort =cWrt
   /***Kelimenin tanimlanmasi */
   newWort.status.Situation[0] = doc.querySelector(
     "article>div>nav>a[href]"
@@ -644,3 +653,19 @@ function checkEl(e) {
   return e === null ? false : true;
 }
 
+//console mesaj yazdirmak icin
+function consoleMsg(msgTyp,head,txt){
+  const 
+      head0 ='background: DodgerBlue;',//primary
+      body0='color: DodgerBlue;',
+      head1 ='background: Green;',//successful
+      body1='color: Green;',
+      head2='background: DarkGoldenRod;',//warning
+      body2='color:DarkGoldenRod;',
+      head3='background: red;',//error
+      body3='color:red;',
+      bases='font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;' 
+var stylHead =eval (`head${msgTyp}`) + bases,
+   stylBody = eval (`body${msgTyp} `)
+console.log(`%c ${head} %c ${txt} `, stylHead, stylBody);
+}
