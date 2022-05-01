@@ -399,10 +399,10 @@ function getLang(callback) {
   srcL1 = doc.querySelector('span[lang="tr"]');
   srcL2 = doc.querySelector("form > span.rNobr>a");
   if (checkEl(srcL1)) {
-    wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
+    newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
     newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
   } else if (checkEl(srcL2)) {
-    wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
+    newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
     newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
   } else {
     let encodedParams = new URLSearchParams();
@@ -434,7 +434,7 @@ function getLang(callback) {
         } else {
           res = "";
         }
-        wort_Obj.lang_TR = res;
+        newWort.lang_TR = res;
         newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
       })
       .catch((err) => {
