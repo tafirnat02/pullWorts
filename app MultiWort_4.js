@@ -23,7 +23,7 @@ document.head.appendChild(script);
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
 *//*------------- [ 1. Kisim / Degiskenler ] -------------*/
-const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class04.js"
+const getWrt="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class05.js"
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -53,15 +53,11 @@ const loadWortList = (indexNo) => {
     }).then(list=>{
        return newWortArr = list
     }).then(()=>{
-        setTimeout(()=>{ //sonraki kisim kodu yürütülür...
-        //console.log(document.querySelector("head").lastChild.src)
-        //console.log(newWortArr)
-        console.log("kod yürütülüyor...")
+        //sonraki kisim kodu yürütülür...
         runApp(indexNo)
-      }, 500);
     })
     .catch(err => {
-        console.log("Kelime listesi allinirken bir hata olustu!\n", error);
+        consoleMsg(msgTyp.error,'Wort List Error', 'Kelime listesi alinirken hata olustu. (F:loadWortList)')
     });
 };
 /*------------- [ 3. Kisim / WortObje olusturulur ] -------------*/
@@ -81,6 +77,7 @@ const runApp = (len="") =>{
 const nextWort = () =>{
     if(myArr.length>0){
        let wort  = myArr.shift();
+       consoleMsg(msgTyp.successful,` ${wort} `, 'Kelime islenme alindi... (F:nextWort)')
        getWrtDoc(wort)
     }
 }

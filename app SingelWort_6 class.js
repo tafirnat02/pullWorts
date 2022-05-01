@@ -1,6 +1,12 @@
-const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g;
-const brExp = /·/g;
-const empty = "";
+const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g,
+  brExp = /·/g,
+  empty = "",
+  msgTyp = Object.freeze({
+    primary: 0,
+    successful: 1,
+    warning: 2,
+    error: 3,
+  });
 var newWort,
   doc,
   wortesArr = [],
@@ -9,78 +15,81 @@ var newWort,
   qTxt,
   loCnt = false,
   loopCount = 0,
-  timeoutId,
-  wort_Obj = {
-    wrt: {
-      wort: "",
-      plural: "",
-      prefix: "",
-      suffix: "",
-      artikel: "",
-    },
-    fall: {
-      Dativobjekt: "",
-      Akkusativobjekt: "",
-      Reflexivpronomen: "",
-      Other: "",
-      wechsel: [
-        "'an'",
-        "'in'",
-        "'über'",
-        "'auf'",
-        "'neben'",
-        "'hinter'",
-        "'unter'",
-        "'vor'",
-      ],
-    },
-    status: {
-      Situation: ["", "Durumu"],
-      Zertifikat: ["", "Kelime Seviyesi"],
-      Substantiv: ["", "Isim"],
-      Adjektiv: ["", "Sifat"],
-      Superlativ: ["", "Superlative: en..."],
-      Komparativ: ["", "Komparativ: -e göre..."],
-      Plural: ["", "Cogul eki"],
-      Positiv: ["", "Pozitif"],
-      Genus: ["", "Cinsiyet"],
-      regelmäßige: ["", "Düzenli Cekim Durumu"],
-      Artikel: ["", "Artikel"],
-      starke: ["", "Güclü"],
-      Pronomen: ["", "Zamir"],
-      dekliniert: ["", "Cekimlenme Durumu"],
-      Prädikativ: ["", "Tahmine Dayali Kullanim"],
-      gesteigert: ["", "Sifat Derecelendirilmesi"],
-      Indefinitpronomen: ["", "Belirsiz Zamir"],
-      Other: ["", ""],
-    },
-    adj: {
-      Positiv: "",
-      Komparativ: "",
-      Superlativ: "",
-    },
-    theme: "",
-    source: "",
-    main_Html: "",
-    main_Sound: "",
-    sub_Html: "",
-    sub_Sound: "",
-    lang_TR: "",
-    lang_DE: "",
-    lang_En: "",
-    tbl: {
-      prasens: "",
-      praterium: "",
-      perfekt: "",
-    },
-    zB: [],
-    img: [],
-    othrTbls:{Starke:{txt:'starke Deklination'},
-            Schwache:{txt:'schwache Deklination'},
-            Gemischte:{txt:'gemischte Deklination'},
-            Praedikativ:{txt:'als Prädikativ'},
-            Pronomen:{txt:'Deklination des Pronomens'}}
+  timeoutId;
+
+class Wort {
+  wrt = {
+    wort: "",
+    plural: "",
+    prefix: "",
+    suffix: "",
+    artikel: "",
   };
+  fall = {
+    Dativobjekt: "",
+    Akkusativobjekt: "",
+    Reflexivpronomen: "",
+    Other: "",
+    wechsel: [
+      "'an'",
+      "'in'",
+      "'über'",
+      "'auf'",
+      "'neben'",
+      "'hinter'",
+      "'unter'",
+      "'vor'",
+    ],
+  };
+  status = {
+    Situation: ["", "Durumu"],
+    Zertifikat: ["", "Kelime Seviyesi"],
+    Substantiv: ["", "Isim"],
+    Adjektiv: ["", "Sifat"],
+    Superlativ: ["", "Superlative: en..."],
+    Komparativ: ["", "Komparativ: -e göre..."],
+    Plural: ["", "Cogul eki"],
+    Positiv: ["", "Pozitif"],
+    Genus: ["", "Cinsiyet"],
+    regelmäßige: ["", "Düzenli Cekim Durumu"],
+    Artikel: ["", "Artikel"],
+    starke: ["", "Güclü"],
+    Pronomen: ["", "Zamir"],
+    dekliniert: ["", "Cekimlenme Durumu"],
+    Prädikativ: ["", "Tahmine Dayali Kullanim"],
+    gesteigert: ["", "Sifat Derecelendirilmesi"],
+    Indefinitpronomen: ["", "Belirsiz Zamir"],
+    Other: ["", ""],
+  };
+  adj = {
+    Positiv: "",
+    Komparativ: "",
+    Superlativ: "",
+  };
+  theme = "";
+  source = "";
+  main_Html = "";
+  main_Sound = "";
+  sub_Html = "";
+  sub_Sound = "";
+  lang_TR = "";
+  lang_DE = "";
+  lang_En = "";
+  tbl = {
+    prasens: "",
+    praterium: "",
+    perfekt: "",
+  };
+  zB = [];
+  img = [];
+  othrTbls = {
+    Starke: { txt: "starke Deklination" },
+    Schwache: { txt: "schwache Deklination" },
+    Gemischte: { txt: "gemischte Deklination" },
+    Praedikativ: { txt: "als Prädikativ" },
+    Pronomen: { txt: "Deklination des Pronomens" },
+  };
+}
 
 /* Tekil islem icin bloklanan kod grubu ------ 
 function nextHtml(wrtOj){
@@ -100,24 +109,33 @@ function nextHtml(wrtOj){
 //image icin gapi js'in sayfaya dahil edilmesi
 getAPI();
 //gapi.load fonksiyonunun sayfaya dahili ve kodun yürütülmesi
-timeOutGapi(getWort,true) 
+timeOutGapi(getWort, true);
 
 /******* nesnenin ekrana bastirilmasi islemi ********/
 function outPut() {
-    delete newWort.fall.wechsel;
-    var jsonData = JSON.stringify(newWort);
-    console.log(jsonData); // HTML düzenlemesi icin cikti formati
-    console.log(newWort); //ankiye veri aktarimi icin cikti formati
+  delete newWort.fall.wechsel;
+  var jsonData = JSON.stringify(newWort);
+  console.log(jsonData); // HTML düzenlemesi icin cikti formati
+  console.log(newWort); //ankiye veri aktarimi icin cikti formati
 }
 /******* nesnenin ekrana bastirilmasi islemi sonu********/
 
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
-function getWort(html) {
+function getWort(html) { 
   //img-->load first gApi
-  (doc = html), (newWort = Object.assign({}, wort_Obj));
-  /**kelimenin alinmasi */
-  newWort.wrt.wort = doc.querySelector("form>div>input").value;
+  (doc = html)
+   /**kelimenin alinmasi */
+   let cWrt = doc.querySelector("form>div>input").value;
+  //kelime kontrolü yapilir
+  if(!checkEl(doc.querySelector('section.rBox'))){
+    consoleMsg(msgTyp.error,`"${cWrt}"`, ' Kelime gecerli degil!')
+    //multiple icin sonraki doc isleme alinir...
+    //nextDoc();
+    return false}
+ //kelime icin obje olusturulur ve kelime atani
+  (newWort = new Wort());
+   newWort.wrt.wort =cWrt
   /***Kelimenin tanimlanmasi */
   newWort.status.Situation[0] = doc.querySelector(
     "article>div>nav>a[href]"
@@ -137,8 +155,8 @@ function getWort(html) {
   /***Konjugation Tablolarina dair HTML'ler */
   getTitle("Tbls");
   /***Adjecktiflerin/Pronomenlerin cekimlerine dair tablolar alinir */
-   getOthrTbl()
-  /***örnek cümleleralinir */ 
+  getOthrTbl();
+  /***örnek cümleleralinir */
   getSatze();
   /***almanca tanimi */
   getLangDe();
@@ -329,48 +347,51 @@ function setStatus(ele, verb) {
 }
 
 /****** sifartlarin/pronomen cekimlerine dair tablolar alinir **********/
-function getOthrTbl(){
-
-    let callCal = newWort.status.Adjektiv[0]=='Adjektiv' || newWort.status.Pronomen[0]=='Pronomen' ? true:false
-    if(callCal)othrTbls()  
+function getOthrTbl() {
+  let callCal =
+    newWort.status.Adjektiv[0] == "Adjektiv" ||
+    newWort.status.Pronomen[0] == "Pronomen"
+      ? true
+      : false;
+  if (callCal) othrTbls();
 }
 
-function othrTbls(){
-let allContent= doc.querySelectorAll('div>div>section>header')
-    
-allContent.forEach((itm)=>{
-cnt =itm.innerText    
-    if(cnt.includes(newWort.othrTbls.Starke.txt)){
-        addTrVal(itm,'Starke')
-        delete newWort.othrTbls.Starke.txt;
-    }else if (cnt.includes(newWort.othrTbls.Schwache.txt)){
-        addTrVal(itm,'Schwache')
-        delete newWort.othrTbls.Schwache.txt;
-    }else if (cnt.includes(newWort.othrTbls.Gemischte.txt)){
-        addTrVal(itm,'Gemischte')
-        delete newWort.othrTbls.Gemischte.txt;
-    }else if (cnt.includes(newWort.othrTbls.Praedikativ.txt)){
-        addTrVal(itm,'Praedikativ')
-        delete newWort.othrTbls.Praedikativ.txt;
-    }else if (cnt.includes(newWort.othrTbls.Pronomen.txt)){
-        addTrVal(itm,'Pronomen')
-        delete newWort.othrTbls.Pronomen.txt;
+function othrTbls() {
+  let allContent = doc.querySelectorAll("div>div>section>header");
+
+  allContent.forEach((itm) => {
+    cnt = itm.innerText;
+    if (cnt.includes(newWort.othrTbls.Starke.txt)) {
+      addTrVal(itm, "Starke");
+      delete newWort.othrTbls.Starke.txt;
+    } else if (cnt.includes(newWort.othrTbls.Schwache.txt)) {
+      addTrVal(itm, "Schwache");
+      delete newWort.othrTbls.Schwache.txt;
+    } else if (cnt.includes(newWort.othrTbls.Gemischte.txt)) {
+      addTrVal(itm, "Gemischte");
+      delete newWort.othrTbls.Gemischte.txt;
+    } else if (cnt.includes(newWort.othrTbls.Praedikativ.txt)) {
+      addTrVal(itm, "Praedikativ");
+      delete newWort.othrTbls.Praedikativ.txt;
+    } else if (cnt.includes(newWort.othrTbls.Pronomen.txt)) {
+      addTrVal(itm, "Pronomen");
+      delete newWort.othrTbls.Pronomen.txt;
     }
-})
+  });
 }
-function addTrVal(e,obj){
-    const divs = e.closest("section").querySelectorAll('div.vTbl');
-    divs.forEach((t,n)=>{
-        newWort.othrTbls[obj][t.firstElementChild.innerText]={}
-        const clnE = t.cloneNode(true)
-        const tbl = clnE.querySelectorAll('table>tbody>tr')
-         tbl.forEach((i)=>{
-             let tit = i.firstElementChild.innerText
-             newWort.othrTbls[obj][t.firstElementChild.innerText][tit] ={}
-             i.firstElementChild.remove() // th
-             newWort.othrTbls[obj][t.firstElementChild.innerText][tit] =  i.outerHTML
-         })
-})
+function addTrVal(e, obj) {
+  const divs = e.closest("section").querySelectorAll("div.vTbl");
+  divs.forEach((t, n) => {
+    newWort.othrTbls[obj][t.firstElementChild.innerText] = {};
+    const clnE = t.cloneNode(true);
+    const tbl = clnE.querySelectorAll("table>tbody>tr");
+    tbl.forEach((i) => {
+      let tit = i.firstElementChild.innerText;
+      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = {};
+      i.firstElementChild.remove(); // th
+      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = i.outerHTML;
+    });
+  });
 }
 
 /**** kelimenin TR + En karsiligi alinir */
@@ -386,10 +407,10 @@ function getLang(callback) {
   srcL1 = doc.querySelector('span[lang="tr"]');
   srcL2 = doc.querySelector("form > span.rNobr>a");
   if (checkEl(srcL1)) {
-    wort_Obj.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
+    newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
     newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
   } else if (checkEl(srcL2)) {
-    wort_Obj.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
+    newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
     newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
   } else {
     let encodedParams = new URLSearchParams();
@@ -421,33 +442,33 @@ function getLang(callback) {
         } else {
           res = "";
         }
-        wort_Obj.lang_TR = res;
+        newWort.lang_TR = res;
         newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
       })
       .catch((err) => {
         console.log("Google API sorunu: \n" + err);
-           outPut(); 
+        outPut();
         if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak
       });
   }
 }
 
 //varsa kelimeye dair örnekler alinir
-function getSatze(){
-let allContent= doc.querySelectorAll('div>div>section>header>h2')
-allContent.forEach((itm)=>{
-    if(itm.innerText .includes('Beispiele')){
-       const divs = itm.closest("section").querySelectorAll('div>ul'); 
-        if(!!divs) satzeRun(divs)
+function getSatze() {
+  let allContent = doc.querySelectorAll("div>div>section>header>h2");
+  allContent.forEach((itm) => {
+    if (itm.innerText.includes("Beispiele")) {
+      const divs = itm.closest("section").querySelectorAll("div>ul");
+      if (!!divs) satzeRun(divs);
     }
-})
+  });
 
- let zBel = doc.querySelectorAll(".vBsp>ul");
-    if(!!zBel) satzeRun(zBel)
+  let zBel = doc.querySelectorAll(".vBsp>ul");
+  if (!!zBel) satzeRun(zBel);
 }
 
-function satzeRun(el){
-    el.forEach((z) => {
+function satzeRun(el) {
+  el.forEach((z) => {
     let zB = z.cloneNode(true);
     let lis = zB.querySelectorAll("li");
     lis.forEach((e) => {
@@ -456,7 +477,7 @@ function satzeRun(el){
         newWort.zB.push(e.innerHTML.replace(rpRegExp, empty));
       }
     });
-  });  
+  });
 }
 
 //varsa kelimenin almanca tanimlari alinir
@@ -494,13 +515,15 @@ function getImg() {
       : "");
 
   if (!loCnt) {
-    newWort.img=[] //islem tekrarinda     
+    newWort.img = []; //islem tekrarinda
     qTxt = `${mainQ.replace(rRgx, " OR ")}`;
     //kisa aramaya almanca singular + plural + ilk ingilizce kelime alinir
-    qTxt += !!newWort.lang_En? ` OR ${newWort.lang_En.split(",")[0]}` :'';
+    qTxt += !!newWort.lang_En ? ` OR ${newWort.lang_En.split(",")[0]}` : "";
   } else {
     //ilk kelime + almanca tanim varsa
-    qTxt += !!newWort.lang_DE? ` OR ${newWort.lang_DE.replace(rRgxEnd, "").replace(rRgx, " OR ")}` :"";
+    qTxt += !!newWort.lang_DE
+      ? ` OR ${newWort.lang_DE.replace(rRgxEnd, "").replace(rRgx, " OR ")}`
+      : "";
   }
 
   //srchImg_2704 kriterlerini kullan...
@@ -571,6 +594,8 @@ function execute() {
 
 /*------------- import gAPI-------------*/
 function getAPI() {
+  // singular get>>> document doc'a atanarak sorgu islemi baslanir...
+  doc = document;
   //api import
   if (!cGapi()) {
     //api öncelikle sayfaya en basta yüklenir
@@ -585,34 +610,36 @@ function getAPI() {
 }
 //gapi check
 function cGapi() {
-    //ögenin sayfada olup olmadigi  kontrol edilir
-    return doc.querySelectorAll(
-      'script[type="text/javascript"][src*="apis.googl"]'
-    ).length > 0
-      ? true
-      : false;
-  }
+  //ögenin sayfada olup olmadigi  kontrol edilir
+  return doc.querySelectorAll(
+    'script[type="text/javascript"][src*="apis.googl"]'
+  ).length > 0
+    ? true
+    : false;
+}
 
 /*---- gapi'nin sayfaya dahili setTimeOut ile kontrol  -------*/
-function timeOutGapi(callback, d = false ){ 
-    //gapi objesi öncelikle kontrol edilir
-    let _gapi_Obj = typeof gapi === 'object'
-    //gapi.load fonksiyonu kontrol edilir
-    let _gapi_F= _gapi_Obj?typeof gapi.load === 'function':false  
+function timeOutGapi(callback, d = false) {
+  //gapi objesi öncelikle kontrol edilir
+  let _gapi_Obj = typeof gapi === "object";
+  //gapi.load fonksiyonu kontrol edilir
+  let _gapi_F = _gapi_Obj ? typeof gapi.load === "function" : false;
 
-    if(!d || _gapi_F){
-        clearTimeout(timeoutId);
-        // buradaki document ile sayfa alinir sonrasinda doc olarak islem gorür...
-        //multiple icin bu kisim sadece doc olmali....
-        gapi.load("client",(()=>{callback(document);})); //-->uygulamaya start verilir > gapi.load fonksiyonu cevabina müteakip isleme baslamasi icin zincir callback kullanildi
-    }else{
-        if(loopCount<20){
-            loopCount++
-            timeoutId = setTimeout(()=>{timeOutGapi(callback,true)}, 100);
-        }else{
-            timeOutGapi(callback,false)
-        }
+  if (!d || _gapi_F) {
+    clearTimeout(timeoutId);
+    gapi.load("client", () => {
+      callback(doc);
+    }); //-->uygulamaya start verilir > gapi.load fonksiyonu cevabina müteakip isleme baslamasi icin zincir callback kullanildi
+  } else {
+    if (loopCount < 20) {
+      loopCount++;
+      timeoutId = setTimeout(() => {
+        timeOutGapi(callback, true);
+      }, 100);
+    } else {
+      timeOutGapi(callback, false);
     }
+  }
 }
 /*---- gapi'nin sayfaya dahili setTimeOut ile kontrol sonu -------*/
 /***************** Görsel Icin Yapilan Düzenlemeler Sonu ********************/
@@ -623,3 +650,19 @@ function checkEl(e) {
   return e === null ? false : true;
 }
 
+//console mesaj yazdirmak icin
+function consoleMsg(msgTyp,head,txt){
+  const 
+      head0 ='background: DodgerBlue;',//primary
+      body0='color: DodgerBlue;',
+      head1 ='background: Green;',//successful
+      body1='color: Green;',
+      head2='background: DarkGoldenRod;',//warning
+      body2='color:DarkGoldenRod;',
+      head3='background: red;',//error
+      body3='color:red;',
+      bases='font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;' 
+var stylHead =eval (`head${msgTyp}`) + bases,
+   stylBody = eval (`body${msgTyp} `)
+console.log(`%c ${head} %c ${txt} `, stylHead, stylBody);
+}
