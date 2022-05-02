@@ -400,7 +400,7 @@ function addTrVal(e, obj) {
     const clnE = t.cloneNode(true);
     const tbl = clnE.querySelectorAll("table>tbody>tr");
     tbl.forEach((i) => {
-      let tit = i.firstElementChild.innerText;
+      let tit = i.firstElementChild.innerText.replace(rpRegExp, empty);
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = {};
       i.firstElementChild.remove(); // th
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = i.outerHTML.replace(rpRegExp, empty);

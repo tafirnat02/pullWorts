@@ -1,6 +1,12 @@
 "use strict"; /*
 
 ---- YAPILACAKLAR
+
+diger tablolar alinirken aradaki \n alt satir sebebiyle json.parse islemi hatali olmakta...
+bu kisim düzeltilmeli...
+>> etiklenen foksiyon f:nextDoc >> docs barindiran array cözülürken 
+her bir kelimenin üstüne consolMsg olarak primay sekilde kelime adinin yazdirmak istenildiginde sorun cikmakta...
+
 sayfada ilgili kelime bulunamamasi durumunu ele al
 coklu kisimda tüm kelimelerin döngüyle doc alimi ve obje basimini kontrol et
 döngü kelime sayisi ile sinirli olmali mükerer durumu var kontrol et
@@ -25,7 +31,7 @@ document.head.appendChild(script);
 */ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class06.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class08.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -39,22 +45,10 @@ var newWortArr,
   maxlen;
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
-/*------------- [ script has been executed ] -------------*/
-addJS(wrtApp,intervalApp(`consoleMsg`, itemTyp.function, loadWortList, 50, 1000))
+/*------------- [ sayfaya script eklenir ve kontrollü yapilir ] 
+            daha sonra callback metoduyla loadWortList() yürütülür -------------*/
+addJS(wrtApp,intervalApp(`consoleMsg`, itemTyp.function, loadWortList, 50, 1000)) //consoleMsg: dahil edilen js'deki bir fonksiyon olup kontrol bunun ile gerceklestirilmektedir
 
-//loadScript(wrtApp, loadWortList);
-
-/*
-//sayfaya wort list ve getWort() fonksiyonu dahil edilir
-let oldScript = document.querySelector("head").lastChild  
-//sayfada hali hayirda getWort.js yüklü ise atlanir
-if(oldScript.src !== getWrt){
-  let script = document.createElement('script'); 
-      script.type = 'text/javascript';
-      script.src = getWrt;  
-      document.head.appendChild(script);
-}
-*/
 //wortList obje olarak fatch ile alinir
 function loadWortList(indexNo) {
   let url = wortListUrl;
@@ -76,7 +70,7 @@ function loadWortList(indexNo) {
       consoleMsg(
         msgTyp.error,
         "Wort List Error",
-        "Kelime listesi alinirken hata olustu. (F:loadWortList)"
+        "Kelime listesi alinirken hata olustu. (f:loadWortList)"
       );
     });
 }
@@ -100,7 +94,7 @@ const nextWort = () => {
     consoleMsg(
       msgTyp.successful,
       ` ${wort} `,
-      "Kelime islenme alindi... (F:nextWort)"
+      "Kelime islenme alindi... (f:nextWort)"
     );
     getWrtDoc(wort);
   }
@@ -113,7 +107,7 @@ const getWrtDoc = (wort) => {
   fetch(url, { mode: "no-cors" })
     .then((response) => {
       if (response.status != 200) {
-        throw Error("Hata Kodu: " + response.status);
+        throw Error("Sayfaya Erisilemedi: " + response.status);
       }
       //console.log(response);
       //console.log("durum: " + response.status);
@@ -138,6 +132,11 @@ const getWrtDoc = (wort) => {
       console.log(`Wort Listeki kalinan öge no:${i_no} `);
       console.log("Alinan Kelime: " + newWortArr[i_no]);
       console.log(err);
+      consoleMsg(
+        msgTyp.error,
+        `Sayfa Erisim Hatasi: ${wort}`,
+        `Wort Listeki kalinan öge no:${i_no}, Alinan Kelime: ${newWortArr[i_no]} (f:getWrtDoc)`
+      );
       nextDoc();
     });
 };
@@ -152,13 +151,29 @@ function nextDoc() {
       let html = docs.shift();
       getWort(html);
     } else {
-      console.log("--< ok >--");
+        consoleMsg(
+            msgTyp.successful,
+            `Document Islemi Tamamlanadi`,
+            `Keliemlere ait sayfalar alindi... (f:nextDoc)`
+          );
+        
       wortesArr.forEach((wrt) => {
+          let rsltWrt= JSON.parse(jsonData.replace(rpRegExp, ''))
+        consoleMsg(
+            msgTyp.successful,
+            `${rsltWrt.wrt.wort}`,
+            `kelimesine ait sonuclar (f:nextDoc)`
+          );
+        console.log(rsltWrt)
         console.log(wrt);
       });
     }
   } catch (err) {
-    console.log(`nextDoc Hata : ${err} `);
+    consoleMsg(
+        msgTyp.successful,
+        `Document Islem Hatasi`,
+        `${err} (f:nextDoc)`
+      );
   }
 }
 
