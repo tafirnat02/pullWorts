@@ -177,7 +177,7 @@ function getWort(html) {
     //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
     getLang(getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
-    wortesArr.push(JSON.stringify(newWort));
+    wortesArr.push(JSON.stringify(newWort).replace(rpRegExp, empty));
     nextDoc();
   } catch (err) {
     console.log("getWort(multiple) Hata :\n", err);
