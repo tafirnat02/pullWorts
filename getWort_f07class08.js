@@ -177,7 +177,7 @@ function getWort(html) {
     //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
     getLang(getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
-    wortesArr.push(JSON.stringify(newWort).replace(rpRegExp, empty));
+    wortesArr.push(JSON.stringify(newWort));
     nextDoc();
   } catch (err) {
     console.log("getWort(multiple) Hata :\n", err);
@@ -403,7 +403,7 @@ function addTrVal(e, obj) {
       let tit = i.firstElementChild.innerText;
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = {};
       i.firstElementChild.remove(); // th
-      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = i.outerHTML;
+      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = i.outerHTML.replace(rpRegExp, empty);
     });
   });
 }
