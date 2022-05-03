@@ -31,7 +31,7 @@ document.head.appendChild(script);
 */ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class08.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class09.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -213,14 +213,14 @@ function intervalApp(
     itemTyp,
     callback,
     duration = 100,
-    maxDuration = 2000
+    maxDuration = 3000
   ) {
     let clear;  
     //döngüsel zaman atanir
     const int_ID = setInterval(() => {
       switch (itemTyp) {
         case 0: //fonksiyon kontrolü >> window.functionName
-          if (typeof eval(`window.${item}`) === "function") clear = true;
+          if (typeof window[item] === 'function') clear = true;
           break;
         case 1: //document element kontrolu
           if (document.querySelectorAll(item).length > 0) clear = true; // selector girisi zB:'a[href="test.me"]'
@@ -242,7 +242,12 @@ function intervalApp(
     }, duration); // döngüyü tekrarlar
     //max time sonrasi cikilir
     const clearInt = setTimeout(() => {
-        if(!clear) consoleMsg(msgTyp.error,'Öge Bulunamadi', ' Döngü zamanasimina ugradi... (f:intervalApp)')
+        if(!clear){
+          if(typeof consoleMsg == 'undefined' ){console.log( 'Döngü zamanasimina ugradi... (f:intervalApp)')}
+          else{
+            consoleMsg(msgTyp.error,'Öge Bulunamadi', ' Döngü zamanasimina ugradi... (f:intervalApp)')
+          }
+        } 
       clearInterval(int_ID);
     }, maxDuration); // Will alert once, after a second.
   
