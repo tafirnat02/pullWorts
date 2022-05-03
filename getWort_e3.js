@@ -460,7 +460,7 @@ function getLang(callback) {
       "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
     ];
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", "machen");
+    encodedParams.append("q", newWort.wrt.wort);
     encodedParams.append("target", "tr");
     encodedParams.append("source", "de");
 
@@ -486,7 +486,7 @@ function getLang(callback) {
           if (kNo <= 10) {
             consoleMsg(
               msgTyp.warning,
-              `API Limit -> ${kNo} `,
+              `API Limit | ${newWort.wrt.wort} `,
               `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
             );
             kNo++; //diger keyler denenir..
@@ -496,7 +496,7 @@ function getLang(callback) {
             consoleMsg(
               msgTyp.error,
               `API Limit`,
-              `google-translate1 rapidapi -> all keys limit... (f:getLang-multiple)`
+              `google-translate1 rapidapi -> all keys limit... | ${newWort.wrt.wort} (f:getLang-multiple)`
             );
           }
         } else {
