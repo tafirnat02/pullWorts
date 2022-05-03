@@ -482,8 +482,10 @@ function getLang(callback) {
         newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
       })
       .catch((err) => {
-        consoleMsg(msgTyp.error,`Translate: ${newWort} `,'Google translate API error. (f:getLang-multiple)')
+        consoleMsg(msgTyp.error,`Translate: ${newWort.wrt.wort} `,'Google translate API error. (f:getLang-multiple)')
         console.log(err)
+        console.log(data)
+        console.log(res)
         outPut();
         if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak
       });
