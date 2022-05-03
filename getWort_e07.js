@@ -459,7 +459,7 @@ function getLang(callback) {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-        "X-RapidAPI-Key": "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3", //"315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+        "X-RapidAPI-Key": "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da", //"315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
       },
       body: encodedParams,
     };
