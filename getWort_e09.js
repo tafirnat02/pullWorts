@@ -484,9 +484,8 @@ function getLang(callback) {
       .catch((err) => {
         consoleMsg(msgTyp.error,`Translate: ${newWort.wrt.wort} `,'Google translate API error. (f:getLang-multiple)')
         console.log(err)
-
-        console.log('err.message: ', err.message)
-        console.log(err.message.includes('current plan, BASIC'))
+        console.log('err.message: ', err.toString())
+        console.log(err.toString().includes('current plan, BASIC'))
         console.log('key No: ', kNo)
 
         outPut();
