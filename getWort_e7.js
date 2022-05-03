@@ -444,7 +444,7 @@ function getLang(curWrt, callback) {
     return;
   };
 
-  let kNo = 10;
+  let kNo = 0;
   const getApiLang = () => {
     const ky = [
       "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
@@ -481,11 +481,6 @@ function getLang(curWrt, callback) {
     )
       .then((response) => response.json())
       .then((response) => {
-        
-
-        throw "test hata....";
-
-
         if (typeof response.message === "string") {
           //api sorgu limiti
           if (kNo <= 10) {
@@ -515,7 +510,7 @@ function getLang(curWrt, callback) {
       .catch((err) => {
         consoleMsg(
           msgTyp.error,
-          `Translate: --machen-- `,
+          `Translate | ${curWrt}`,
           "Google translate API error. (f:getLang-multiple)"
         );
         console.log(err);
