@@ -444,7 +444,12 @@ function getLang(curWrt, callback) {
     return;
   };
 
-  let kNo = 0;
+  /*
+      let kNo = 0; << google translate api siniri sebebiyle 
+                      uygulama tam aktif olana degin key No 10 olarak 
+                      uygulanacak.
+  */
+  let kNo = 10;
   const getApiLang = () => {
     const ky = [
       "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",

@@ -1,6 +1,8 @@
 "use strict"; /*
 
 ---- YAPILACAKLAR
+server engellediginde kalinan rakamdan sonraki ogenin alinmasi
+en üste ve islemi tekrar kontrol ederek check edilmelidir....
 
 sayfada ilgili kelime bulunamamasi durumunu ele al
 
@@ -9,7 +11,7 @@ döngü kelime sayisi ile sinirli olmali mükerer durumu var kontrol et
 
 
 google image kismini aktif et
-googl traslate ksimini aktif et
+googl traslate ksimini aktif et [ ..ok..]
 sayfa server 429 hatasi verdiginde sayfayi yenileme uyarisi at 
     >> bilgiler gidecek mi önden veya sonradan yapilabilir kontrol et olmaz ise iptal
 
@@ -26,10 +28,23 @@ document.head.appendChild(script);
 
     Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
     [ Hata Durumu: linkleri kontrol et!]
+
+/*
+   ================= Ö N EM L I =============
+Test Icin uyugulama tam aktif olana kadar bazi kodlar bilerek degistirilmistir...
+1- >   /* fonksiyon: getLang   
+      let kNo = 0; << google translate api siniri sebebiyle 
+                      uygulama tam aktif olana degin key No 10 olarak 
+                      uygulanacak.
+  *//*
+2-
+
+*/
+
 */ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e4.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e7.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -38,8 +53,9 @@ const wortListUrl =
 var newWortArr,
   docs = [],
   myArr,
-  i_no = 0,
-  maxlen;
+  maxlen,
+  i_no = 0; /*<<-----  servir engeli sonucu erisim hatasi
+                        oldugunda kalinan no buraya girilerek islem devam edilebilri ----> */
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
 /*------------- [ sayfaya script eklenir ve kontrollü yapilir ] 
