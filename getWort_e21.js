@@ -433,16 +433,18 @@ function getLang(callback) {
 
     if (checkEl(srcL1)) {
       newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
-      newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+      if(newWort.status.Substantiv[0] == "Substantiv") callback()
+      //newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
-      newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+      if(newWort.status.Substantiv[0] == "Substantiv") callback()
+      //newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
   };
 
-  let kNo = 0;
+  let kNo = 10;
   const getApiLang = () => {
     const ky = [
       "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
@@ -502,7 +504,7 @@ function getLang(callback) {
           newWort.lang_TR = response.data[
             "translations"
           ][0].translatedText.replace(rpRegExp, empty);
-          newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+         if(newWort.status.Substantiv[0] == "Substantiv") callback()  //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
       })
       .catch((err) => {
