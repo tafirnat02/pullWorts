@@ -29,12 +29,12 @@ document.head.appendChild(script);
 */ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e07.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e21.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
 const wortListUrl =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test1.json";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test01.json";
 var newWortArr,
   docs = [],
   myArr,

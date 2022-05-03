@@ -433,15 +433,18 @@ function getLang(callback) {
 
     if (checkEl(srcL1)) {
       newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
-      if(newWort.status.Substantiv[0] == "Substantiv") callback()
-      //newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+      //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
+      //return
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
-      if(newWort.status.Substantiv[0] == "Substantiv") callback()
-      //newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+      //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
+     // return
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
+
+    if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
+    return
   };
 
   let kNo = 10;
@@ -504,7 +507,7 @@ function getLang(callback) {
           newWort.lang_TR = response.data[
             "translations"
           ][0].translatedText.replace(rpRegExp, empty);
-         if(newWort.status.Substantiv[0] == "Substantiv") callback()  //isim ise görsel alinacak degilse sonraki ögeye gecilir
+        // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
       })
       .catch((err) => {
@@ -572,6 +575,7 @@ function getLangDe() {
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
   //kondtol icin devre disi birakildi
+  consoleMsg(msgTyp.primary,'getImg() Yürütüldü....')
   return false;
 
   //image sources
