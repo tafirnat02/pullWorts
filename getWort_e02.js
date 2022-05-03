@@ -92,11 +92,11 @@ class Wort {
 }
 
 function nextHtml(wrtOj) {
-  console.log(wrtOj.wrt);
-  console.log(JSON.stringify(wrtOj));
+  //console.log(wrtOj.wrt);
+  //console.log(JSON.stringify(wrtOj));
   Object.keys(wrtOj).forEach((key) => {
-    console.log(key, wrtOj[key]);
-    console.log("______________________");
+    //console.log(key, wrtOj[key]);
+    //console.log("______________________");
     //kosnoldaki fonksiyon isleme tekrar sokulur
     nextDoc();
   });
@@ -122,8 +122,8 @@ getImg() fonksiyonu da devreye alinmali...
 function outPut() {
   delete newWort.fall.wechsel;
   var jsonData = JSON.stringify(newWort);
-  console.log(jsonData); // HTML düzenlemesi icin cikti formati
-  console.log(newWort); //ankiye veri aktarimi icin cikti formati
+  //console.log(jsonData); // HTML düzenlemesi icin cikti formati
+  //console.log(newWort); //ankiye veri aktarimi icin cikti formati
 }
 /******* nesnenin ekrana bastirilmasi islemi sonu********/
 
