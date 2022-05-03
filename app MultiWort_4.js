@@ -2,14 +2,12 @@
 
 ---- YAPILACAKLAR
 
-diger tablolar alinirken aradaki \n alt satir sebebiyle json.parse islemi hatali olmakta...
-bu kisim düzeltilmeli...
->> etiklenen foksiyon f:nextDoc >> docs barindiran array cözülürken 
-her bir kelimenin üstüne consolMsg olarak primay sekilde kelime adinin yazdirmak istenildiginde sorun cikmakta...
-
 sayfada ilgili kelime bulunamamasi durumunu ele al
+
 coklu kisimda tüm kelimelerin döngüyle doc alimi ve obje basimini kontrol et
 döngü kelime sayisi ile sinirli olmali mükerer durumu var kontrol et
+
+
 google image kismini aktif et
 googl traslate ksimini aktif et
 sayfa server 429 hatasi verdiginde sayfayi yenileme uyarisi at 
@@ -31,7 +29,7 @@ document.head.appendChild(script);
 */ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_f07class09.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e02.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -40,12 +38,12 @@ const wortListUrl =
 var newWortArr,
   docs = [],
   myArr,
-  clnDocs,
   i_no = 0,
   maxlen;
 
 /*------------- [ 2. Kisim / Codes Inject ] -------------*/
 /*------------- [ sayfaya script eklenir ve kontrollü yapilir ] 
+            addJS fonksiyonu ile wrtApp url'indeki js file import edilir 
             daha sonra callback metoduyla loadWortList() yürütülür -------------*/
 addJS(wrtApp,intervalApp(`consoleMsg`, itemTyp.function, loadWortList, 50, 1000)) //consoleMsg: dahil edilen js'deki bir fonksiyon olup kontrol bunun ile gerceklestirilmektedir
 
@@ -116,6 +114,7 @@ const getWrtDoc = (wort) => {
     .then((html) => {
       let parser = new DOMParser();
       let doc = parser.parseFromString(html, "text/html");
+      //her bir sonuc docs arrayinde tutulur.
       docs.push(doc);
     })
     .then(() => {
@@ -128,44 +127,39 @@ const getWrtDoc = (wort) => {
       }
     })
     .catch((err) => {
-      console.log("---> " + wort);
-      console.log(`Wort Listeki kalinan öge no:${i_no} `);
-      console.log("Alinan Kelime: " + newWortArr[i_no]);
-      console.log(err);
       consoleMsg(
         msgTyp.error,
         `Sayfa Erisim Hatasi: ${wort}`,
         `Wort Listeki kalinan öge no:${i_no}, Alinan Kelime: ${newWortArr[i_no]} (f:getWrtDoc)`
       );
+      console.log(err);
       nextDoc();
     });
 };
 
 /*------------- [ 4. Kisim / WortObje olusturulur ] -------------*/
-//alınan her bır html sayfasi tek tek isleme alinarak kelime nesnesi olusturulur
-
-//daha sonra teker teker ögeler getWort fonksiyonuna sokulur
+//arraya alinan her bır html sayfasi tek tek getWort fonksiyonuna islenmek üzere gönderilir
 function nextDoc() {
   try {
     if (docs.length > 0) {
       let html = docs.shift();
-      getWort(html);
+      getWort(html);//her kelimeye ait ham html verileri getWort ile Json data olarak ayristirilir
     } else {
+      //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir...
         consoleMsg(
             msgTyp.successful,
             `Document Islemi Tamamlanadi`,
             `Keliemlere ait sayfalar alindi... (f:nextDoc)`
           );
-        
       wortesArr.forEach((wrt) => {
-          let rsltWrt= JSON.parse(jsonData.replace(rpRegExp, ''))
+          let rsltWrt= JSON.parse(wrt)
         consoleMsg(
             msgTyp.successful,
-            `${rsltWrt.wrt.wort}`,
+            rsltWrt.wrt.wort,
             `kelimesine ait sonuclar (f:nextDoc)`
           );
-        console.log(rsltWrt)
         console.log(wrt);
+        console.log(rsltWrt)
       });
     }
   } catch (err) {

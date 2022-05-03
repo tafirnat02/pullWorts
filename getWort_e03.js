@@ -15,7 +15,8 @@ var newWort,
   qTxt,
   loCnt = false,
   loopCount = 0,
-  timeoutId;
+  timeoutId,
+  kNo = 0;
 
 class Wort {
   wrt = {
@@ -130,10 +131,7 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  consoleMsg(
-    msgTyp.primary,
-    `Öge Sayisi: `,`docs: ${docs.length}`
-  );
+  consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${docs.length}`);
 
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki nextDoc fonksiyonu ile buraya gönderilir...
   try {
@@ -187,7 +185,10 @@ function getWort(html) {
     nextDoc();
   } catch (err) {
     consoleMsg(
-      msgTyp.error,`${cWrt}`,"'e ait HTML islenirken hata olustu.. (f:getWort[multiple])");
+      msgTyp.error,
+      `${cWrt}`,
+      "'e ait HTML islenirken hata olustu.. (f:getWort[multiple])"
+    );
     console.log(err);
   }
 }
@@ -410,13 +411,27 @@ function addTrVal(e, obj) {
       let tit = i.firstElementChild.innerText.replace(rpRegExp, empty);
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = {};
       i.firstElementChild.remove(); // th
-      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = i.outerHTML.replace(rpRegExp, empty);
+      newWort.othrTbls[obj][t.firstElementChild.innerText][tit] =
+        i.outerHTML.replace(rpRegExp, empty);
     });
   });
 }
 
 /**** kelimenin TR + En karsiligi alinir */
 function getLang(callback) {
+  const ky = [
+    "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
+    "4169b729a4mshdfbcf80a2cd8e6cp15bd53jsnaf3a9c946fa8",
+    "92ce60f8d0mshc350c83f2271d57p1fc85cjsn6cc325b66603",
+    "2a17947c6fmsh37224f56f3284b3p1dd75djsndfac7a9015fe",
+    "fc1d84d6aamsh58aa3844407ec67p11597bjsnbd12981632ba",
+    "83219a4a0cmshbc13d688ac6b942p1c8044jsn9a2b9871e43d",
+    "1cfd59fd33msh38d8050f2040c54p1cd2f9jsnfd3e122d293c",
+    "80eb2deae2mshb393cd69c2783b6p190ec5jsnc1701bf3bde1",
+    "aa5821836amsh8cc27db9c0a6ccap17ed8fjsn78e8de5e382b",
+    "d041d76df6msh4c7b6813615f12cp167d70jsned4f0e8fb04a",
+    "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+  ];
   let srcL1 = "",
     srcL2 = "",
     res = "";
@@ -444,7 +459,7 @@ function getLang(callback) {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-        "X-RapidAPI-Key": "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+        "X-RapidAPI-Key": "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3", //"315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
       },
       body: encodedParams,
     };
@@ -467,8 +482,8 @@ function getLang(callback) {
         newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
       })
       .catch((err) => {
-        console.log("Google API sorunu: \n" + err);
-        console.log("getLang (multiple) err-wort: ", newWort);
+        consoleMsg(msgTyp.error,`Translate: ${newWort} `,'Google translate API error. (f:getLang-multiple)')
+        console.log(err)
         outPut();
         if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak
       });
