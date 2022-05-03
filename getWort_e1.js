@@ -419,79 +419,104 @@ function addTrVal(e, obj) {
 
 /**** kelimenin TR + En karsiligi alinir */
 function getLang(callback) {
-  const ky = [
-    "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
-    "4169b729a4mshdfbcf80a2cd8e6cp15bd53jsnaf3a9c946fa8",
-    "92ce60f8d0mshc350c83f2271d57p1fc85cjsn6cc325b66603",
-    "2a17947c6fmsh37224f56f3284b3p1dd75djsndfac7a9015fe",
-    "fc1d84d6aamsh58aa3844407ec67p11597bjsnbd12981632ba",
-    "83219a4a0cmshbc13d688ac6b942p1c8044jsn9a2b9871e43d",
-    "1cfd59fd33msh38d8050f2040c54p1cd2f9jsnfd3e122d293c",
-    "80eb2deae2mshb393cd69c2783b6p190ec5jsnc1701bf3bde1",
-    "aa5821836amsh8cc27db9c0a6ccap17ed8fjsn78e8de5e382b",
-    "d041d76df6msh4c7b6813615f12cp167d70jsned4f0e8fb04a",
-    "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
-  ];
-  let srcL1 = "",
-    srcL2 = "",
-    res = "";
-  //ingilizce karsligi
-  newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
-    ? doc.querySelector('dd[lang="en"]').innerText.replace("\n", "")
-    : "";
-  //Tükcesi
-  srcL1 = doc.querySelector('span[lang="tr"]');
-  srcL2 = doc.querySelector("form > span.rNobr>a");
-  if (checkEl(srcL1)) {
-    newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
-    newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
-  } else if (checkEl(srcL2)) {
-    newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
-    newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
-  } else {
-    let encodedParams = new URLSearchParams();
-    encodedParams.append("q", newWort.wrt.wort); //<< kelime girisi yapilir
+  const getDocForLang = () => {
+    //documandan ilgili veriler alinir
+    let srcL1 = "",
+      srcL2 = "";
+    //ingilizce karsligi
+    newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
+      ? doc.querySelector('dd[lang="en"]').innerText.replace("\n", "")
+      : "";
+    //Tükce karsiligi
+    srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
+    srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
+
+    if (checkEl(srcL1)) {
+      newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
+      newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+    } else if (checkEl(srcL2)) {
+      newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
+      newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+    } else {
+      getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
+    }
+  };
+
+  let kNo = 0;
+  const getApiLang = () => {
+    const ky = [
+      "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
+      "4169b729a4mshdfbcf80a2cd8e6cp15bd53jsnaf3a9c946fa8",
+      "92ce60f8d0mshc350c83f2271d57p1fc85cjsn6cc325b66603",
+      "2a17947c6fmsh37224f56f3284b3p1dd75djsndfac7a9015fe",
+      "fc1d84d6aamsh58aa3844407ec67p11597bjsnbd12981632ba",
+      "83219a4a0cmshbc13d688ac6b942p1c8044jsn9a2b9871e43d",
+      "1cfd59fd33msh38d8050f2040c54p1cd2f9jsnfd3e122d293c",
+      "80eb2deae2mshb393cd69c2783b6p190ec5jsnc1701bf3bde1",
+      "aa5821836amsh8cc27db9c0a6ccap17ed8fjsn78e8de5e382b",
+      "d041d76df6msh4c7b6813615f12cp167d70jsned4f0e8fb04a",
+      "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+    ];
+    const encodedParams = new URLSearchParams();
+    encodedParams.append("q", "machen");
     encodedParams.append("target", "tr");
     encodedParams.append("source", "de");
-    let options = {
+
+    const options = {
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-        "X-RapidAPI-Key": "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da", //"315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
+        "X-RapidAPI-Key": ky[kNo],
       },
       body: encodedParams,
     };
+
     fetch(
       "https://google-translate1.p.rapidapi.com/language/translate/v2",
       options
     )
-      .then((response) => response.json()) //.then(response => console.log(response))
-      .then((data) => {
-        console.log(data);
-        console.log(data.data["translations"][0].translatedText);
-        res = data.data["translations"][0].translatedText;
-        console.log(newWort.wrt.wort != res && res != "");
-        if (newWort.wrt.wort != res && res != "") {
-          res = res.replace(rpRegExp, empty) + " @G"; //eger ayni kelime dönerse cevap bulunmadi....
+      .then((response) => response.json())
+      .then((response) => {
+        if (typeof response.message === "string") {
+          //api sorgu limiti
+          if (kNo <= 10) {
+            consoleMsg(
+              msgTyp.warning,
+              `API Limit -> ${kNo} `,
+              `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
+            );
+            kNo++; //diger keyler denenir..
+            getApiLang();
+          } else {
+            //tüm keyler limit asimi ise
+            consoleMsg(
+              msgTyp.error,
+              `API Limit`,
+              `google-translate1 rapidapi -> all keys limit... (f:getLang-multiple)`
+            );
+          }
         } else {
-          res = "";
+          //basarili sekilde veri alindi
+          newWort.lang_TR = response.data[
+            "translations"
+          ][0].translatedText.replace(rpRegExp, empty);
+          newWort.status.Substantiv[0] == "Substantiv" ? callback() : nextDoc(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
-        newWort.lang_TR = res;
-        newWort.status.Substantiv[0] == "Substantiv" ? callback() : outPut(); //isim ise görsel alinacak
       })
       .catch((err) => {
-        consoleMsg(msgTyp.error,`Translate: ${newWort.wrt.wort} `,'Google translate API error. (f:getLang-multiple)')
-        console.log(err)
-        console.log('err.message: ', err.toString())
-        console.log(err.toString().includes('current plan, BASIC'))
-        console.log('key No: ', kNo)
-
-        outPut();
-        if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak
+        consoleMsg(
+          msgTyp.error,
+          `Translate: --machen-- `,
+          "Google translate API error. (f:getLang-multiple)"
+        );
+        console.log(err);
       });
-  }
+  };
+
+  //initialization hatasi almamak icin en alttan cargildi
+  getDocForLang.call();
 }
 
 //varsa kelimeye dair örnekler alinir
