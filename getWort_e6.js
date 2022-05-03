@@ -481,6 +481,11 @@ function getLang(curWrt, callback) {
     )
       .then((response) => response.json())
       .then((response) => {
+        
+
+        throw "test hata....";
+
+
         if (typeof response.message === "string") {
           //api sorgu limiti
           if (kNo <= 10) {
