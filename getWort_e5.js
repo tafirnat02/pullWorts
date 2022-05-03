@@ -175,11 +175,11 @@ function getWort(html) {
     getOthrTbl();
     /***örnek cümleleralinir */
     getSatze();
-    /***almanca tanimi */
-    getLangDe();
+    /***almanca ingilizce tanimlari alinir */
+    getLangDeEng();
     //dil durumu kontrol edilir ve callback ile görsel durumuna gecilir...
     //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
-    getLang(getImg); //calback->getImg
+    getLang(cWrt,getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
     wortesArr.push(JSON.stringify(newWort));
     nextDoc();
@@ -418,15 +418,11 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR + En karsiligi alinir */
-function getLang(callback) {
+function getLang(curWrt, callback) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
       srcL2 = "";
-    //ingilizce karsligi
-    newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
-      ? doc.querySelector('dd[lang="en"]').innerText.replace("\n", "")
-      : "";
     //Tükce karsiligi
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
@@ -438,13 +434,14 @@ function getLang(callback) {
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
       //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
-     // return
+      // return
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
 
-    if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
-    return
+    if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
+    console.log('curWrt >> ', curWrt)
+    return;
   };
 
   let kNo = 10;
@@ -463,7 +460,7 @@ function getLang(callback) {
       "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
     ];
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", newWort.wrt.wort);
+    encodedParams.append("q", curWrt);
     encodedParams.append("target", "tr");
     encodedParams.append("source", "de");
 
@@ -489,7 +486,7 @@ function getLang(callback) {
           if (kNo <= 10) {
             consoleMsg(
               msgTyp.warning,
-              `API Limit | ${newWort.wrt.wort} `,
+              `API Limit | ${curWrt} `,
               `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
             );
             kNo++; //diger keyler denenir..
@@ -499,7 +496,7 @@ function getLang(callback) {
             consoleMsg(
               msgTyp.error,
               `API Limit`,
-              `google-translate1 rapidapi -> all keys limit... | ${newWort.wrt.wort} (f:getLang-multiple)`
+              `google-translate1 rapidapi -> all keys limit... | ${curWrt} (f:getLang-multiple)`
             );
           }
         } else {
@@ -507,7 +504,7 @@ function getLang(callback) {
           newWort.lang_TR = response.data[
             "translations"
           ][0].translatedText.replace(rpRegExp, empty);
-        // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
+          // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
       })
       .catch((err) => {
@@ -552,7 +549,7 @@ function satzeRun(el) {
 }
 
 //varsa kelimenin almanca tanimlari alinir
-function getLangDe() {
+function getLangDeEng() {
   let allHeader = doc.querySelectorAll("header>h2");
   let zB, bDe;
 
@@ -568,6 +565,11 @@ function getLangDe() {
       });
     }
   });
+
+  //ingilizce karsligi
+  newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
+    ? doc.querySelector('dd[lang="en"]').innerText.replace("\n", "")
+    : "";
 }
 
 /***************** Görsel Icin Yapilan Düzenlemeler ********************/
@@ -575,7 +577,7 @@ function getLangDe() {
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
   //kondtol icin devre disi birakildi
-  consoleMsg(msgTyp.primary,'getImg() Yürütüldü....')
+  consoleMsg(msgTyp.primary, "getImg() Yürütüldü....");
   return false;
 
   //image sources
