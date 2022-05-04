@@ -40,8 +40,7 @@ Test Icin uyugulama tam aktif olana kadar bazi kodlar bilerek degistirilmistir..
 2-
 
 */
-
-*/ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
+ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
   "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e7.js";
