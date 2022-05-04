@@ -48,7 +48,7 @@ const wrtApp =
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
 const wortListUrl =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test02.json";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json";
 var newWortArr,
   docs = [],
   myArr,
@@ -105,7 +105,7 @@ const nextWort = () => {
   if (myArr.length > 0) {
     let wort = myArr.shift();
     consoleMsg(
-      msgTyp.primary,
+      msgTyp.successful,
       ` ${wort} `,
       "Kelime islenme alindi... (f:nextWort)"
     );
@@ -169,7 +169,7 @@ function nextDoc() {
       wortesArr.forEach((wrt) => {
           let rsltWrt= JSON.parse(wrt)
         consoleMsg(
-            msgTyp.successful,
+            msgTyp.primary,
             rsltWrt.wrt.wort,
             `kelimesine ait sonuclar (f:nextDoc)`
           );

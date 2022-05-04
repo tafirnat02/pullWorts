@@ -143,12 +143,12 @@ function getWort(html) {
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
         msgTyp.error,
-        `"${newWort.wrt.wort}"`,
-        " Kelime gecerli degil!"
+        `"${cWrt}"`,
+        "Aranilan kelime icin sonu bulunamadi!"
       );
       //multiple icin sonraki doc isleme alinir...
       nextDoc();
-      return false;
+      return;
     }
     //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
     newWort = new Wort();
