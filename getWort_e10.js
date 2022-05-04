@@ -144,7 +144,8 @@ function getWort(html) {
       consoleMsg(
         msgTyp.error,
         `"${cWrt}"`,
-        "Aranilan kelime icin sonu bulunamadi!"
+        `Aranilan kelime icin sonu bulunamadi!\n
+        Sayfaya git: https://www.verbformen.de/?w=${cWrt}`
       );
       //multiple icin sonraki doc isleme alinir...
       nextDoc();

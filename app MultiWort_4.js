@@ -43,7 +43,7 @@ Test Icin uyugulama tam aktif olana kadar bazi kodlar bilerek degistirilmistir..
  /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e8.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e9.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -105,7 +105,7 @@ const nextWort = () => {
   if (myArr.length > 0) {
     let wort = myArr.shift();
     consoleMsg(
-      msgTyp.successful,
+      msgTyp.primary,
       ` ${wort} `,
       "Kelime islenme alindi... (f:nextWort)"
     );
@@ -169,7 +169,7 @@ function nextDoc() {
       wortesArr.forEach((wrt) => {
           let rsltWrt= JSON.parse(wrt)
         consoleMsg(
-            msgTyp.primary,
+            msgTyp.successful,
             rsltWrt.wrt.wort,
             `kelimesine ait sonuclar (f:nextDoc)`
           );
