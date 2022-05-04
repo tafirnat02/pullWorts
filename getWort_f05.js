@@ -611,9 +611,12 @@ try {
   //srchImg_2704 kriterlerini kullan...
   troy = ["a3e969be698bd439c"];
   loadClient();
-} catch (error) {
+} catch (err) {
   console.log(newWort)
   consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`)
+  consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`, err)
+  console.log(err)
+  console.log(err.message)
 }
 
 }
@@ -739,7 +742,7 @@ function checkEl(e) {
 }
 
 //console mesaj yazdirmak icin
-function consoleMsg(msgTyp, head, txt) {
+function consoleMsg(msgTyp, head, txt, err="") {
   const head0 = "background: DodgerBlue;", //primary
     body0 = "color: DodgerBlue;",
     head1 = "background: Green;", //successful
@@ -749,10 +752,10 @@ function consoleMsg(msgTyp, head, txt) {
     head3 = "background: red;", //error
     body3 = "color:red;",
     bases =
-      "font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;";
+      "font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;";  
   var stylHead = eval(`head${msgTyp}`) + bases,
     stylBody = eval(`body${msgTyp} `);
-  console.log(`%c ${head} %c ${txt} `, stylHead, stylBody);
+  console.log(`%c ${head} %c ${txt}  ${err}`, stylHead, stylBody);
   /*
 consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
 */
