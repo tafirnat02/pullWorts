@@ -138,14 +138,14 @@ function getWort(html) {
     //img-->load first gApi
     doc = html;
     /**kelimenin alinmasi */
-    let cWrt = doc.querySelector("form>div>input").value;
-    console.log('curWrt >> ', curWrt)
+    let currentWort = doc.querySelector("form>div>input").value;
+    console.log('currentWort >> ', currentWort)
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
         msgTyp.error,
-        `"${cWrt}"`,
-        `Aranilan kelime icin sonuc bulunamadi! https://www.verbformen.de/?w=${cWrt}`
+        `"${currentWort}"`,
+        `Aranilan kelime icin sonuc bulunamadi! https://www.verbformen.de/?w=${currentWort}`
       );
       //multiple icin sonraki doc isleme alinir...
       nextDoc();
@@ -153,7 +153,7 @@ function getWort(html) {
     }
     //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
     newWort = new Wort();
-    newWort.wrt.wort = cWrt;
+    newWort.wrt.wort = currentWort;
     /***Kelimenin tanimlanmasi */
     newWort.status.Situation[0] = doc.querySelector(
       "article>div>nav>a[href]"
@@ -180,14 +180,14 @@ function getWort(html) {
     getLangDeEng();
     //dil durumu kontrol edilir ve callback ile görsel durumuna gecilir...
     //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
-    getLang(cWrt,getImg); //calback->getImg
+    getLang(currentWort,getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
     wortesArr.push(JSON.stringify(newWort));
     nextDoc();
   } catch (err) {
     consoleMsg(
       msgTyp.error,
-      `${cWrt}`,
+      `${currentWort}`,
       "'e ait HTML islenirken hata olustu.. (f:getWort[multiple])"
     );
     console.log(err);
@@ -419,7 +419,7 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR + En karsiligi alinir */
-function getLang(curWrt, callback) {
+function getLang(currentWort, callback) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -465,7 +465,7 @@ function getLang(curWrt, callback) {
       "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
     ];
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", curWrt);
+    encodedParams.append("q", currentWort);
     encodedParams.append("target", "tr");
     encodedParams.append("source", "de");
 
@@ -491,7 +491,7 @@ function getLang(curWrt, callback) {
           if (kNo <= 10) {
             consoleMsg(
               msgTyp.warning,
-              `API Limit | ${curWrt} `,
+              `API Limit | ${currentWort} `,
               `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
             );
             kNo++; //diger keyler denenir..
@@ -501,7 +501,7 @@ function getLang(curWrt, callback) {
             consoleMsg(
               msgTyp.error,
               `API Limit`,
-              `google-translate1 rapidapi -> all keys limit... | ${curWrt} (f:getLang-multiple)`
+              `google-translate1 rapidapi -> all keys limit... | ${currentWort} (f:getLang-multiple)`
             );
           }
         } else {
@@ -515,7 +515,7 @@ function getLang(curWrt, callback) {
       .catch((err) => {
         consoleMsg(
           msgTyp.error,
-          `Translate | ${curWrt}`,
+          `Translate | ${currentWort}`,
           "Google translate API error. (f:getLang-multiple)"
         );
         console.log(err);
