@@ -586,6 +586,7 @@ function getImg() {
   
   //image sources
   //arama icin ingilizce kelimler
+try {
   let rRgx = new RegExp(/,|;|\.|\//g);
   let rRgxEnd = new RegExp(/<i>|<\/i>|<br>/g);
   let mainQ =
@@ -610,6 +611,11 @@ function getImg() {
   //srchImg_2704 kriterlerini kullan...
   troy = ["a3e969be698bd439c"];
   loadClient();
+} catch (error) {
+  console.log(newWort)
+  consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`)
+}
+
 }
 //istemci yürütülür...
 function loadClient() {
