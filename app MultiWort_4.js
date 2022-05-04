@@ -1,49 +1,43 @@
-"use strict"; /*
-
----- YAPILACAKLAR
-server engellediginde kalinan rakamdan sonraki ogenin alinmasi
-en üste ve islemi tekrar kontrol ederek check edilmelidir....
-
-sayfada ilgili kelime bulunamamasi durumunu ele al
-
-coklu kisimda tüm kelimelerin döngüyle doc alimi ve obje basimini kontrol et
-döngü kelime sayisi ile sinirli olmali mükerer durumu var kontrol et
-
-
-google image kismini aktif et
-googl traslate ksimini aktif et [ ..ok..]
-sayfa server 429 hatasi verdiginde sayfayi yenileme uyarisi at 
-    >> bilgiler gidecek mi önden veya sonradan yapilabilir kontrol et olmaz ise iptal
-
-
-
-//import ederek kodu yürütmek icin: Sayfaya dahil edildiginde yürütülür.
-//Yeniden yürütmek icin sayfa yenilendirken sonra bu kod tekrar yürütülmelidir.
-
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/app%20MultiWort_2.js";
-document.head.appendChild(script);
-
-
-    Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
-    [ Hata Durumu: linkleri kontrol et!]
-
+"use strict"; 
 /*
+---- YAPILACAKLAR----------------------
+ - server engellediginde kalinan rakamdan sonraki ogenin alinmasi
+  kalinan öge icin bildirimde bulun ve sayfayi yenile ve konsol bilgilerini kontrol et
+  eger uyari yeni sayfada kalirsa kalinan öge no hatirlamak icin cok iyi olur
+
+ - en üste ve islemi tekrar kontrol ederek check edilmelidir....
+
+ - google image kismini aktif et
+
+ - sayfa server 429 hatasi verdiginde sayfayi yenileme uyarisi at 
+  >> bilgiler gidecek mi önden veya sonradan yapilabilir kontrol et olmaz ise iptal
+
+ - Herhangi baska dosya olmadan tek bu dosya yütürülmekle coklu kelime alinir....
+  [ Hata Durumu: linkleri kontrol et!]
+
+ - google spech Text i audio kismina dahil edilebilir....
    ================= Ö N EM L I =============
-Test Icin uyugulama tam aktif olana kadar bazi kodlar bilerek degistirilmistir...
-1- >   /* fonksiyon: getLang   
-      let kNo = 0; << google translate api siniri sebebiyle 
-                      uygulama tam aktif olana degin key No 10 olarak 
-                      uygulanacak.
-  *//*
-2-
+  Test Icin uyugulama tam aktif olana kadar bazi kodlar bilerek degistirilmistir...
+  1- >  fonksiyon: getLang   
+        let kNo = 0; << google translate api siniri sebebiyle 
+        uygulama tam aktif olana degin key No 10 olarak 
+        uygulanacak.
+
+  2-
+
+
+    /////////////// tamamlananlar /////////////////////
+  sayfada ilgili kelime bulunamamasi durumunu ele al [...Ok..]
+  googl traslate ksimini aktif et [ ..ok..]
+  döngü kelime sayisi ile sinirli olmali mükerer durumu var kontrol et [..ok...]
+  coklu kisimda tüm kelimelerin döngüyle doc alimi ve obje basimini kontrol et [..ok...]
 
 */
+
  /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e9.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_e10.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -104,11 +98,11 @@ const runApp = (len = "") => {
 const nextWort = () => {
   if (myArr.length > 0) {
     let wort = myArr.shift();
-    consoleMsg(
+    /*consoleMsg(
       msgTyp.primary,
       ` ${wort} `,
       "Kelime islenme alindi... (f:nextWort)"
-    );
+    );*/
     getWrtDoc(wort);
   }
 };

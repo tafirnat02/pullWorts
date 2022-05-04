@@ -583,8 +583,7 @@ function getLangDeEng() {
 function getImg() {
   //kondtol icin devre disi birakildi
   consoleMsg(msgTyp.primary, "getImg() Yürütüldü....");
-  return false;
-
+  
   //image sources
   //arama icin ingilizce kelimler
   let rRgx = new RegExp(/,|;|\.|\//g);
