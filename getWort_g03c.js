@@ -582,7 +582,7 @@ function getLangDeEng() {
 function getImg() {
   //kondtol icin devre disi birakildi
   debugger
-  let checkGapi = `script[src=https://apis.google.com/js/api.js]`
+  let checkGapi = `https://apis.google.com/js/api.js`
   if (document.querySelectorAll(`script[src="${checkGapi}"]`).length>0){
     consoleMsg(msgTyp.primary, "getImg() ","gapi yüklendi...");
   }else{
