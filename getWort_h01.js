@@ -629,8 +629,8 @@ try {
        safe=active&
        searchType=image&
        cx=a3e969be698bd439c&
-       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`;
-    url = url.replaceAll(rRgxEnd, "") ; //cse key
+       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`;//cse key
+    url = url.replaceAll(rRgxEnd, "").replaceAll(" ","") ; 
 console.log(url)
     fetch(url)
       .then((response) => {
