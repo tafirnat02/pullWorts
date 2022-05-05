@@ -131,9 +131,7 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  debugger
   consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${arrDocument.length}`);
-
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
   try {
     //img-->load first gApi
@@ -141,6 +139,7 @@ function getWort(html) {
     /**kelimenin alinmasi */
     let currentWort = doc.querySelector("form>div>input").value;
     console.log('currentWort >> ', currentWort)
+    debugger
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
