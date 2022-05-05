@@ -616,24 +616,23 @@ function getImg() {
     searchPara.push(...searchDe)
   }
 
-try {
-  debugger
+  
   const searchApi = () => {
     const url =`
     https://customsearch.googleapis.com/customsearch/v1?
+    key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
+    cx=a3e969be698bd439c&
+    searchType=image&
+    safe=active&
     c2coff=1&
+    filter=1&
     cr=${searchPara[1]}&
     gl=${searchPara[0]}&
     hl=${searchPara[0]}&
-    q=${qTxt + excludedUrl}&
-    filter=1&
-    safe=active&
-    searchType=image&
-    cx=a3e969be698bd439c&
-    key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw
+    q=${qTxt + excludedUrl}
     `.replaceAll(rRgxEnd, "") ; 
-
 console.log(url)
+debugger
     fetch(url)
       .then((response) => {
         return response.text();
@@ -676,11 +675,8 @@ console.log(url)
         }
       });
   };
-
+  
    if (tryCSEimg !== "finish") searchApi();
-} catch (error) {
-  console.log(error)
-}
   /*** call searchApi: finish yukaridaki 3 seceneginde test edildigini gösterir*/
  
 }
