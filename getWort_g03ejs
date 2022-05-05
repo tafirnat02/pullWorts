@@ -623,7 +623,6 @@ try {
   loadClient();
 } catch (err) {
   console.log(newWort)
-  consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`)
   consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`, err)
   console.log(err)
   console.log(err.message)
@@ -632,8 +631,8 @@ try {
 }
 //istemci yürütülür...
 function loadClient() {
-  //gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
-  gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
+  gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
+ // gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
   return gapi.client
     .load(
       "https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest"

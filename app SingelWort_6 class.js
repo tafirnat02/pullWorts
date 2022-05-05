@@ -527,13 +527,13 @@ function getImg() {
   }
 
   //srchImg_2704 kriterlerini kullan...
-  troy = ["a3e969be698bd439c"];
+  troy = ["a3e969be698bd439c","43ee39fa4cfa0400a","c23b05fa4f69a434e","a63f41cf66d614e56","729623ca31d534c37","e6415d6a998894840", "81559b9a5542844f0", "009bd2355a51b4179"]
   loadClient();
 }
 //istemci yürütülür...
 function loadClient() {
-  //gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
-  gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
+  gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
+  //gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
   return gapi.client
     .load(
       "https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest"
