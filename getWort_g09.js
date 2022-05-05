@@ -1,5 +1,5 @@
-const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g,
-  brExp = /·/g,
+const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
+  brExp = /·/gi,
   empty = "",
   msgTyp = Object.freeze({
     primary: 0,
@@ -229,13 +229,13 @@ function getTitle(tit) {
 function setTbls() {
   newWort.tbl.prasens = doc
     .querySelector("a[href*='indikativ/praesens']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+    .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, empty);
   newWort.tbl.praterium = doc
     .querySelector("a[href*='indikativ/praeteritum']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+    .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, empty);
   newWort.tbl.perfekt = doc
     .querySelector("a[href*='indikativ/perfekt']")
-    .parentNode.nextElementSibling.innerHTML.replace(rpRegExp, empty);
+    .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, empty);
 }
 function setLang(head) {
   ele = head.querySelector("span[lang='tr']");
@@ -285,7 +285,7 @@ function getAdj() {
 function setMainEl(head) {
   let ele = head.querySelector("p.vGrnd.rCntr");
   newWort.main_Sound = ele.querySelector('a[href][onclick^="Stimme"]').href;
-  //newWort.main_Html = ele.querySelector('b').outerHTML.replace(rpRegExp, empty);
+  //newWort.main_Html = ele.querySelector('b').outerHTML.replaceAll(rpRegExp, empty);
 
   let grundArr = ele.querySelectorAll("b");
   if (grundArr.length > 1) {
@@ -297,7 +297,7 @@ function setMainEl(head) {
   let txtEl = ele.querySelector('img[alt="Deutsch"]').nextSibling;
   if (checkEl(txtEl) && txtEl.nodeName == "#text") {
     grundEl = txtEl.textContent + grundEl;
-    grundEl = grundEl.replace(rpRegExp, empty);
+    grundEl = grundEl.replaceAll(rpRegExp, empty);
   }
 
   newWort.main_Html = grundEl;
@@ -315,7 +315,7 @@ function setSubEl(head) {
     let s_p = doc.querySelectorAll('th[title="Nominativ"]');
     newWort.wrt.artikel = s_p[0].nextElementSibling.textContent;
     newWort.wrt.plural = s_p[1].nextElementSibling.nextElementSibling
-      ? s_p[1].nextElementSibling.nextElementSibling.textContent.replace(
+      ? s_p[1].nextElementSibling.nextElementSibling.textContent.replaceAll(
           rpRegExp,
           empty
         )
@@ -324,7 +324,7 @@ function setSubEl(head) {
       newWort.sub_Html = ""; //ohne Plural
     } else {
       newWort.sub_Html =
-        s_p[1].nextElementSibling.nextElementSibling.innerHTML.replace(
+        s_p[1].nextElementSibling.nextElementSibling.innerHTML.replaceAll(
           rpRegExp,
           empty
         );
@@ -332,8 +332,8 @@ function setSubEl(head) {
   } else {
     //adjektiv ve Konjugation  durumu
     newWort.sub_Html = subHtml.innerHTML
-      .replace(rpRegExp, empty)
-      .replace(brExp, "<br>");
+      .replaceAll(rpRegExp, empty)
+      .replaceAll(brExp, "<br>");
   }
 }
 /**** objenin status keyinde tutulan verileri head bardan alir */
@@ -346,7 +346,7 @@ function setStatus(ele, verb) {
       default:
         if (verb) {
           if (checkEl(t.querySelector("span").title)) {
-            newWort.status.Zertifikat[0] = arr[0].replace(rpRegExp, empty);
+            newWort.status.Zertifikat[0] = arr[0].replaceAll(rpRegExp, empty);
             arr.shift();
           }
         } else {
@@ -354,15 +354,15 @@ function setStatus(ele, verb) {
             if (t.title.includes(k)) {
               newWort.status[k][0] =
                 newWort.status[k][0] == ""
-                  ? t.innerText.replace(rpRegExp, empty)
-                  : newWort.status[k][0].replace(rpRegExp, empty);
+                  ? t.innerText.replaceAll(rpRegExp, empty)
+                  : newWort.status[k][0].replaceAll(rpRegExp, empty);
             }
           });
         }
         break;
     }
   });
-  newWort.status.Other = verb ? arr.join(" ").replace(rpRegExp, empty) : "";
+  newWort.status.Other = verb ? arr.join(" ").replaceAll(rpRegExp, empty) : "";
 }
 
 /****** sifartlarin/pronomen cekimlerine dair tablolar alinir **********/
@@ -405,11 +405,11 @@ function addTrVal(e, obj) {
     const clnE = t.cloneNode(true);
     const tbl = clnE.querySelectorAll("table>tbody>tr");
     tbl.forEach((i) => {
-      let tit = i.firstElementChild.innerText.replace(rpRegExp, empty);
+      let tit = i.firstElementChild.innerText.replaceAll(rpRegExp, empty);
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] = {};
       i.firstElementChild.remove(); // th
       newWort.othrTbls[obj][t.firstElementChild.innerText][tit] =
-        i.outerHTML.replace(rpRegExp, empty);
+        i.outerHTML.replaceAll(rpRegExp, empty);
     });
   });
 }
@@ -425,11 +425,11 @@ function getLang(currentWort, callback) {
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
 
     if (checkEl(srcL1)) {
-      newWort.lang_TR = srcL1.innerText.replace(rpRegExp, empty);
+      newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
       //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
       //return
     } else if (checkEl(srcL2)) {
-      newWort.lang_TR = srcL2.innerText.replace(rpRegExp, empty);
+      newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
       //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
       // return
     } else {
@@ -504,7 +504,7 @@ function getLang(currentWort, callback) {
           //basarili sekilde veri alindi
           newWort.lang_TR = response.data[
             "translations"
-          ][0].translatedText.replace(rpRegExp, empty);
+          ][0].translatedText.replaceAll(rpRegExp, empty);
           // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
       })
@@ -543,7 +543,7 @@ function satzeRun(el) {
     lis.forEach((e) => {
       if (!!e.querySelector("a")) {
         e.querySelector("a").remove();
-        newWort.zB.push(e.innerHTML.replace(rpRegExp, empty));
+        newWort.zB.push(e.innerHTML.replaceAll(rpRegExp, empty));
       }
     });
   });
@@ -562,14 +562,14 @@ function getLangDeEng() {
         .cloneNode(true);
       let lis = bDe.querySelectorAll("li");
       lis.forEach((e) => {
-        newWort.lang_DE += e.innerHTML.replace(/»|\n/g, "") + "<br>";
+        newWort.lang_DE += e.innerHTML.replaceAll(/»|\n/gi, "") + "<br>";
       });
     }
   });
 
   //ingilizce karsligi
   newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
-    ? doc.querySelector('dd[lang="en"]').innerText.replace("\n", "")
+    ? doc.querySelector('dd[lang="en"]').innerText.replaceAll("\n", "")
     : "";
 }
 
@@ -582,13 +582,16 @@ function getImg() {
   2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
  Düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?apix=true&apix_params=%7B%22c2coff%22%3A%220%22%2C%22cr%22%3A%22countryDE%22%2C%22cx%22%3A%22a3e969be698bd439c%22%2C%22filter%22%3A%221%22%2C%22gl%22%3A%22de%22%2C%22hl%22%3A%22de%22%2C%22q%22%3A%22sound%22%2C%22safe%22%3A%22active%22%2C%22searchType%22%3A%22image%22%7D
  */
-
-  const rRgx = new RegExp(/,|;|\.|\//g);
-  const rRgxEnd = new RegExp(/<i>|<\/i>|<br>/g);
-  const excludedUrl =
+  const searchPara =[],
+        searchDe=['de','countryDE'],
+        searchEn=['en', 'countryUS'],
+        rRgx = new RegExp(/,|;|\.|\//gi),
+        rRgxEnd = new RegExp(/<i>|<\/i>|<br>\s/gi),
+        excludedUrl =
     " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
 
   //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
+  searchPara.length = 0 //döngüde parametreler yeniden atanir...
   if (tryCSEimg === false) {
     //odaklanmis arama metni: Almanca singular + plural
     qTxt =
@@ -597,35 +600,36 @@ function getImg() {
       newWort.wrt.plural != newWort.wrt.wort
         ? " OR " + newWort.wrt.plural
         : "");
-    qTxt = `${qTxt.replace(rRgx, " OR ")}`;
+    qTxt = `${qTxt.replaceAll(rRgx, " OR ")}`;
+    searchPara.push(...searchDe)
     tryCSEimg = true;
   } else if (tryCSEimg === true && !!newWort.lang_En) {
     //varsa ingilizce kelimelerden arama yapilir sadece..
-    qTxt = newWort.lang_En.replace(rRgxEnd, "").replace(rRgx, " OR ");
+    qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ");
+    searchPara.push(...searchEn)
   } else {
     //varsa almanca tanimina göre arama yapilir sadece
     qTxt += !!newWort.lang_DE
-      ? ` OR ${newWort.lang_DE.replace(rRgxEnd, "").replace(rRgx, " OR ")}`
+      ? ` OR ${newWort.lang_DE.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ")}`
       : "";
     tryCSEimg = "quitImg";
+    searchPara.push(...searchDe)
   }
-
 
 try {
   debugger
   const searchApi = () => {
-    const url =
-      `https://customsearch.googleapis.com/customsearch/v1?` +
-      `c2coff=0&` +
-      `cr=countryDE&` +
-      `cx=a3e969be698bd439c&` + // costum search id
-      `filter=1&` +
-      `gl=de&` +
-      `hl=de&` +
-      `q=${eval(qTxt + excludedUrl)}&` +
-      `safe=active&` +
-      `searchType=image&` +
-      `key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`; //cse key
+    const url =`https://customsearch.googleapis.com/customsearch/v1?
+       c2coff=1&
+       cr=${searchPara[1]}&
+       gl=${searchPara[0]}&
+       hl=${searchPara[0]}&
+       q=${qTxt + excludedUrl}&
+       filter=1&
+       safe=active&
+       searchType=image&
+       cx=a3e969be698bd439c&
+       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`.replaceAll(rRgxEnd, "") ; //cse key
 
     fetch(url)
       .then((response) => {
@@ -721,7 +725,7 @@ consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama 
     let bdy = doc.querySelector("body");
     bdy.insertBefore(script, bdy.firstChild);
   }
-  //gapi.load("client");
+  //giapi.load("client");
 }
 //gapi check
 function cGapi() {
