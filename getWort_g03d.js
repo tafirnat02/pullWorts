@@ -581,7 +581,9 @@ function getLangDeEng() {
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
   //kondtol icin devre disi birakildi
-  debugger
+/*
+gapi durumunu test icin---
+
   let checkGapi = `https://apis.google.com/js/api.js`
   if (document.querySelectorAll(`script[src="${checkGapi}"]`).length>0){
     consoleMsg(msgTyp.primary, "getImg() ","gapi yüklendi...");
@@ -589,9 +591,11 @@ function getImg() {
     consoleMsg(msgTyp.warning, "getImg() ","gapi yüklenemedi...");
   }
   return
-  
+ */ 
   //image sources
   //arama icin ingilizce kelimler
+
+  
 try {
   let rRgx = new RegExp(/,|;|\.|\//g);
   let rRgxEnd = new RegExp(/<i>|<\/i>|<br>/g);
