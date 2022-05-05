@@ -139,7 +139,6 @@ function getWort(html) {
     /**kelimenin alinmasi */
     let currentWort = doc.querySelector("form>div>input").value;
     console.log('currentWort >> ', currentWort)
-    debugger
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
@@ -582,9 +581,9 @@ function getLangDeEng() {
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
   //kondtol icin devre disi birakildi
-  
-  let testGapi = `script[src=https://apis.google.com/js/api.js]`
-  if (document.querySelectorAll(testGapi).length > 0){
+  debugger
+  let checkGapi = `script[src=https://apis.google.com/js/api.js]`
+  if (document.querySelectorAll(`script[src="${checkGapi}"]`).length>0){
     consoleMsg(msgTyp.primary, "getImg() ","gapi yüklendi...");
   }else{
     consoleMsg(msgTyp.warning, "getImg() ","gapi yüklenemedi...");
