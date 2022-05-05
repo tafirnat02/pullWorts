@@ -131,7 +131,8 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${docs.length}`);
+  debugger
+  consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${arrDocument.length}`);
 
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
   try {
