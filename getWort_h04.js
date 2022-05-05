@@ -586,7 +586,7 @@ function getImg() {
         searchDe=['de','countryDE'],
         searchEn=['en', 'countryUS'],
         rRgx = new RegExp(/,|;|\.|\//gi),
-        rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|"  "|\t/gi),
+        rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|\t|[ ]{2,}/gi),
         excludedUrl =
     " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
 
