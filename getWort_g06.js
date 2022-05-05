@@ -10,10 +10,7 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/g,
 var newWort,
   doc,
   wortesArr = [],
-  imgRes = {},
-  troy,
-  qTxt,
-  loCnt = false,
+  tryCSEimg = false,
   loopCount = 0,
   timeoutId,
   kNo = 0;
@@ -138,7 +135,7 @@ function getWort(html) {
     doc = html;
     /**kelimenin alinmasi */
     let currentWort = doc.querySelector("form>div>input").value;
-    console.log('currentWort >> ', currentWort)
+    console.log("currentWort >> ", currentWort);
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
@@ -179,7 +176,7 @@ function getWort(html) {
     getLangDeEng();
     //dil durumu kontrol edilir ve callback ile görsel durumuna gecilir...
     //eger nomen ise sadece bu durumda görsel alma söz konusu olacak...
-    getLang(currentWort,getImg); //calback->getImg
+    getLang(currentWort, getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
     wortesArr.push(JSON.stringify(newWort));
     getWortObj();
@@ -580,123 +577,132 @@ function getLangDeEng() {
 //ugulamanin basinda api sayfaya dahil edilir
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
-  //kondtol icin devre disi birakildi
-/*
-gapi durumunu test icin---
+  /*get methoduyla alinmakta...
+  1-Programmable Search Engine (CSE) ile bir arama motoru olusturulur,
+  2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
+ Düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?apix=true&apix_params=%7B%22c2coff%22%3A%220%22%2C%22cr%22%3A%22countryDE%22%2C%22cx%22%3A%22a3e969be698bd439c%22%2C%22filter%22%3A%221%22%2C%22gl%22%3A%22de%22%2C%22hl%22%3A%22de%22%2C%22q%22%3A%22sound%22%2C%22safe%22%3A%22active%22%2C%22searchType%22%3A%22image%22%7D
+ */
+  const rRgx = new RegExp(/,|;|\.|\//g);
+  const rRgxEnd = new RegExp(/<i>|<\/i>|<br>/g);
+  const excludedUrl =
+    " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
 
-  let checkGapi = `https://apis.google.com/js/api.js`
-  if (document.querySelectorAll(`script[src="${checkGapi}"]`).length>0){
-    consoleMsg(msgTyp.primary, "getImg() ","gapi yüklendi...");
-  }else{
-    consoleMsg(msgTyp.warning, "getImg() ","gapi yüklenemedi...");
-  }
-  return
- */ 
-  //image sources
-  //arama icin ingilizce kelimler
-
-  debugger
-  
-try {
-  let rRgx = new RegExp(/,|;|\.|\//g);
-  let rRgxEnd = new RegExp(/<i>|<\/i>|<br>/g);
-  let mainQ =
-    `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
-    ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
-    newWort.wrt.plural != newWort.wrt.wort
-      ? " OR " + newWort.wrt.plural
-      : "");
-
-  if (!loCnt) {
-    newWort.img = []; //islem tekrarinda
-    qTxt = `${mainQ.replace(rRgx, " OR ")}`;
-    //kisa aramaya almanca singular + plural + ilk ingilizce kelime alinir
-    qTxt += !!newWort.lang_En ? ` OR ${newWort.lang_En.split(",")[0]}` : "";
+  //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
+  if (tryCSEimg === false) {
+    //odaklanmis arama metni: Almanca singular + plural
+    qTxt =
+      `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
+      ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
+      newWort.wrt.plural != newWort.wrt.wort
+        ? " OR " + newWort.wrt.plural
+        : "");
+    qTxt = `${qTxt.replace(rRgx, " OR ")}`;
+    tryCSEimg = true;
+  } else if (tryCSEimg === true && !!newWort.lang_En) {
+    //varsa ingilizce kelimelerden arama yapilir sadece..
+    qTxt = newWort.lang_En.replace(rRgxEnd, "").replace(rRgx, " OR ");
   } else {
-    //ilk kelime + almanca tanim varsa
+    //varsa almanca tanimina göre arama yapilir sadece
     qTxt += !!newWort.lang_DE
       ? ` OR ${newWort.lang_DE.replace(rRgxEnd, "").replace(rRgx, " OR ")}`
       : "";
+    tryCSEimg = "quitImg";
   }
 
-  //srchImg_2704 kriterlerini kullan...
-  troy = ["a3e969be698bd439c"];
-  loadClient();
-} catch (err) {
-  console.log(newWort)
-  consoleMsg(msgTyp.error,'Image Error',`${newWort.wrt.wort} görseli alinirken hata olustu...`, err)
-  console.log(err)
-  console.log(err.message)
-}
+  const searchApi = () => {
+    const url =
+      `https://customsearch.googleapis.com/customsearch/v1?` +
+      `c2coff=0&` +
+      `cr=countryDE&` +
+      `cx=a3e969be698bd439c&` + // costum search id
+      `filter=1&` +
+      `gl=de&` +
+      `hl=de&` +
+      `q=${eval(qTxt + excludedUrl)}&` +
+      `safe=active&` +
+      `searchType=image&` +
+      `key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`; //cse key
 
-}
-//istemci yürütülür...
-function loadClient() {
-  gapi.client.setApiKey("AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw");//
- // gapi.client.setApiKey("AIzaSyA27tfTgHk1LOLODEZXMvL5vPBLf_18Jc0"); //tafirnat
-  return gapi.client
-    .load(
-      "https://content.googleapis.com/discovery/v1/apis/customsearch/v1/rest"
-    )
-    .then(
-      function () {
-        execute();
-      },
-      function (err) {
-        console.error("Error loading GAPI client for API", err);
-      }
-    );
-}
-// Make sure the client is loaded before calling this method.
-function execute() {
-  return gapi.client.search.cse
-    .list({
-      cx: troy[0],
-      q: qTxt, //queryWort +  '  -stock -istockphoto', //wikipedia symbol
-      cr: "countryDE",
-      gl: "de",
-      hl: "de",
-      lr: "lang_de",
-      safe: "active",
-      searchType: "image",
-    })
-    .then(
-      function (response) {
-        // Handle the results here (response.result has the parsed body).
-        imgRes = Object.assign({}, response);
-        if (!!!imgRes.result.items) {
-          if (!loCnt) {
-            console.log("görsel bulunmadi! Tekrar Deneniyor...");
-            loCnt = true;
-            getImg();
-          } else {
-            console.log("görsel bulunmadi!");
-            outPut();
-          }
-        }
-        imgRes.result.items.forEach((itm) => {
-          newWort.img.push(itm.image.thumbnailLink);
-        });
-
-        if (!loCnt && newWort.img.length < 9) {
-          loCnt = true;
-          getImg();
+    fetch(url)
+      .then((response) => {
+        return response.text();
+      }) // or .json()
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((response) => {
+        //arama soonucu kontrol edilir
+        if (typeof response.items !== "undefined") return response;
+        if (tryCSEimg === "quitImg") {
+          throw "noImage";
         } else {
-          outPut();
+          throw "tryImage";
         }
-      },
-      function (err) {
-        console.error("Execute error", err);
-        outPut();
-      }
-    );
+      })
+      .then((result) => {
+        console.log(result);
+        result.items.forEach((item, index) => {
+          console.log(item.image.thumbnailLink);
+        });
+      })
+      .then(() => {
+        console.log("islem basarili sekilde sonuclandi...");
+      })
+      .catch((err) => {
+        switch (err) {
+          case "tryImage"://sonraki metne göre arama yapilir
+
+            break;
+          case "noImage"://tüm secimlik metin aramasi sonucu image bulunamamasi durumu
+            
+            break;
+          default: // diger hatalar
+            console.log(
+              `Kelime listesi alinirken hata oldu. Kelime urlini kontrol edin! (f:loadApp) ${url}`,
+              err
+            );
+            break;
+        }
+      });
+  };
+
+  /*** call searchApi: finish yukaridaki 3 seceneginde test edildigini gösterir*/
+  if (tryCSEimg !== "finish") searchApi();
 }
 
-/*------------- import gAPI-------------*/
-function getAPI() {
-  //Sayfa document olraka alinir ve doc a tanir//
-  /********************/ doc = document; /********************/
+/**** DOM Element Checker*********/
+function checkEl(e) {
+  return e === null ? false : true;
+}
 
+//console mesaj yazdirmak icin
+function consoleMsg(msgTyp, head, txt, err = "") {
+  const head0 = "background: DodgerBlue;", //primary
+    body0 = "color: DodgerBlue;",
+    head1 = "background: Green;", //successful
+    body1 = "color: Green;",
+    head2 = "background: DarkGoldenRod;", //warning
+    body2 = "color:DarkGoldenRod;",
+    head3 = "background: red;", //error
+    body3 = "color:red;",
+    bases =
+      "font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;";
+  var stylHead = eval(`head${msgTyp}`) + bases,
+    stylBody = eval(`body${msgTyp} `);
+  console.log(`%c ${head} %c ${txt}  ${err}`, stylHead, stylBody);
+  /*
+consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
+*/
+}
+
+
+
+// SILINECEK
+/*------------- import gAPI-------------*/
+//function getAPI() {
+  //Sayfa document olraka alinir ve doc a tanir//
+
+/*
   //api import
   if (!cGapi()) {
     //api öncelikle sayfaya en basta yüklenir
@@ -718,8 +724,10 @@ function cGapi() {
     ? true
     : false;
 }
+*/
 
 /*---- gapi'nin sayfaya dahili setTimeOut ile kontrol  -------*/
+/*
 function timeOutGapi(callback, d = false) {
   //gapi objesi öncelikle kontrol edilir
   let _gapi_Obj = typeof gapi === "object";
@@ -742,31 +750,9 @@ function timeOutGapi(callback, d = false) {
     }
   }
 }
+*/
 /*---- gapi'nin sayfaya dahili setTimeOut ile kontrol sonu -------*/
 /***************** Görsel Icin Yapilan Düzenlemeler Sonu ********************/
 
 /**Genel Kullanimdaki Diger Fonksiyonlar */
-/***** DOM Element Checker*********/
-function checkEl(e) {
-  return e === null ? false : true;
-}
 
-//console mesaj yazdirmak icin
-function consoleMsg(msgTyp, head, txt, err="") {
-  const head0 = "background: DodgerBlue;", //primary
-    body0 = "color: DodgerBlue;",
-    head1 = "background: Green;", //successful
-    body1 = "color: Green;",
-    head2 = "background: DarkGoldenRod;", //warning
-    body2 = "color:DarkGoldenRod;",
-    head3 = "background: red;", //error
-    body3 = "color:red;",
-    bases =
-      "font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;";  
-  var stylHead = eval(`head${msgTyp}`) + bases,
-    stylBody = eval(`body${msgTyp} `);
-  console.log(`%c ${head} %c ${txt}  ${err}`, stylHead, stylBody);
-  /*
-consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
-*/
-}
