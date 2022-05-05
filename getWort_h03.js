@@ -586,7 +586,7 @@ function getImg() {
         searchDe=['de','countryDE'],
         searchEn=['en', 'countryUS'],
         rRgx = new RegExp(/,|;|\.|\//gi),
-        rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n/gi),
+        rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|"  "|\t/gi),
         excludedUrl =
     " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
 
@@ -619,18 +619,20 @@ function getImg() {
 try {
   debugger
   const searchApi = () => {
-    var url =`https://customsearch.googleapis.com/customsearch/v1?
-       c2coff=1&
-       cr=${searchPara[1]}&
-       gl=${searchPara[0]}&
-       hl=${searchPara[0]}&
-       q=${qTxt + excludedUrl}&
-       filter=1&
-       safe=active&
-       searchType=image&
-       cx=a3e969be698bd439c&
-       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`;//cse key
-    url = url.replaceAll(rRgxEnd, "") ; 
+    const url =`
+    https://customsearch.googleapis.com/customsearch/v1?
+    c2coff=1&
+    cr=${searchPara[1]}&
+    gl=${searchPara[0]}&
+    hl=${searchPara[0]}&
+    q=${qTxt + excludedUrl}&
+    filter=1&
+    safe=active&
+    searchType=image&
+    cx=a3e969be698bd439c&
+    key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw
+    `.replaceAll(rRgxEnd, "") ; 
+
 console.log(url)
     fetch(url)
       .then((response) => {
