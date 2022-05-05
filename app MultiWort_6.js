@@ -206,7 +206,7 @@ function intervalApp(
   }, duration); // döngüyü tekrarlar
   //max time sonrasi cikilir
   const clearInt = setTimeout(() => {
-    if (!clear)console.log(`Süre Asimi: "${item}" adli ${Object.keys(itemTyp)[typ]} erisilebilir degil!  (f:intervalApp-clearInt)`);
+    if (!clear)console.log(`Süre Asimi: "${item}" adli ${Object.keys(itemTyp)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`);
     clearInterval(int_ID);
   }, maxDuration); 
 

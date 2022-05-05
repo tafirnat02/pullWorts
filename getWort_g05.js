@@ -595,6 +595,7 @@ gapi durumunu test icin---
   //image sources
   //arama icin ingilizce kelimler
 
+  debugger
   
 try {
   let rRgx = new RegExp(/,|;|\.|\//g);
