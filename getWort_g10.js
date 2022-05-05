@@ -619,7 +619,7 @@ function getImg() {
 try {
   debugger
   const searchApi = () => {
-    const url =`https://customsearch.googleapis.com/customsearch/v1?
+    var url =`https://customsearch.googleapis.com/customsearch/v1?
        c2coff=1&
        cr=${searchPara[1]}&
        gl=${searchPara[0]}&
@@ -629,8 +629,9 @@ try {
        safe=active&
        searchType=image&
        cx=a3e969be698bd439c&
-       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`.replaceAll(rRgxEnd, "") ; //cse key
-
+       key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw`;
+    url = url.replaceAll(rRgxEnd, "") ; //cse key
+console.log(url)
     fetch(url)
       .then((response) => {
         return response.text();
