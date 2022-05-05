@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 /*
 ---- YAPILACAKLAR----------------------
  - server engellediginde kalinan rakamdan sonraki ogenin alinmasi
@@ -34,11 +34,10 @@
 
 */
 
-/*------------- [ 1. Kisim / Degiskenler ] -------------*/
+ /*------------- [ 1. Kisim / Degiskenler ] -------------*/
 const itemTyp = Object.freeze({ function: 0, domEl: 1, variabel: 2 });
 const wrtApp =
   "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_g00.js";
-const Gapi = "https://apis.google.com/js/api.js";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortList2.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortlist.json";
 //const wortListUrl ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wort_verbenList.json"
@@ -55,10 +54,7 @@ var newWortArr,
 /*------------- [ sayfaya script eklenir ve kontrollü yapilir ] 
             addJS fonksiyonu ile wrtApp url'indeki js file import edilir 
             daha sonra callback metoduyla loadWortList() yürütülür -------------*/
-addJS(
-  wrtApp,
-  intervalApp(`consoleMsg`, itemTyp.function, loadWortList, 50, 1000)
-); //consoleMsg: dahil edilen js'deki bir fonksiyon olup kontrol bunun ile gerceklestirilmektedir
+addJS(wrtApp,intervalApp(`consoleMsg`, itemTyp.function, loadWortList, 50, 1000)) //consoleMsg: dahil edilen js'deki bir fonksiyon olup kontrol bunun ile gerceklestirilmektedir
 
 //wortList obje olarak fatch ile alinir
 function loadWortList(indexNo) {
@@ -156,31 +152,31 @@ function nextDoc() {
   try {
     if (docs.length > 0) {
       let html = docs.shift();
-      getWort(html); //her kelimeye ait ham html verileri getWort ile Json data olarak ayristirilir
+      getWort(html);//her kelimeye ait ham html verileri getWort ile Json data olarak ayristirilir
     } else {
       //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir...
-      consoleMsg(
-        msgTyp.successful,
-        `Document Islemi Tamamlanadi`,
-        `Keliemlere ait sayfalar alindi... (f:nextDoc)`
-      );
-      wortesArr.forEach((wrt) => {
-        let rsltWrt = JSON.parse(wrt);
         consoleMsg(
-          msgTyp.successful,
-          rsltWrt.wrt.wort,
-          `kelimesine ait sonuclar (f:nextDoc)`
-        );
+            msgTyp.successful,
+            `Document Islemi Tamamlanadi`,
+            `Keliemlere ait sayfalar alindi... (f:nextDoc)`
+          );
+      wortesArr.forEach((wrt) => {
+          let rsltWrt= JSON.parse(wrt)
+        consoleMsg(
+            msgTyp.successful,
+            rsltWrt.wrt.wort,
+            `kelimesine ait sonuclar (f:nextDoc)`
+          );
         console.log(wrt);
-        console.log(rsltWrt);
+        console.log(rsltWrt)
       });
     }
   } catch (err) {
     consoleMsg(
-      msgTyp.successful,
-      `Document Islem Hatasi`,
-      `${err} (f:nextDoc)`
-    );
+        msgTyp.successful,
+        `Document Islem Hatasi`,
+        `${err} (f:nextDoc)`
+      );
   }
 }
 
@@ -195,11 +191,11 @@ function nextDoc() {
 /*------------- External JavaScript Import-------------*/
 
 function addJS(jsUrl, callback, pos = "head") {
-  //yükleme öncesi ilgili js dosyada olup olmadigi kontrol edilir
-  if (document.querySelectorAll(`script[src="${jsUrl}"]`).length > 0) {
-    callback;
-    return;
-  }
+    //yükleme öncesi ilgili js dosyada olup olmadigi kontrol edilir
+    if (document.querySelectorAll(`script[src="${jsUrl}"]`).length > 0) {
+        callback;
+        return;
+    }
   //sayfaya dahil edilme
   var docPos = document[pos];
   var script = document.createElement("script");
@@ -216,53 +212,49 @@ setTimeInterval ile kontrol edilir ve duruma göre sonraki fonskiyon callback il
 zB: dom elelmani kontrol ->>      intervalApp(`script[src="${wrtApp}"]`, itemTyp.domEl, callMe, 100, 800)
 zB: callback olarak -fonksiyon->> addJS(wrtApp,intervalApp(`consoleMsg`, itemTyp.function, callMe, 100, 800))*/
 function intervalApp(
-  item,
-  itemTyp,
-  callback,
-  duration = 100,
-  maxDuration = 3000
-) {
-  let clear;
-  //döngüsel zaman atanir
-  const int_ID = setInterval(() => {
-    switch (itemTyp) {
-      case 0: //fonksiyon kontrolü >> window.functionName
-        if (typeof window[item] === "function") clear = true;
-        break;
-      case 1: //document element kontrolu
-        if (document.querySelectorAll(item).length > 0) clear = true; // selector girisi zB:'a[href="test.me"]'
-        break;
-      default: //obje, array, string vs degiskenlerin kontrolü
-        try {
-          if (typeof eval(item) != "undefined") clear = true;
-        } catch (error) {
-          clear = false;
-        }
-        break;
-    }
-    if (clear) {
-      //öge varsa zamanlamayi temizler
-      clearInterval(int_ID);
-      callback();
-      return;
-    }
-  }, duration); // döngüyü tekrarlar
-  //max time sonrasi cikilir
-  const clearInt = setTimeout(() => {
-    if (!clear) {
-      if (typeof consoleMsg == "undefined") {
-        console.log("Döngü zamanasimina ugradi... (f:intervalApp)");
-      } else {
-        consoleMsg(
-          msgTyp.error,
-          "Öge Bulunamadi",
-          " Döngü zamanasimina ugradi... (f:intervalApp)"
-        );
+    item,
+    itemTyp,
+    callback,
+    duration = 100,
+    maxDuration = 3000
+  ) {
+    let clear;  
+    //döngüsel zaman atanir
+    const int_ID = setInterval(() => {
+      switch (itemTyp) {
+        case 0: //fonksiyon kontrolü >> window.functionName
+          if (typeof window[item] === 'function') clear = true;
+          break;
+        case 1: //document element kontrolu
+          if (document.querySelectorAll(item).length > 0) clear = true; // selector girisi zB:'a[href="test.me"]'
+          break;
+        default: //obje, array, string vs degiskenlerin kontrolü
+          try {
+            if (typeof eval(item) != "undefined") clear = true;
+          } catch (error) {
+            clear = false;
+          }
+          break;
       }
-    }
-    clearInterval(int_ID);
-  }, maxDuration); // Will alert once, after a second.
-
-  clearInt;
-  int_ID;
-}
+      if (clear) {
+        //öge varsa zamanlamayi temizler
+        clearInterval(int_ID);
+        callback();
+        return;
+      }
+    }, duration); // döngüyü tekrarlar
+    //max time sonrasi cikilir
+    const clearInt = setTimeout(() => {
+        if(!clear){
+          if(typeof consoleMsg == 'undefined' ){console.log( 'Döngü zamanasimina ugradi... (f:intervalApp)')}
+          else{
+            consoleMsg(msgTyp.error,'Öge Bulunamadi', ' Döngü zamanasimina ugradi... (f:intervalApp)')
+          }
+        } 
+      clearInterval(int_ID);
+    }, maxDuration); // Will alert once, after a second.
+  
+    clearInt;
+    int_ID;
+  }
+  

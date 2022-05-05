@@ -99,7 +99,7 @@ function nextHtml(wrtOj) {
     //console.log(key, wrtOj[key]);
     //console.log("______________________");
     //kosnoldaki fonksiyon isleme tekrar sokulur
-    nextDoc();
+    getWortObj();
   });
 }
 
@@ -133,7 +133,7 @@ function outPut() {
 function getWort(html) {
   consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${docs.length}`);
 
-  //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki nextDoc fonksiyonu ile buraya gönderilir...
+  //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
   try {
     //img-->load first gApi
     doc = html;
@@ -148,7 +148,7 @@ function getWort(html) {
         `Aranilan kelime icin sonuc bulunamadi! https://www.verbformen.de/?w=${currentWort}`
       );
       //multiple icin sonraki doc isleme alinir...
-      nextDoc();
+      getWortObj();
       return;
     }
     //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
@@ -183,7 +183,7 @@ function getWort(html) {
     getLang(currentWort,getImg); //calback->getImg
     //multiple icin sonraki doc isleme alinir...
     wortesArr.push(JSON.stringify(newWort));
-    nextDoc();
+    getWortObj();
   } catch (err) {
     consoleMsg(
       msgTyp.error,
@@ -582,7 +582,14 @@ function getLangDeEng() {
 //--> callback ile en son cikti basilmali  <---
 function getImg() {
   //kondtol icin devre disi birakildi
-  consoleMsg(msgTyp.primary, "getImg() Yürütüldü....");
+  
+  let testGapi = `script[src=https://apis.google.com/js/api.js]`
+  if (document.querySelectorAll(testGapi).length > 0){
+    consoleMsg(msgTyp.primary, "getImg() ","gapi yüklendi...");
+  }else{
+    consoleMsg(msgTyp.warning, "getImg() ","gapi yüklenemedi...");
+  }
+  return
   
   //image sources
   //arama icin ingilizce kelimler
