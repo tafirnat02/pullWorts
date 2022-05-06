@@ -170,12 +170,14 @@ function getWort(html) {
       return newWort;
     })
     .then((newWort) => {
-      return getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      resolve(newWort)
     })
     .then((newWort) => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
-        return getImg(newWort); //nomen ise görsel alinir
+        getImg(newWort); //nomen ise görsel alinir
       }
+      resolve(newWort)
     })
     .then((newWort) => {
       wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
@@ -440,8 +442,6 @@ function getLang(newWort) {
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
-    debugger
-    return newWort;
   };
 
   /*
@@ -525,6 +525,7 @@ function getLang(newWort) {
 
   //initialization hatasi almamak icin en alttan cargildi
   getDocForLang.call();
+  return newWort;
 }
 
 //varsa kelimeye dair örnekler alinir
