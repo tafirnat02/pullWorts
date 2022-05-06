@@ -596,26 +596,26 @@ function getImg() {
     if (tryCSEimg === false) {
       //odaklanmis arama metni: Almanca singular + plural
       qTxt =
-        `"${newWort.wrt.wort}"  OR  ${newWort.wrt.wort}` +
+        `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
         ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
         newWort.wrt.plural != newWort.wrt.wort
-          ? "  OR  " + newWort.wrt.plural
+          ? " OR " + newWort.wrt.plural
           : "");
-      qTxt = `${qTxt.replaceAll(rRgx, "  OR  ")}`;
+      qTxt = `${qTxt.replaceAll(rRgx, " OR ")}`;
       subQtxt = qTxt;
       searchPara.push(...searchDe);
       tryCSEimg = true;
     } else if (tryCSEimg === true && !!newWort.lang_En) {
       //varsa ingilizce kelimelerden arama yapilir sadece..
-      qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, "  OR  ");
+      qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ");
       searchPara.push(...searchEn);
       tryCSEimg ='nextStep';
     } else {
       //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
       qTxt = !!newWort.lang_DE
-        ? `${subQtxt}  OR  ${newWort.lang_DE
+        ? `${subQtxt} OR ${newWort.lang_DE
             .replaceAll(rRgxEnd, "")
-            .replaceAll(rRgx, "  OR  ")}`
+            .replaceAll(rRgx, " OR ")}`
         : "";
       tryCSEimg = "quitImg";
       searchPara.push(...searchDe);
