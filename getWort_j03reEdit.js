@@ -8,8 +8,7 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
     warning: 2,
     error: 3,
   });
-var newWort,
-  doc,
+var doc,
   kNo = 0;
 
 class Wort {
@@ -142,38 +141,41 @@ function getWort(html) {
   checkDoc
     .then(() => {
       //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
-      newWort = new Wort();
+     let newWort = new Wort();
       newWort.wrt.wort = currentWort;
       /***Kelimenin tanimlanmasi */
       newWort.status.Situation[0] = doc.querySelector(
         "article>div>nav>a[href]"
       ).nextElementSibling.textContent;
       /**Üst kisimdaki kelimeye dair gramatik bilgiler */
-      getTitle("headTitle");
+      getTitle("headTitle", newWort);
       /***sub Title: Keliemenin cogulu, verben halleri ve diger cekimler bulunur***/
-      getTitle("subCode");
+      getTitle("subCode", newWort);
       /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
-      getTitle("subMain");
+      getTitle("subMain", newWort);
       /*** worte dair text bilgileri olusturulur */
-      getTitle("wortText");
+      getTitle("wortText", newWort);
       /**** Akkusativ/Dativ kullanimlarini neseye alma** */
-      getTitle("fall");
+      getTitle("fall", newWort);
       /***Konjugation Tablolarina dair HTML'ler */
-      getTitle("Tbls");
+      getTitle("Tbls", newWort);
       /***Adjecktiflerin/Pronomenlerin cekimlerine dair tablolar alinir */
-      getOthrTbl();
+      getOthrTbl(newWort);
       /***örnek cümleleralinir */
-      getSatze();
+      getSatze(newWort);
       /***almanca ingilizce tanimlari alinir */
-      getLangDeEng();
+      getLangDeEng(newWort);
+      return newWort
     })
-    .then(() => {
-      getLang(); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+    .then((newWort) => {
+      getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      return newWort
     })
-    .then(() => {
-      if (newWort.status.Substantiv[0] == "Substantiv") getImg(); //nomen ise görsel alinir
+    .then((newWort) => {
+      if (newWort.status.Substantiv[0] == "Substantiv") getImg(newWort); //nomen ise görsel alinir
+      return newWort
     })
-    .then(() => {
+    .then((newWort) => {
       wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })

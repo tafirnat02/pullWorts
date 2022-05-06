@@ -8,7 +8,7 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
     warning: 2,
     error: 3,
   });
-var newWort,
+let newWort,
   doc,
   kNo = 0;
 
@@ -166,14 +166,17 @@ function getWort(html) {
       getSatze();
       /***almanca ingilizce tanimlari alinir */
       getLangDeEng();
+      return newWort;
     })
-    .then(() => {
-      getLang(); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+    .then((newWort) => {
+      return getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
     })
-    .then(() => {
-      if (newWort.status.Substantiv[0] == "Substantiv") getImg(); //nomen ise görsel alinir
+    .then((newWort) => {
+      if (newWort.status.Substantiv[0] == "Substantiv") {
+        return getImg(newWort); //nomen ise görsel alinir
+      }
     })
-    .then(() => {
+    .then((newWort) => {
       wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })
@@ -423,7 +426,7 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR  karsiligi alinir */
-function getLang() {
+function getLang(newWort) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -438,6 +441,7 @@ function getLang() {
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
+    return newWort;
   };
 
   /*
@@ -576,7 +580,7 @@ function getLangDeEng() {
 /***************** Görsel Icin Yapilan Düzenlemeler ********************/
 //ugulamanin basinda api sayfaya dahil edilir
 //--> callback ile en son cikti basilmali  <---
-function getImg() {
+function getImg(newWort) {
   /*get methoduyla alinmakta...
   1-Programmable Search Engine (CSE) ile bir arama motoru olusturulur,
   2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
@@ -664,13 +668,13 @@ function getImg() {
         result.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        console.log('newWort ögesinin img sonrasi durumu...')
-        console.log(newWort)
+        console.log("newWort ögesinin img sonrasi durumu...");
+        console.log(newWort);
       })
       .then(() => {
         if (newWort.img.length >= 6) {
           tryCSEimg = "quitImg";
-          return;
+          return newWort;
         } else if (tryCSEimg === "quitImg") {
           throw "noImage";
         } else {
@@ -699,10 +703,11 @@ function getImg() {
             );
             break;
         }
+        return newWort;
       });
   };
-
   if (tryCSEimg !== "quitImg") urler();
+  return newWort;
 }
 
 /**** DOM Element Checker*********/
