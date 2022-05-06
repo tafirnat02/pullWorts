@@ -127,20 +127,18 @@ function outPut() {
 /*------------------tekil alinmasi icin editlenen kod blogu SONU ---------------------*/
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
-  consoleMsg(msgTyp.primary, `Öge Sayisi: `, `docs: ${arrDocument.length}`);
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
   try {
     //img-->load first gApi
     doc = html;
     /**kelimenin alinmasi */
     let currentWort = doc.querySelector("form>div>input").value;
-    console.log("currentWort >> ", currentWort);
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) {
       consoleMsg(
         msgTyp.error,
         `"${currentWort}"`,
-        `Aranilan kelime icin sonuc bulunamadi! https://www.verbformen.de/?w=${currentWort}`
+        `Aranilan kelime icin sonuc bulunamadi!`, `https://www.verbformen.de/?w=${currentWort}`
       );
       //multiple icin sonraki doc isleme alinir...
       getWortObj();
@@ -506,7 +504,7 @@ function getLang(currentWort, callback) {
       .catch((err) => {
         consoleMsg(
           msgTyp.error,
-          `Translate | ${currentWort}`,
+          `${currentWort}`,
           "Google translate API error. (f:getLang-multiple)"
         );
         console.log(err);
@@ -662,7 +660,6 @@ function getImg() {
         return;
       })
       .then(() => {
-        q=e+t+z+u+i+o+5;//hata kontrolü
         if (newWort.img.length >= 6) {
           tryCSEimg = "quitImg";
 
@@ -685,7 +682,7 @@ function getImg() {
           default: // diger hatalar
             consoleMsg(
               msgTyp.error,
-              `Error | ${newWort.wrt.wort}`,
+              `${newWort.wrt.wort}`,
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );

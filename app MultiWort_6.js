@@ -12,7 +12,7 @@ const subWortList=[],arrDocument=[]
     jFs ={
     gApi:"https://apis.google.com/js/api.js",
     wortList:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
-    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_i08.js",
+    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_i09.js",
     check(){
          let e_getWort = document.querySelectorAll(`script[src="${this.getWort}"]`).length,
              e_gApi = document.querySelectorAll(`script[src="${this.gApi}"]`).length
@@ -82,6 +82,7 @@ loadApp() //        🏁🚩🏁 loadApp promise yapisiyla uygulamaya start veri
 const wortListEditor = () => {
      maxlen = mainWortList.length
      subWortList.push(...mainWortList.slice(starter, maxlen));
+     wortesArr.length=0 // JSON olarak tutulan kelime bilgileri islem tekrarinda dizin sifirlanir...
      nextWort();
 };
 
@@ -142,8 +143,8 @@ const getWortObj = () =>{
         `Document Islemi Tamamlanadi`,
         `Keliemlere ait sayfalar alindi... (f:nextDoc)`
       );
-        console.log(arrDocument)
-      arrDocument.forEach((wrt) => {
+        //console.log(wortesArr) // >> Tüm JSON obje olarak tutulen kelimelere ait dizin. getWort'ten push() edilir.
+        wortesArr.forEach((wrt) => {
         let rsltWrt = JSON.parse(wrt);
         consoleMsg(
           msgTyp.successful,
@@ -157,7 +158,7 @@ const getWortObj = () =>{
     consoleMsg(
       msgTyp.error,
       `Document Islem Hatasi`,
-      `${err} (f:nextDoc)`, err
+      `${err} (f:getWortObj)`, err
     );
   }
 }
