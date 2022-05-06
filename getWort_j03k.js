@@ -442,7 +442,7 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR  karsiligi alinir */
-function getLang(newWort) {
+function getLang() {
   debugger
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
