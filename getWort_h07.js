@@ -10,7 +10,6 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
 var newWort,
   doc,
   wortesArr = [],
-  tryCSEimg = false,
   loopCount = 0,
   timeoutId,
   kNo = 0;
@@ -589,7 +588,7 @@ function getImg() {
     rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|\t|[ ]{2,}/gi),
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
-  let subQtxt;
+  var subQtxt,tryCSEimg = false
   //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
 
   const urler = () => {
@@ -660,11 +659,13 @@ function getImg() {
         result.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
+        return
       })
       .then(() => {
-        if (newWort.img.length >= 6) return;
-
-        if (tryCSEimg === "quitImg") {
+        if (newWort.img.length >= 6){
+          tryCSEimg = "quitImg"
+          return;
+        }else if (tryCSEimg === "quitImg") {
           throw "noImage";
         } else {
           throw "tryImage";
@@ -676,6 +677,7 @@ function getImg() {
             urler();
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
+            tryCSEimg = "quitImg"
             consoleMsg(`No Image: ${newWort.wrt.wort}`, `Görsel bulunamadi!`);
             break;
           default: // diger hatalar
@@ -689,7 +691,7 @@ function getImg() {
       });
   };
 
-  urler();
+  if (tryCSEimg !== "quitImg") urler();
 }
 
 /**** DOM Element Checker*********/
