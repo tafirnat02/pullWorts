@@ -203,9 +203,6 @@ function getWort(html) {
       })
     }
 
-
-      
-}
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
 function getTitle(tit) {
