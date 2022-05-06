@@ -141,6 +141,7 @@ function getWort(html) {
   //HTML  icerigi dogrulama sonrasi Wort sinifindan nesne olusturulur ve propertyleri atanir
   checkDoc
     .then(() => {
+        debugger
       //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
       newWort = new Wort();
       newWort.wrt.wort = currentWort;
@@ -197,11 +198,9 @@ function getWort(html) {
           break;
         default:
           consoleMsg(
-            msgTyp.error,
-            `${currentWort}`,
-            "'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])",
-            error
+            msgTyp.error,`${currentWort}`,"'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])"
           );
+          console.log(error)
           break;
       }
     });
