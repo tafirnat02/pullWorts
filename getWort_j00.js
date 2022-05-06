@@ -654,15 +654,17 @@ function getImg() {
         }
       })
       .then((result) => {
+        console.log(newWort.img)
+        console.log(result.items)
         result.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        return;
+        console.log(newWort.img)
       })
       .then(() => {
+        console.log('img.length:',newWort.img.length)
         if (newWort.img.length >= 6) {
           tryCSEimg = "quitImg";
-
           return;
         } else if (tryCSEimg === "quitImg") {
           throw "noImage";
