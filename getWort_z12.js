@@ -669,7 +669,7 @@ function getImg(newWort) {
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
 
     debugger;
-
+console.log(newWort.wrt.wort,resApi.img.index, url)
     fetch(url)
       .then((response) => {
         console.log(newWort.wrt.wort, response.status)
@@ -735,6 +735,7 @@ function getImg(newWort) {
                 `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchApi)`,
                 err
               );
+              tryCSEimg = "quitImg"
             }
             break;
           default: // diger hatalar
@@ -744,8 +745,10 @@ function getImg(newWort) {
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
+            tryCSEimg = "quitImg"
             break;
         }
+
       });
   };
   if (tryCSEimg !== "quitImg") urler();
