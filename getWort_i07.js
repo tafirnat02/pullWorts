@@ -430,7 +430,6 @@ function getLang(currentWort, callback) {
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
-    debugger;
     if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
     return;
   };
@@ -626,7 +625,6 @@ function getImg() {
   };
 
   const searchApi = () => {
-    debugger;
     console.log("testBase:", qTxt + excludedUrl);
     var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
