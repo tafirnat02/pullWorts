@@ -584,7 +584,6 @@ function getImg() {
   const searchPara = [],
     searchDe = ["de", "countryDE"],
     searchEn = ["en", "countryUS"],
-    rRgx = new RegExp(/,|;|\.|\//gi),
     rRgxUrl = new RegExp(/&[ ]{1,}/gi),
     rRgxBreak = new RegExp(/\r\n|\r|\n|\t|[ ]{2,}/gi),
     rRgxWrd = new RegExp(/<i>|<b>|<\/i>|<\/b>|,|\.|;|\//gi),
@@ -627,6 +626,7 @@ function getImg() {
   };
 
   const searchApi = () => {
+    debugger
     console.log ('testBase:',qTxt + excludedUrl)
     const url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
