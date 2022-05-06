@@ -628,7 +628,7 @@ function getImg() {
   const searchApi = () => {
     debugger;
     console.log("testBase:", qTxt + excludedUrl);
-    const url = `https://customsearch.googleapis.com/customsearch/v1?
+    var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
     cx=a3e969be698bd439c&
     searchType=image&
