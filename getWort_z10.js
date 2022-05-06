@@ -2,13 +2,23 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
   brExp = /·/gi,
   empty = "",
   wortesArr = [],
-  resApi = [true, true];
-msgTyp = Object.freeze({
-  primary: 0,
-  successful: 1,
-  warning: 2,
-  error: 3,
-});
+  msgTyp = Object.freeze({
+    primary: 0,
+    successful: 1,
+    warning: 2,
+    error: 3,
+  }),
+  resApi = {
+    lang: {
+      status: true,
+      index: 0,
+    },
+    img: {
+      status: true,
+      index: 0,
+    },
+  };
+
 let newWort,
   doc,
   kNo = 0;
@@ -175,7 +185,7 @@ function getWort(html) {
     })
     .then((newWort) => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
-        if (resApi[1]) getImg(newWort); //api aktif ise: nomen ise görsel alinir
+        if (resApi.img.status) getImg(newWort); //api aktif ise: nomen ise görsel alinir
       }
       return newWort;
     })
@@ -442,7 +452,7 @@ function getLang(newWort) {
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
     } else {
-      if (resApi[0]) getApiLang(); //api aktif ise: tükce karsiligi icin  apiye yönlendirilir
+      if (resApi.lang.status) getApiLang(); //api aktif ise: tükce karsiligi icin  apiye yönlendirilir
     }
   };
 
@@ -601,7 +611,6 @@ function getImg(newWort) {
       ["AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw", "a3e969be698bd439c"],
       ["AIzaSyCVS4E6QeXeDZoyEMOICbKxUR22O7uNGVM", "3a809e54711b3d927"],
       ["AIzaSyAOzki0o1Pi1zvSOSLVY0cVWBSDb1EwtKg", "206d7b21e9b9cb1ff"],
-      0,
     ],
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
@@ -646,8 +655,8 @@ function getImg(newWort) {
 
   const searchApi = () => {
     var url = `https://customsearch.googleapis.com/customsearch/v1?
-    key=${cse[cse[3]][0]}&
-    cx=${cse[cse[3]][1]}&
+    key=${cse[resApi.img.index][0]}&
+    cx=${cse[resApi.img.index][1]}&
     searchType=image&
     safe=active&
     c2coff=1&
@@ -714,11 +723,11 @@ function getImg(newWort) {
               );
             break;
           case 429:
-            if (cse[3] < cse.length - 1) {
-              cse[cse.length - 1] += 1;
+            if (resApi.img.index < cse.length) {
+              resApi.img.index += 1;
               searchApi();
             } else {
-              resApi[1] = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
+              resApi.lang.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
               consoleMsg(
                 msgTyp.warning,
                 `429 | ${newWort.wrt.wort}`,
