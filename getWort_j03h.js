@@ -443,6 +443,7 @@ function addTrVal(e, obj) {
 
 /**** kelimenin TR  karsiligi alinir */
 function getLang(newWort) {
+  debugger
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -450,7 +451,6 @@ function getLang(newWort) {
     //Tükce karsiligi
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
-debugger
     if (checkEl(srcL1)) {
       newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
     } else if (checkEl(srcL2)) {
