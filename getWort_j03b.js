@@ -131,11 +131,12 @@ function getWort(html) {
   debugger
   let currentWort
   doc = html;
-  const  checkDoc = new Promise((myResolve, myReject) =>{
+  const  checkDoc = new Promise((resolve) =>{
        /**kelimenin alinmasi */
         currentWort = doc.querySelector("form>div>input").value;
        //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
        if (!checkEl(doc.querySelector("section.rBox"))) throw('not found wort!')
+       resolve()
     });
     
     //HTML  icerigi dogrulama sonrasi Wort sinifindan nesne olusturulur ve propertyleri atanir 
@@ -167,11 +168,15 @@ function getWort(html) {
     getSatze();
     /***almanca ingilizce tanimlari alinir */
      getLangDeEng();
+     return
     })
     .then(()=>{
     getLang(currentWort ); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
-    }).then(()=>{
+    return
+    })
+    .then(()=>{
       if (newWort.status.Substantiv[0] == "Substantiv") getImg()//nomen ise görsel alinir
+      return
     })
     .then(()=>{
       wortesArr.push(JSON.stringify(newWort));//alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
