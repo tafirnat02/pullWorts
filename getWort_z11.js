@@ -672,6 +672,7 @@ function getImg(newWort) {
 
     fetch(url)
       .then((response) => {
+        console.log(newWort.wrt.wort, response.status)
         if (response.status === 200) {
           return response.text();
         } else if (response.status === 429) {
