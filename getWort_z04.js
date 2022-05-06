@@ -167,7 +167,8 @@ function getWort(html) {
       getSatze();
       /***almanca ingilizce tanimlari alinir */
       getLangDeEng();
-      return newWort;
+      //return newWort;
+      resolve(newWort);
     })
     .then((newWort) => {
       getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
