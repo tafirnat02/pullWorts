@@ -641,7 +641,7 @@ function getImg() {
     q=${qTxt + excludedUrl}
     `;
     console.log('urlBase:',url);
-    url.replaceAll(rRgxBreak, "").replaceAll(rRgxBreak, "").replaceAll(rRgxUrl,'&');
+    url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl,'&');
     console.log('resultUrl:',url);
     debugger;
     fetch(url)
