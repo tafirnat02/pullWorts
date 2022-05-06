@@ -430,7 +430,7 @@ function getLang(currentWort, callback) {
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
-    debugger
+    debugger;
     if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
     return;
   };
@@ -581,11 +581,13 @@ function getImg() {
     searchDe = ["de", "countryDE"],
     searchEn = ["en", "countryUS"],
     rRgxUrl = new RegExp(/&[ ]{1,}/gi),
+    rRgxWrd = new RegExp(/,|\.|;|\//gi),
+    rRgxDom = new RegExp(/<i>|<b>|<\/i>|<\/b>/gi),
     rRgxBreak = new RegExp(/\r\n|\r|\n|\t|[ ]{2,}/gi),
-    rRgxWrd = new RegExp(/<i>|<b>|<\/i>|<\/b>|,|\.|;|\//gi),
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
-  var subQtxt,tryCSEimg = false
+  var subQtxt,
+    tryCSEimg = false;
   //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
 
   const urler = () => {
@@ -598,32 +600,34 @@ function getImg() {
         newWort.wrt.plural != newWort.wrt.wort
           ? " OR " + newWort.wrt.plural
           : "");
-      qTxt = `${qTxt.replaceAll(rRgx, " OR ")}`;
+      qTxt = `${qTxt.replaceAll(rRgxWrd, " OR ")}`;
       subQtxt = qTxt;
       searchPara.push(...searchDe);
       tryCSEimg = true;
     } else if (tryCSEimg === true && !!newWort.lang_En) {
       //varsa ingilizce kelimelerden arama yapilir sadece..
-      qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ");
+      qTxt = newWort.lang_En
+        .replaceAll(rRgxDom, "")
+        .replaceAll(rRgxWrd, " OR ");
       searchPara.push(...searchEn);
-      tryCSEimg ='nextStep';
+      tryCSEimg = "nextStep";
     } else {
       //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
       qTxt = !!newWort.lang_DE
         ? `${subQtxt} OR ${newWort.lang_DE
-            .replaceAll(rRgxEnd, "")
-            .replaceAll(rRgx, " OR ")}`
+            .replaceAll(rRgxDom, "")
+            .replaceAll(rRgxWrd, " OR ")}`
         : "";
       tryCSEimg = "quitImg";
       searchPara.push(...searchDe);
     }
-    qTxt = qTxt.replaceAll(rRgxWrd,' ')
-    searchApi()
+    qTxt = qTxt.replaceAll(rRgxDom, "");
+    searchApi();
   };
 
   const searchApi = () => {
-    debugger
-    console.log ('testBase:',qTxt + excludedUrl)
+    debugger;
+    console.log("testBase:", qTxt + excludedUrl);
     const url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
     cx=a3e969be698bd439c&
@@ -636,9 +640,9 @@ function getImg() {
     hl=${searchPara[0]}&
     q=${qTxt + excludedUrl}
     `;
-    console.log('urlBase:',url);
-    url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl,'&');
-    console.log('resultUrl:',url);
+    console.log("urlBase:", url);
+    url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
+    console.log("resultUrl:", url);
     debugger;
     fetch(url)
       .then((response) => {
@@ -661,13 +665,13 @@ function getImg() {
         result.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        return
+        return;
       })
       .then(() => {
-        if (newWort.img.length >= 6){
-          tryCSEimg = "quitImg"
+        if (newWort.img.length >= 6) {
+          tryCSEimg = "quitImg";
           return;
-        }else if (tryCSEimg === "quitImg") {
+        } else if (tryCSEimg === "quitImg") {
           throw "noImage";
         } else {
           throw "tryImage";
@@ -679,7 +683,7 @@ function getImg() {
             urler();
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
-            tryCSEimg = "quitImg"
+            tryCSEimg = "quitImg";
             consoleMsg(`No Image: ${newWort.wrt.wort}`, `Görsel bulunamadi!`);
             break;
           default: // diger hatalar
