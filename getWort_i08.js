@@ -269,6 +269,7 @@ function setFall(head) {
   });
   subFall = subFall.split(" -§- ").sort().join(" ").trim();
   newWort.fall.Other = subFall;
+  delete newWort.fall.wechsel;
 }
 /***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
 function getAdj() {
@@ -641,7 +642,6 @@ function getImg() {
     console.log("urlBase:", url);
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
     console.log("resultUrl:", url);
-    debugger;
     fetch(url)
       .then((response) => {
         return response.text();
@@ -666,8 +666,10 @@ function getImg() {
         return;
       })
       .then(() => {
+        q=e+t+z+u+i+o+5;//hata kontrolü
         if (newWort.img.length >= 6) {
           tryCSEimg = "quitImg";
+
           return;
         } else if (tryCSEimg === "quitImg") {
           throw "noImage";
@@ -682,11 +684,11 @@ function getImg() {
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
             tryCSEimg = "quitImg";
-            consoleMsg(`No Image: ${newWort.wrt.wort}`, `Görsel bulunamadi!`);
+            consoleMsg(`No Image | ${newWort.wrt.wort}`, `Görsel bulunamadi! (f:getImg-searchApi)`);
             break;
           default: // diger hatalar
             consoleMsg(
-              `Error: ${newWort.wrt.wort}`,
+              `Error | ${newWort.wrt.wort}`,
               `Görsel alinirken hata olustu! (f:getImg-searchApi) `,
               err
             );
