@@ -669,10 +669,10 @@ function getImg(newWort) {
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
 
     debugger;
-console.log(newWort.wrt.wort,resApi.img.index, url)
+    console.log(newWort.wrt.wort, resApi.img.index, url);
     fetch(url)
       .then((response) => {
-        console.log(newWort.wrt.wort, response.status)
+        console.log(newWort.wrt.wort, response.status);
         if (response.status === 200) {
           return response.text();
         } else if (response.status === 429) {
@@ -710,6 +710,7 @@ console.log(newWort.wrt.wort,resApi.img.index, url)
         }
       })
       .catch((err) => {
+        debugger
         switch (err) {
           case "tryImage": //sonraki metne göre arama yapilir
             urler();
@@ -735,7 +736,7 @@ console.log(newWort.wrt.wort,resApi.img.index, url)
                 `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchApi)`,
                 err
               );
-              tryCSEimg = "quitImg"
+              tryCSEimg = "quitImg";
             }
             break;
           default: // diger hatalar
@@ -745,10 +746,9 @@ console.log(newWort.wrt.wort,resApi.img.index, url)
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
-            tryCSEimg = "quitImg"
+            tryCSEimg = "quitImg";
             break;
         }
-
       });
   };
   if (tryCSEimg !== "quitImg") urler();
