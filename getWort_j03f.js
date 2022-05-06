@@ -128,85 +128,83 @@ function outPut() {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
-  let currentWort
+  let currentWort;
   doc = html;
-  const  checkDoc = new Promise((resolve) =>{
-       /**kelimenin alinmasi */
-        currentWort = doc.querySelector("form>div>input").value;
-       //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
-       if (!checkEl(doc.querySelector("section.rBox"))) throw('not found wort!')
-       resolve()
-    });
-    
-    //HTML  icerigi dogrulama sonrasi Wort sinifindan nesne olusturulur ve propertyleri atanir 
-    checkDoc.then(()=>{
-    //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
-    newWort = new Wort();
-    newWort.wrt.wort = currentWort;
-    /***Kelimenin tanimlanmasi */
-    newWort.status.Situation[0] = doc.querySelector(
-      "article>div>nav>a[href]"
-    ).nextElementSibling.textContent;
-    /**Üst kisimdaki kelimeye dair gramatik bilgiler */
-    getTitle("headTitle");
-    /***sub Title: Keliemenin cogulu, verben halleri ve diger cekimler bulunur***/
-    getTitle("subCode");
-    /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
-    getTitle("subMain");
-    /*** worte dair text bilgileri olusturulur */
-    getTitle("wortText");
-    /*****Türkcesi */
-    getTitle("lang");
-    /**** Akkusativ/Dativ kullanimlarini neseye alma** */
-    getTitle("fall");
-    /***Konjugation Tablolarina dair HTML'ler */
-    getTitle("Tbls");
-    /***Adjecktiflerin/Pronomenlerin cekimlerine dair tablolar alinir */
-    getOthrTbl();
-    /***örnek cümleleralinir */
-    getSatze();
-    /***almanca ingilizce tanimlari alinir */
-     getLangDeEng();
-     return
+  const checkDoc = new Promise((resolve) => {
+    /**kelimenin alinmasi */
+    currentWort = doc.querySelector("form>div>input").value;
+    //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
+    if (!checkEl(doc.querySelector("section.rBox"))) throw "not found wort!";
+    resolve();
+  });
+
+  //HTML  icerigi dogrulama sonrasi Wort sinifindan nesne olusturulur ve propertyleri atanir
+  checkDoc
+    .then(() => {
+      //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
+      newWort = new Wort();
+      newWort.wrt.wort = currentWort;
+      /***Kelimenin tanimlanmasi */
+      newWort.status.Situation[0] = doc.querySelector(
+        "article>div>nav>a[href]"
+      ).nextElementSibling.textContent;
+      /**Üst kisimdaki kelimeye dair gramatik bilgiler */
+      getTitle("headTitle");
+      /***sub Title: Keliemenin cogulu, verben halleri ve diger cekimler bulunur***/
+      getTitle("subCode");
+      /*** mainTitle: Keliemyi ve ses dosyasini objeye ekler */
+      getTitle("subMain");
+      /*** worte dair text bilgileri olusturulur */
+      getTitle("wortText");
+      /*****Türkcesi */
+      getTitle("lang");
+      /**** Akkusativ/Dativ kullanimlarini neseye alma** */
+      getTitle("fall");
+      /***Konjugation Tablolarina dair HTML'ler */
+      getTitle("Tbls");
+      /***almanca ingilizce tanimlari alinir */
+      getLangDeEng();
+      /***Adjecktiflerin/Pronomenlerin cekimlerine dair tablolar alinir */
+      getOthrTbl();
+      /***örnek cümleleralinir */
+      getSatze();
     })
-    .then(()=>{
-    getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
-    return
+    .then(() => {
+      getLang(); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
     })
-    .then(()=>{
-      if (newWort.status.Substantiv[0] == "Substantiv") getImg(newWort)//nomen ise görsel alinir
-      return
+    .then(() => {
+      if (newWort.status.Substantiv[0] == "Substantiv") getImg(); //nomen ise görsel alinir
     })
-    .then(()=>{
-      wortesArr.push(JSON.stringify(newWort));//alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
-      getWortObj();//(multiple icin)sonraki doc isleme alinir...
+    .then(() => {
+      wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
+      getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })
-    .catch((error)=>{
+    .catch((error) => {
       switch (error) {
-        case 'not found wort!':
+        case "not found wort!":
           consoleMsg(
             msgTyp.error,
             `"${currentWort}"`,
-            `Aranilan kelime icin gecerli sayfa bulunamadi! (f:getWort-checkDoc[multiple])`, `https://www.verbformen.de/?w=${currentWort}`
+            `Aranilan kelime icin gecerli sayfa bulunamadi! (f:getWort-checkDoc[multiple])`,
+            `https://www.verbformen.de/?w=${currentWort}`
           );
-          getWortObj();//multiple icin sonraki doc isleme alinir...
-        break;
-        case 555 :
-          
-        break;
-        case 554 :
-          
-        break;
+          getWortObj(); //multiple icin sonraki doc isleme alinir...
+          break;
+        case 555:
+          break;
+        case 554:
+          break;
         default:
           consoleMsg(
             msgTyp.error,
             `${currentWort}`,
-            "'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])",error
+            "'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])",
+            error
           );
           break;
-        }
-      })
-    }
+      }
+    });
+}
 
 /****::: Sub function****** */
 /***Genel olarak ilgili fonksiyona yönlendirm yapan ara fonksiyon */
@@ -435,7 +433,7 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR + En karsiligi alinir */
-function getLang(newWort_sub) {
+function getLang(newWort) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -445,9 +443,9 @@ function getLang(newWort_sub) {
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
 
     if (checkEl(srcL1)) {
-      newWort_sub.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
+      newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
     } else if (checkEl(srcL2)) {
-      newWort_sub.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
+      newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
@@ -474,7 +472,7 @@ function getLang(newWort_sub) {
       "315d73dc43msh61c6def5cbe0690p1cad03jsnc046f66648da",
     ];
     const encodedParams = new URLSearchParams();
-    encodedParams.append("q", newWort_sub.wrt.wort);
+    encodedParams.append("q", newWort.wrt.wort);
     encodedParams.append("target", "tr");
     encodedParams.append("source", "de");
 
@@ -500,7 +498,7 @@ function getLang(newWort_sub) {
           if (kNo <= 10) {
             consoleMsg(
               msgTyp.warning,
-              `API Limit | ${newWort_sub.wrt.wort} `,
+              `API Limit | ${newWort.wrt.wort} `,
               `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
             );
             kNo++; //diger keyler denenir..
@@ -510,21 +508,21 @@ function getLang(newWort_sub) {
             consoleMsg(
               msgTyp.error,
               `API Limit`,
-              `google-translate1 rapidapi -> all keys limit... | ${newWort_sub.wrt.wort} (f:getLang-multiple)`
+              `google-translate1 rapidapi -> all keys limit... | ${newWort.wrt.wort} (f:getLang-multiple)`
             );
           }
         } else {
           //basarili sekilde veri alindi
-          newWort_sub.lang_TR = response.data[
+          newWort.lang_TR = response.data[
             "translations"
           ][0].translatedText.replaceAll(rpRegExp, empty);
-          // if(newWort_sub.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
+          // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
         }
       })
       .catch((err) => {
         consoleMsg(
           msgTyp.error,
-          `${newWort_sub.wrt.wort}`,
+          `${newWort.wrt.wort}`,
           "Google translate API error. (f:getLang-multiple)"
         );
         console.log(err);
@@ -589,7 +587,7 @@ function getLangDeEng() {
 /***************** Görsel Icin Yapilan Düzenlemeler ********************/
 //ugulamanin basinda api sayfaya dahil edilir
 //--> callback ile en son cikti basilmali  <---
-function getImg(newWort_sub) {
+function getImg() {
   /*get methoduyla alinmakta...
   1-Programmable Search Engine (CSE) ile bir arama motoru olusturulur,
   2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
@@ -613,26 +611,26 @@ function getImg(newWort_sub) {
     if (tryCSEimg === false) {
       //odaklanmis arama metni: Almanca singular + plural
       qTxt =
-        `"${newWort_sub.wrt.wort}" OR ${newWort_sub.wrt.wort}` +
-        ((newWort_sub.wrt.artikel != "-" || newWort_sub.wrt.plural != "-") &&
-        newWort_sub.wrt.plural != newWort_sub.wrt.wort
-          ? " OR " + newWort_sub.wrt.plural
+        `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
+        ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
+        newWort.wrt.plural != newWort.wrt.wort
+          ? " OR " + newWort.wrt.plural
           : "");
       qTxt = `${qTxt.replaceAll(rRgxWrd, " OR ")}`;
       subQtxt = qTxt;
       searchPara.push(...searchDe);
       tryCSEimg = true;
-    } else if (tryCSEimg === true && !!newWort_sub.lang_En) {
+    } else if (tryCSEimg === true && !!newWort.lang_En) {
       //varsa ingilizce kelimelerden arama yapilir sadece..
-      qTxt = newWort_sub.lang_En
+      qTxt = newWort.lang_En
         .replaceAll(rRgxDom, "")
         .replaceAll(rRgxWrd, " OR ");
       searchPara.push(...searchEn);
       tryCSEimg = "nextStep";
     } else {
       //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
-      qTxt = !!newWort_sub.lang_DE
-        ? `${subQtxt} OR ${newWort_sub.lang_DE
+      qTxt = !!newWort.lang_DE
+        ? `${subQtxt} OR ${newWort.lang_DE
             .replaceAll(rRgxDom, "")
             .replaceAll(rRgxWrd, " OR ")}`
         : "";
@@ -674,16 +672,14 @@ function getImg(newWort_sub) {
         }
       })
       .then((result) => {
-        console.log(newWort_sub.img)
-        console.log(result.items)
         result.items.forEach((item, index) => {
-          newWort_sub.img.push(item.image.thumbnailLink);
+          newWort.img.push(item.image.thumbnailLink);
         });
-        console.log(newWort_sub.img)
+        console.log('newWort ögesinin img sonrasi durumu...')
+        console.log(newWort)
       })
       .then(() => {
-        console.log('img.length:',newWort_sub.img.length)
-        if (newWort_sub.img.length >= 6) {
+        if (newWort.img.length >= 6) {
           tryCSEimg = "quitImg";
           return;
         } else if (tryCSEimg === "quitImg") {
@@ -699,12 +695,16 @@ function getImg(newWort_sub) {
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
             tryCSEimg = "quitImg";
-            consoleMsg( msgTyp.warning,`No Image | ${newWort_sub.wrt.wort}`, `Görsel bulunamadi! (f:getImg-searchApi)`);
+            consoleMsg(
+              msgTyp.warning,
+              `No Image | ${newWort.wrt.wort}`,
+              `Görsel bulunamadi! (f:getImg-searchApi)`
+            );
             break;
           default: // diger hatalar
             consoleMsg(
               msgTyp.error,
-              `${newWort_sub.wrt.wort}`,
+              `${newWort.wrt.wort}`,
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
