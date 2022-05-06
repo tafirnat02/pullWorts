@@ -425,16 +425,12 @@ function getLang(currentWort, callback) {
 
     if (checkEl(srcL1)) {
       newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
-      //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
-      //return
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
-      //if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
-      // return
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
-
+    debugger
     if (newWort.status.Substantiv[0] == "Substantiv") callback(); //isim ise görsel alinacak degilse sonraki ögeye gecilir
     return;
   };
