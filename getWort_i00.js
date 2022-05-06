@@ -585,7 +585,9 @@ function getImg() {
     searchDe = ["de", "countryDE"],
     searchEn = ["en", "countryUS"],
     rRgx = new RegExp(/,|;|\.|\//gi),
-    rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|\t|[ ]{2,}/gi),
+    rRgxUrl = new RegExp(/&[ ]{1,}/gi),
+    rRgxBreak = new RegExp(/\r\n|\r|\n|\t|[ ]{2,}/gi),
+    rRgxWrd = new RegExp(/<i>|<b>|<\/i>|<\/b>|,|\.|;|\//gi),
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
   var subQtxt,tryCSEimg = false
@@ -620,13 +622,13 @@ function getImg() {
       tryCSEimg = "quitImg";
       searchPara.push(...searchDe);
     }
+    qTxt = qTxt.replaceAll(rRgxWrd,' ')
     searchApi()
   };
 
   const searchApi = () => {
     console.log ('testBase:',qTxt + excludedUrl)
-    const url = `
-    https://customsearch.googleapis.com/customsearch/v1?
+    const url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
     cx=a3e969be698bd439c&
     searchType=image&
@@ -639,7 +641,7 @@ function getImg() {
     q=${qTxt + excludedUrl}
     `;
     console.log('urlBase:',url);
-    url.replaceAll(rRgxEnd, "");
+    url.replaceAll(rRgxBreak, "").replaceAll(rRgxBreak, "").replaceAll(rRgxUrl,'&');
     console.log('resultUrl:',url);
     debugger;
     fetch(url)
