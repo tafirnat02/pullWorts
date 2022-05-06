@@ -12,7 +12,7 @@ const subWortList=[],arrDocument=[]
     jFs ={
     gApi:"https://apis.google.com/js/api.js",
     wortList:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
-    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_i05.js",
+    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_i08.js",
     check(){
          let e_getWort = document.querySelectorAll(`script[src="${this.getWort}"]`).length,
              e_gApi = document.querySelectorAll(`script[src="${this.gApi}"]`).length
@@ -129,14 +129,13 @@ const getWortHTML = (wort) => {
 
 /*------------- [ 8. Kisim / Kelimeye Ait HTML document objesi alinir] -------------*/
 // fetch islemeinin ardindan tekrar kelime isleme alinir ve dizinden cikarilir
-
-
 const getWortObj = () =>{
     try {
     if (arrDocument.length > 0) {
       let html = arrDocument.shift();
       getWort(html); //her kelimeye ait ham html verileri getWort ile Json data olarak ayristirilir
-    } else {
+      return
+    } 
       //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir...
       consoleMsg(
         msgTyp.successful,
@@ -154,7 +153,6 @@ const getWortObj = () =>{
         console.log(wrt);
         console.log(rsltWrt);
       });
-    }
   } catch (err) {
     consoleMsg(
       msgTyp.error,

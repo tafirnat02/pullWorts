@@ -626,7 +626,6 @@ function getImg() {
   };
 
   const searchApi = () => {
-    console.log("testBase:", qTxt + excludedUrl);
     var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
     cx=a3e969be698bd439c&
@@ -639,9 +638,7 @@ function getImg() {
     hl=${searchPara[0]}&
     q=${qTxt + excludedUrl}
     `;
-    console.log("urlBase:", url);
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-    console.log("resultUrl:", url);
     fetch(url)
       .then((response) => {
         return response.text();
@@ -659,7 +656,6 @@ function getImg() {
         }
       })
       .then((result) => {
-        console.log(result);
         result.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
@@ -684,12 +680,13 @@ function getImg() {
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
             tryCSEimg = "quitImg";
-            consoleMsg(`No Image | ${newWort.wrt.wort}`, `Görsel bulunamadi! (f:getImg-searchApi)`);
+            consoleMsg( msgTyp.warning,`No Image | ${newWort.wrt.wort}`, `Görsel bulunamadi! (f:getImg-searchApi)`);
             break;
           default: // diger hatalar
             consoleMsg(
+              msgTyp.error,
               `Error | ${newWort.wrt.wort}`,
-              `Görsel alinirken hata olustu! (f:getImg-searchApi) `,
+              `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
             break;
