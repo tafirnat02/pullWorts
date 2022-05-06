@@ -611,6 +611,7 @@ function getImg(newWort) {
       ["AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw", "a3e969be698bd439c"],
       ["AIzaSyCVS4E6QeXeDZoyEMOICbKxUR22O7uNGVM", "3a809e54711b3d927"],
       ["AIzaSyAOzki0o1Pi1zvSOSLVY0cVWBSDb1EwtKg", "206d7b21e9b9cb1ff"],
+      ["AIzaSyCuccrJiVM6rntFedFIM4LEH-jF_uCv8Zw", "35567e479b9d748eb"],
     ],
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
@@ -667,8 +668,6 @@ function getImg(newWort) {
     q=${qTxt + excludedUrl}
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-
-    debugger;
     console.log(newWort.wrt.wort, resApi.img.index, url);
     fetch(url)
       .then((response) => {
@@ -678,7 +677,7 @@ function getImg(newWort) {
         } else if (response.status === 429) {
           throw 429;
         } else {
-          console.log('response:', response)
+          console.log("response:", response);
           throw response;
         }
       }) // or .json()
@@ -696,6 +695,7 @@ function getImg(newWort) {
         }
       })
       .then((response) => {
+        console.log(response.items);
         response.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
@@ -711,7 +711,7 @@ function getImg(newWort) {
         }
       })
       .catch((err) => {
-        debugger
+        debugger;
         switch (err) {
           case "tryImage": //sonraki metne göre arama yapilir
             urler();
