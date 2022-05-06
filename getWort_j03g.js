@@ -162,12 +162,12 @@ function getWort(html) {
       getTitle("fall");
       /***Konjugation Tablolarina dair HTML'ler */
       getTitle("Tbls");
-      /***almanca ingilizce tanimlari alinir */
-      getLangDeEng();
       /***Adjecktiflerin/Pronomenlerin cekimlerine dair tablolar alinir */
       getOthrTbl();
       /***örnek cümleleralinir */
       getSatze();
+      /***almanca ingilizce tanimlari alinir */
+      getLangDeEng();
     })
     .then(() => {
       getLang(); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
