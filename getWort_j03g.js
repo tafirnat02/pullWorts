@@ -156,8 +156,10 @@ function getWort(html) {
       getTitle("subMain");
       /*** worte dair text bilgileri olusturulur */
       getTitle("wortText");
+      
       /*****Türkcesi */
-      getTitle("lang");
+      //getTitle("lang"); >> Türkcesi getLang kisminda alinmakta ::::::::::: kontol edildikten sonra getTitle, oradan cagrilan fonksiyon silinmeli...
+
       /**** Akkusativ/Dativ kullanimlarini neseye alma** */
       getTitle("fall");
       /***Konjugation Tablolarina dair HTML'ler */
@@ -231,9 +233,11 @@ function getTitle(tit) {
     case "wortText":
       if (!verb) getAdj();
       break;
+      /*
     case "lang":
       setLang(head);
       break;
+      */
     case "fall":
       if (verb) setFall(head);
       break;
@@ -254,15 +258,17 @@ function setTbls() {
     .querySelector("a[href*='indikativ/perfekt']")
     .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, empty);
 }
+/*
 function setLang(head) {
   console.log(head)
-  debugger
   ele = head.querySelector("span[lang='tr']");
   console.log(ele)
   if (checkEl(ele)) {
     newWort.lang_TR = ele.innerText.trim();
   }
 }
+
+*/
 /******Fillerin dativ akkusativ kullanimlarinin tespiti */
 function setFall(head) {
   let subFall = "",
@@ -435,7 +441,7 @@ function addTrVal(e, obj) {
   });
 }
 
-/**** kelimenin TR + En karsiligi alinir */
+/**** kelimenin TR  karsiligi alinir */
 function getLang(newWort) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
@@ -444,7 +450,7 @@ function getLang(newWort) {
     //Tükce karsiligi
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
-
+debugger
     if (checkEl(srcL1)) {
       newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
     } else if (checkEl(srcL2)) {

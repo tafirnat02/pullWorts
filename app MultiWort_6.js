@@ -12,7 +12,7 @@ const subWortList=[],arrDocument=[]
     jFs ={
     gApi:"https://apis.google.com/js/api.js",
     wortList:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
-    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_j03g.js",
+    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_j03i.js",
     check(){
          let e_getWort = document.querySelectorAll(`script[src="${this.getWort}"]`).length,
              e_gApi = document.querySelectorAll(`script[src="${this.gApi}"]`).length
@@ -27,7 +27,7 @@ const subWortList=[],arrDocument=[]
 
 /*------------- [ 2. Kisim / Wort Liset Inject:Promise] -------------*/
 const loadApp =()=>{
-  console.log('🚩██ Loading…\n████▒▒▒▒▒▒▒▒▒▒▒▒▒')
+  console.log('🚩 Loading… █▒▒▒▒▒▒▒▒▒▒▒▒▒')
     return new Promise((resolve,reject) => {
        if (mainWortList.length>0) resolve(true) //kelimeler elle girilmisse
         //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
