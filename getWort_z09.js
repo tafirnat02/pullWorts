@@ -2,12 +2,13 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
   brExp = /·/gi,
   empty = "",
   wortesArr = [],
-  msgTyp = Object.freeze({
-    primary: 0,
-    successful: 1,
-    warning: 2,
-    error: 3,
-  });
+  resApi = [true, true];
+msgTyp = Object.freeze({
+  primary: 0,
+  successful: 1,
+  warning: 2,
+  error: 3,
+});
 let newWort,
   doc,
   kNo = 0;
@@ -168,17 +169,17 @@ function getWort(html) {
       getLangDeEng();
       return newWort;
     })
-    .then(newWort => {
-      getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
-      return newWort
+    .then((newWort) => {
+      getLang(newWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      return newWort;
     })
-    .then(newWort => {
+    .then((newWort) => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
-        getImg(newWort); //nomen ise görsel alinir
+        if (resApi[1]) getImg(newWort); //api aktif ise: nomen ise görsel alinir
       }
-      return newWort
+      return newWort;
     })
-    .then(newWort => {
+    .then((newWort) => {
       wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })
@@ -199,9 +200,11 @@ function getWort(html) {
           break;
         default:
           consoleMsg(
-            msgTyp.error,`${currentWort}`,"'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])"
+            msgTyp.error,
+            `${currentWort}`,
+            "'e ait HTML verisi islenirken hata olustu! (f:getWort[multiple])"
           );
-          console.log(error)
+          console.log(error);
           break;
       }
     });
@@ -430,7 +433,7 @@ function getLang(newWort) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
-        srcL2 = "";
+      srcL2 = "";
     //Tükce karsiligi
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
@@ -439,7 +442,7 @@ function getLang(newWort) {
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
     } else {
-      getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
+      if (resApi[0]) getApiLang(); //api aktif ise: tükce karsiligi icin  apiye yönlendirilir
     }
   };
 
@@ -519,7 +522,7 @@ function getLang(newWort) {
         );
         console.log(err);
       });
-      return newWort;
+    return newWort;
   };
 
   //initialization hatasi almamak icin en alttan cargildi
@@ -594,6 +597,12 @@ function getImg(newWort) {
     rRgxWrd = new RegExp(/,|\.|;|\//gi),
     rRgxDom = new RegExp(/<i>|<b>|<\/i>|<\/b>/gi),
     rRgxBreak = new RegExp(/\r\n|\r|\n|\t|[ ]{2,}/gi),
+    cse = [
+      ["AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw", "a3e969be698bd439c"],
+      ["AIzaSyCVS4E6QeXeDZoyEMOICbKxUR22O7uNGVM", "3a809e54711b3d927"],
+      ["AIzaSyAOzki0o1Pi1zvSOSLVY0cVWBSDb1EwtKg", "206d7b21e9b9cb1ff"],
+      0,
+    ],
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
   var subQtxt,
@@ -637,8 +646,8 @@ function getImg(newWort) {
 
   const searchApi = () => {
     var url = `https://customsearch.googleapis.com/customsearch/v1?
-    key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
-    cx=a3e969be698bd439c&
+    key=${cse[cse[3]][0]}&
+    cx=${cse[cse[3]][1]}&
     searchType=image&
     safe=active&
     c2coff=1&
@@ -649,22 +658,25 @@ function getImg(newWort) {
     q=${qTxt + excludedUrl}
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-    
-    debugger
+
+    debugger;
 
     fetch(url)
-      .then(response => {
-        console.log('response_1:', response)
-        return response.text();
+      .then((response) => {
+        if (response.status === 200) {
+          return response.text();
+        } else if (response.status === 429) {
+          throw 429;
+        } else {
+          throw response;
+        }
       }) // or .json()
-      .then(response => {
-        response= JSON.parse(response);
-        console.log('response_2:', response)
-        return response
+      .then((response) => {
+        return JSON.parse(response);
       })
-      .then(response => {
+      .then((response) => {
         //arama soonucu kontrol edilir
-        console.log('response_3:', response)
+        console.log("response_3:", response);
         if (typeof response.items !== "undefined") return response;
         if (tryCSEimg === "quitImg") {
           throw "noImage";
@@ -672,12 +684,10 @@ function getImg(newWort) {
           throw "tryImage";
         }
       })
-      .then(response => {
-        console.log('response_4:', response)
+      .then((response) => {
         response.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        console.log("newWort ögesinin img sonrasi durumu...", newWort);
       })
       .then(() => {
         if (newWort.img.length >= 6) {
@@ -696,11 +706,26 @@ function getImg(newWort) {
             break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
             tryCSEimg = "quitImg";
-            consoleMsg(
-              msgTyp.warning,
-              `No Image | ${newWort.wrt.wort}`,
-              `Görsel bulunamadi! (f:getImg-searchApi)`
-            );
+            if (newWort.img.length === 0)
+              consoleMsg(
+                msgTyp.warning,
+                `No Image | ${newWort.wrt.wort}`,
+                `Görsel bulunamadi! (f:getImg-searchApi)`
+              );
+            break;
+          case 429:
+            if (cse[3] < cse.length - 1) {
+              cse[cse.length - 1] += 1;
+              searchApi();
+            } else {
+              resApi[1] = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
+              consoleMsg(
+                msgTyp.warning,
+                `429 | ${newWort.wrt.wort}`,
+                `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchApi)`,
+                err
+              );
+            }
             break;
           default: // diger hatalar
             consoleMsg(
