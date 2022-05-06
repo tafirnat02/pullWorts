@@ -141,7 +141,6 @@ function getWort(html) {
   //HTML  icerigi dogrulama sonrasi Wort sinifindan nesne olusturulur ve propertyleri atanir
   checkDoc
     .then(() => {
-        debugger
       //kelime icin Wort sinifindan bir nesne olusturulur ve kelime atanir
       newWort = new Wort();
       newWort.wrt.wort = currentWort;
@@ -588,6 +587,8 @@ function getImg(newWort) {
   2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
  Düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?apix=true&apix_params=%7B%22c2coff%22%3A%220%22%2C%22cr%22%3A%22countryDE%22%2C%22cx%22%3A%22a3e969be698bd439c%22%2C%22filter%22%3A%221%22%2C%22gl%22%3A%22de%22%2C%22hl%22%3A%22de%22%2C%22q%22%3A%22sound%22%2C%22safe%22%3A%22active%22%2C%22searchType%22%3A%22image%22%7D
  */
+debugger
+
   const searchPara = [],
     searchDe = ["de", "countryDE"],
     searchEn = ["en", "countryUS"],
