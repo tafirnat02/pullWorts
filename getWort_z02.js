@@ -429,7 +429,7 @@ function getLang(newWort) {
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
-      srcL2 = "";
+        srcL2 = "";
     //Tükce karsiligi
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
@@ -440,6 +440,7 @@ function getLang(newWort) {
     } else {
       getApiLang(); // tükce karsiligi alinamaz ise apiya yönlendirilir
     }
+    debugger
     return newWort;
   };
 
@@ -519,6 +520,7 @@ function getLang(newWort) {
         );
         console.log(err);
       });
+      return newWort;
   };
 
   //initialization hatasi almamak icin en alttan cargildi
