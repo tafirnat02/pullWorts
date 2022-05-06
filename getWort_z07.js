@@ -652,13 +652,13 @@ debugger
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
     fetch(url)
-      .then((response) => {
+      .then(response => {
         return response.text();
       }) // or .json()
-      .then((response) => {
+      .then(response => {
         return JSON.parse(response);
       })
-      .then((response) => {
+      .then(response => {
         //arama soonucu kontrol edilir
         if (typeof response.items !== "undefined") return response;
         if (tryCSEimg === "quitImg") {
@@ -667,12 +667,11 @@ debugger
           throw "tryImage";
         }
       })
-      .then((result) => {
-        result.items.forEach((item, index) => {
+      .then(response => {
+        response.items.forEach((item, index) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        console.log("newWort ögesinin img sonrasi durumu...");
-        console.log(newWort);
+        console.log("newWort ögesinin img sonrasi durumu...", newWort);
       })
       .then(() => {
         if (newWort.img.length >= 6) {
@@ -706,7 +705,6 @@ debugger
             );
             break;
         }
-        return newWort;
       });
   };
   if (tryCSEimg !== "quitImg") urler();
