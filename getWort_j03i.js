@@ -255,7 +255,10 @@ function setTbls() {
     .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, empty);
 }
 function setLang(head) {
+  console.log(head)
+  debugger
   ele = head.querySelector("span[lang='tr']");
+  console.log(ele)
   if (checkEl(ele)) {
     newWort.lang_TR = ele.innerText.trim();
   }
