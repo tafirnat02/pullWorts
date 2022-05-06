@@ -582,43 +582,49 @@ function getImg() {
   2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
  Düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?apix=true&apix_params=%7B%22c2coff%22%3A%220%22%2C%22cr%22%3A%22countryDE%22%2C%22cx%22%3A%22a3e969be698bd439c%22%2C%22filter%22%3A%221%22%2C%22gl%22%3A%22de%22%2C%22hl%22%3A%22de%22%2C%22q%22%3A%22sound%22%2C%22safe%22%3A%22active%22%2C%22searchType%22%3A%22image%22%7D
  */
-  const searchPara =[],
-        searchDe=['de','countryDE'],
-        searchEn=['en', 'countryUS'],
-        rRgx = new RegExp(/,|;|\.|\//gi),
-        rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|\t|[ ]{2,}/gi),
-        excludedUrl =
-    " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
-
+  const searchPara = [],
+    searchDe = ["de", "countryDE"],
+    searchEn = ["en", "countryUS"],
+    rRgx = new RegExp(/,|;|\.|\//gi),
+    rRgxEnd = new RegExp(/<i>|<\/i>|<br>|\r\n|\r|\n|\t|[ ]{2,}/gi),
+    excludedUrl =
+      " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
+  let subQtxt;
   //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
-  searchPara.length = 0 //döngüde parametreler yeniden atanir...
-  if (tryCSEimg === false) {
-    //odaklanmis arama metni: Almanca singular + plural
-    qTxt =
-      `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
-      ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
-      newWort.wrt.plural != newWort.wrt.wort
-        ? " OR " + newWort.wrt.plural
-        : "");
-    qTxt = `${qTxt.replaceAll(rRgx, " OR ")}`;
-    searchPara.push(...searchDe)
-    tryCSEimg = true;
-  } else if (tryCSEimg === true && !!newWort.lang_En) {
-    //varsa ingilizce kelimelerden arama yapilir sadece..
-    qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ");
-    searchPara.push(...searchEn)
-  } else {
-    //varsa almanca tanimina göre arama yapilir sadece
-    qTxt += !!newWort.lang_DE
-      ? ` OR ${newWort.lang_DE.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ")}`
-      : "";
-    tryCSEimg = "quitImg";
-    searchPara.push(...searchDe)
-  }
 
-  
+  const urler = () => {
+    searchPara.length = 0; //döngüde parametreler yeniden atanir...
+    if (tryCSEimg === false) {
+      //odaklanmis arama metni: Almanca singular + plural
+      qTxt =
+        `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
+        ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
+        newWort.wrt.plural != newWort.wrt.wort
+          ? " OR " + newWort.wrt.plural
+          : "");
+      qTxt = `${qTxt.replaceAll(rRgx, " OR ")}`;
+      subQtxt = qTxt;
+      searchPara.push(...searchDe);
+      tryCSEimg = true;
+    } else if (tryCSEimg === true && !!newWort.lang_En) {
+      //varsa ingilizce kelimelerden arama yapilir sadece..
+      qTxt = newWort.lang_En.replaceAll(rRgxEnd, "").replaceAll(rRgx, " OR ");
+      searchPara.push(...searchEn);
+    } else {
+      //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
+      qTxt = !!newWort.lang_DE
+        ? `${subQtxt}  OR ${newWort.lang_DE
+            .replaceAll(rRgxEnd, "")
+            .replaceAll(rRgx, " OR ")}`
+        : "";
+      tryCSEimg = "quitImg";
+      searchPara.push(...searchDe);
+    }
+    searchApi()
+  };
+
   const searchApi = () => {
-    const url =`
+    const url = `
     https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
     cx=a3e969be698bd439c&
@@ -630,9 +636,9 @@ function getImg() {
     gl=${searchPara[0]}&
     hl=${searchPara[0]}&
     q=${qTxt + excludedUrl}
-    `.replaceAll(rRgxEnd, "") ; 
-console.log(url)
-debugger
+    `.replaceAll(rRgxEnd, "");
+    console.log(url);
+    debugger;
     fetch(url)
       .then((response) => {
         return response.text();
@@ -652,33 +658,38 @@ debugger
       .then((result) => {
         console.log(result);
         result.items.forEach((item, index) => {
-          console.log(item.image.thumbnailLink);
+          newWort.img.push(item.image.thumbnailLink);
         });
       })
       .then(() => {
-        console.log("islem basarili sekilde sonuclandi...");
+        if (newWort.img.length >= 6) return;
+
+        if (tryCSEimg === "quitImg") {
+          throw "noImage";
+        } else {
+          throw "tryImage";
+        }
       })
       .catch((err) => {
         switch (err) {
-          case "tryImage"://sonraki metne göre arama yapilir
-
+          case "tryImage": //sonraki metne göre arama yapilir
+            urler();
             break;
-          case "noImage"://tüm secimlik metin aramasi sonucu image bulunamamasi durumu
-            
+          case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
+            consoleMsg(`No Image: ${newWort.wrt.wort}`, `Görsel bulunamadi!`);
             break;
           default: // diger hatalar
-            console.log(
-              `Kelime listesi alinirken hata oldu. Kelime urlini kontrol edin! (f:loadApp) ${url}`,
+            consoleMsg(
+              `Error: ${newWort.wrt.wort}`,
+              `Görsel alinirken hata olustu! (f:getImg-searchApi) `,
               err
             );
             break;
         }
       });
   };
-  
-   if (tryCSEimg !== "finish") searchApi();
-  /*** call searchApi: finish yukaridaki 3 seceneginde test edildigini gösterir*/
- 
+
+  urler();
 }
 
 /**** DOM Element Checker*********/
@@ -706,12 +717,10 @@ consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama 
 */
 }
 
-
-
 // SILINECEK
 /*------------- import gAPI-------------*/
 //function getAPI() {
-  //Sayfa document olraka alinir ve doc a tanir//
+//Sayfa document olraka alinir ve doc a tanir//
 
 /*
   //api import
@@ -766,4 +775,3 @@ function timeOutGapi(callback, d = false) {
 /***************** Görsel Icin Yapilan Düzenlemeler Sonu ********************/
 
 /**Genel Kullanimdaki Diger Fonksiyonlar */
-
