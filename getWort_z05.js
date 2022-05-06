@@ -167,20 +167,19 @@ function getWort(html) {
       getSatze();
       /***almanca ingilizce tanimlari alinir */
       getLangDeEng();
-      //return newWort;
-      resolve(newWort);
+      return newWort;
     })
-    .then((newWort) => {
+    .then(newWort => {
       getLang(newWort); //dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
-      resolve(newWort)
+      return newWort
     })
-    .then((newWort) => {
+    .then(newWort => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
         getImg(newWort); //nomen ise görsel alinir
       }
-      resolve(newWort)
+      return newWort
     })
-    .then((newWort) => {
+    .then(newWort => {
       wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })
