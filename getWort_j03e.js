@@ -135,7 +135,6 @@ function getWort(html) {
         currentWort = doc.querySelector("form>div>input").value;
        //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
        if (!checkEl(doc.querySelector("section.rBox"))) throw('not found wort!')
-       consoleMsg(msgTyp.primary,'App On','Kelimeler icin JSON veri olusturuluyor...')
        resolve()
     });
     
