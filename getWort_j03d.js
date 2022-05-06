@@ -128,7 +128,6 @@ function outPut() {
 //buradaki kodalr ile sayfadaki kelimenin bilgileri newWort objesine atanir....
 function getWort(html) {
   //alinan ilgili HTML icerikler siralya islenilmek üzere 'app MultiWort*.js' deki getWortObj fonksiyonu ile buraya gönderilir...
-  debugger
   let currentWort
   doc = html;
   const  checkDoc = new Promise((resolve) =>{
