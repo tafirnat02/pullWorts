@@ -678,6 +678,7 @@ function getImg(newWort) {
         } else if (response.status === 429) {
           throw 429;
         } else {
+          console.log('response:', response)
           throw response;
         }
       }) // or .json()
