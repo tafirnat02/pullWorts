@@ -624,6 +624,7 @@ function getImg() {
   };
 
   const searchApi = () => {
+    console.log ('testBase:',qTxt + excludedUrl)
     const url = `
     https://customsearch.googleapis.com/customsearch/v1?
     key=AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw&
@@ -636,8 +637,10 @@ function getImg() {
     gl=${searchPara[0]}&
     hl=${searchPara[0]}&
     q=${qTxt + excludedUrl}
-    `.replaceAll(rRgxEnd, "");
-    console.log(url);
+    `;
+    console.log('urlBase:',url);
+    url.replaceAll(rRgxEnd, "");
+    console.log('resultUrl:',url);
     debugger;
     fetch(url)
       .then((response) => {
