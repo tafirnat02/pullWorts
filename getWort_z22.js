@@ -770,9 +770,10 @@ function getImg(newWort) {
   if (tryCSE < 3) {
     debugger
     urler(newWort)
-    .then((newWort) => {
-      return searchApi(newWort);
-    });
+    .then(
+       searchApi(newWort)
+    );
+
   }else{
     console.log("am ende: object ", newWort);
     newWort.test='cikis'
