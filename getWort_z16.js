@@ -596,9 +596,10 @@ function getLangDeEng() {
 //--> callback ile en son cikti basilmali  <---
 function getImg(newWort) {
   /*get methoduyla alinmakta...
-  1-Programmable Search Engine (CSE) ile bir arama motoru olusturulur,
-  2- CSE Api referanslari ve key alinarak arama api olusturulur alttaki linkte
- Düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?apix=true&apix_params=%7B%22c2coff%22%3A%220%22%2C%22cr%22%3A%22countryDE%22%2C%22cx%22%3A%22a3e969be698bd439c%22%2C%22filter%22%3A%221%22%2C%22gl%22%3A%22de%22%2C%22hl%22%3A%22de%22%2C%22q%22%3A%22sound%22%2C%22safe%22%3A%22active%22%2C%22searchType%22%3A%22image%22%7D
+  1-Programmable Search Engine (CSE) new create 👉 https://programmablesearchengine.google.com/controlpanel/create
+  View all cse 👉  https://programmablesearchengine.google.com/controlpanel/all
+  2-Custom Search JSON API new API key 👉 https://developers.google.com/custom-search/v1/overview#search_engine_id
+  3- CSE Api referanslari düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
  */
   const searchPara = [],
     searchDe = ["de", "countryDE"],
@@ -612,6 +613,8 @@ function getImg(newWort) {
       ["AIzaSyCVS4E6QeXeDZoyEMOICbKxUR22O7uNGVM", "3a809e54711b3d927"],
       ["AIzaSyAOzki0o1Pi1zvSOSLVY0cVWBSDb1EwtKg", "206d7b21e9b9cb1ff"],
       ["AIzaSyCuccrJiVM6rntFedFIM4LEH-jF_uCv8Zw", "35567e479b9d748eb"],
+      ["AIzaSyDqNKbCbulrRy6XJvELDdv9LOtpSGeii8M", "25137c264a9db4dbc"],
+      ["AIzaSyAKYGVOpY9R0XjuvPiocMEE8GtdHdjuk5I", "a3e78d7388ad640cf"],
     ],
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
@@ -668,7 +671,7 @@ function getImg(newWort) {
     q=${qTxt + excludedUrl}
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-    console.log(newWort.wrt.wort, resApi.img.index, url);
+    console.log(newWort.wrt.wort, resApi.img.index,`\n`, url);
     fetch(url)
       .then((response) => {
         console.log(newWort.wrt.wort, response.status);
@@ -687,6 +690,7 @@ function getImg(newWort) {
       .then((response) => {
         //arama soonucu kontrol edilir
         console.log("response_3:", response);
+        console.log('arama Sonucu:', response.searchInformation.totalResults)
         if (typeof response.items !== "undefined") return response;
         if (tryCSEimg === "quitImg") {
           throw "noImage";
