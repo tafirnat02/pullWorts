@@ -601,6 +601,8 @@ function getImg(newWort) {
   2-Custom Search JSON API new API key 👉 https://developers.google.com/custom-search/v1/overview#search_engine_id
   3- CSE Api referanslari düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
  */
+  newWort.test='giris'
+
   const searchPara = [],
     searchDe = ["de", "countryDE"],
     searchEn = ["en", "countryUS"],
@@ -621,6 +623,7 @@ function getImg(newWort) {
   var subQtxt;
   tryCSE = 0; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
   const urler = async (newWort) => {
+    newWort.test='urler'
     switch (tryCSE) {
       case 0:
         //odaklanmis arama metni: Almanca singular + plural
@@ -657,6 +660,7 @@ function getImg(newWort) {
   };
 
   const searchApi = (newWort) => {
+    newWort.test='searchApi'
     var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=${cse[resApi.img.index][0]}&
     cx=${cse[resApi.img.index][1]}&
@@ -671,6 +675,7 @@ function getImg(newWort) {
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
     console.log(newWort.wrt.wort, resApi.img.index, `\n`, url);
+    
     fetch(url)
       .then((response) => {
         console.log(newWort.wrt.wort, response.status);
@@ -702,6 +707,7 @@ function getImg(newWort) {
       })
       .then((response) => {
         console.log(response.items);
+        newWort.test='image'
         response.items.forEach((item) => {
           newWort.img.push(item.image.thumbnailLink);
         });
@@ -769,8 +775,10 @@ function getImg(newWort) {
     });
   }else{
     console.log("am ende: object ", newWort);
+    newWort.test='cikis'
     return newWort
   }
+  newWort.test='amEnde...'
 }
 
 /**** DOM Element Checker*********/
