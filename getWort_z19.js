@@ -620,7 +620,7 @@ function getImg(newWort) {
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
   var subQtxt;
   tryCSE = 0; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
-  const urler = () => {
+  const urler = async (newWort) => {
     switch (tryCSE) {
       case 0:
         //odaklanmis arama metni: Almanca singular + plural
@@ -646,8 +646,6 @@ function getImg(newWort) {
               .replaceAll(rRgxDom, "")
               .replaceAll(rRgxWrd, " OR ")}`
           : "";
-        tryCSEimg = "quitImg";
-        searchPara.push(...searchDe);
         break;
     }
     qTxt = qTxt.replaceAll(rRgxDom, "");
@@ -655,11 +653,10 @@ function getImg(newWort) {
     searchPara.length = 0; //önce parametreler sinirlanir sonra atanir...
     tryCSE == 1 ? searchPara.push(...searchEn) : searchPara.push(...searchDe);
     tryCSE++;
-
-    searchApi(); //belirlenen parametrelere göre arama GET ile alinir...
+    return newWort
   };
 
-  const searchApi = () => {
+  const searchApi = (newWort) => {
     var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=${cse[resApi.img.index][0]}&
     cx=${cse[resApi.img.index][1]}&
@@ -694,9 +691,12 @@ function getImg(newWort) {
         if (response.searchInformation.totalResults !== "0") return response;
         //aramada sonuc bulunamaz ise
         if (tryCSE < 3) {
-          urler(); //sonraki arama parametresine göre arama yapilir
+          urler(newWort)//sonraki arama parametresine göre arama yapilir
+          .then((newWort) => {
+            return searchApi(newWort);
+          });
         } else {
-          tryCSE = 9;//cikis yapilir
+          tryCSE = 9; //cikis yapilir
           throw "noImage";
         }
       })
@@ -705,24 +705,27 @@ function getImg(newWort) {
         response.items.forEach((item) => {
           newWort.img.push(item.image.thumbnailLink);
         });
-        console.log('alinma sonrasi obje\n', newWort)
-        return newWort
+        console.log("alinma sonrasi obje\n", newWort);
+        return newWort;
       })
       .then((newWort) => {
         if (newWort.img.length >= 6) {
-          tryCSE = 9;//cikis yapilir
+          tryCSE = 9; //cikis yapilir
           return newWort;
         } else if (tryCSE < 3) {
-          urler(); //sonraki arama parametresine göre arama yapilir
+          urler(newWort)//sonraki arama parametresine göre arama yapilir
+          .then((newWort) => {
+            return searchApi(newWort);
+          });
         } else {
-          tryCSE = 9;//cikis yapilir
+          tryCSE = 9; //cikis yapilir
         }
       })
       .catch((err) => {
         debugger;
         switch (err) {
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
-            if (newWort.img.length <1)
+            if (newWort.img.length < 1)
               consoleMsg(
                 msgTyp.warning,
                 `⚠️${newWort.wrt.wort}`,
@@ -731,7 +734,7 @@ function getImg(newWort) {
             break;
           case 429: // server engeli halinde diger keyve id'ler ile denenir...
             if (resApi.img.index < cse.length) {
-              resApi.img.index++
+              resApi.img.index++;
               searchApi();
             } else {
               resApi.img.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
@@ -741,24 +744,32 @@ function getImg(newWort) {
                 `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchApi)`,
                 err
               );
-              tryCSE = 9;//cikis yapilir
+              tryCSE = 9; //cikis yapilir
             }
             break;
           default: // diger hatalar
+          //cikis yapilir
             consoleMsg(
               msgTyp.error,
               `${newWort.wrt.wort}`,
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
-            tryCSE = 9;//cikis yapilir
+            tryCSE = 9;
             break;
         }
       });
   };
-  if (tryCSE <3) urler();
-  console.log('am ende: object ', newWort)
-  //return newWort;
+
+  if (tryCSE < 3) {
+    urler(newWort)
+    .then((newWort) => {
+      return searchApi(newWort);
+    });
+  }else{
+    console.log("am ende: object ", newWort);
+    return newWort
+  }
 }
 
 /**** DOM Element Checker*********/
