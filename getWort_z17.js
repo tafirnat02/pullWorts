@@ -452,7 +452,7 @@ function getLang(newWort) {
     } else if (checkEl(srcL2)) {
       newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
     } else {
-      if (resApi.lang.status) getApiLang(); //api aktif ise: tükce karsiligi icin  apiye yönlendirilir
+      if (resApi.lang.status) getApiLang(); //api aktif ise: Tükcesi icin  apiye yönlendirilir
     }
   };
 
@@ -618,43 +618,45 @@ function getImg(newWort) {
     ],
     excludedUrl =
       " -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
-  var subQtxt,
-    tryCSEimg = false;
-  //tryCSEimg: eger ilk aramada görsel bulunmaz ise arama kriterini genisleterek islem tekrarlanmasi icin...
-
+  var subQtxt;
+  tryCSE = 0; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
   const urler = () => {
-    searchPara.length = 0; //döngüde parametreler yeniden atanir...
-    if (tryCSEimg === false) {
-      //odaklanmis arama metni: Almanca singular + plural
-      qTxt =
-        `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
-        ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
-        newWort.wrt.plural != newWort.wrt.wort
-          ? " OR " + newWort.wrt.plural
-          : "");
-      qTxt = `${qTxt.replaceAll(rRgxWrd, " OR ")}`;
-      subQtxt = qTxt;
-      searchPara.push(...searchDe);
-      tryCSEimg = true;
-    } else if (tryCSEimg === true && !!newWort.lang_En) {
-      //varsa ingilizce kelimelerden arama yapilir sadece..
-      qTxt = newWort.lang_En
-        .replaceAll(rRgxDom, "")
-        .replaceAll(rRgxWrd, " OR ");
-      searchPara.push(...searchEn);
-      tryCSEimg = "nextStep";
-    } else {
-      //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
-      qTxt = !!newWort.lang_DE
-        ? `${subQtxt} OR ${newWort.lang_DE
-            .replaceAll(rRgxDom, "")
-            .replaceAll(rRgxWrd, " OR ")}`
-        : "";
-      tryCSEimg = "quitImg";
-      searchPara.push(...searchDe);
+    switch (tryCSE) {
+      case 0:
+        //odaklanmis arama metni: Almanca singular + plural
+        qTxt =
+          `"${newWort.wrt.wort}" OR ${newWort.wrt.wort}` +
+          ((newWort.wrt.artikel != "-" || newWort.wrt.plural != "-") &&
+          newWort.wrt.plural != newWort.wrt.wort
+            ? " OR " + newWort.wrt.plural
+            : "");
+        qTxt = `${qTxt.replaceAll(rRgxWrd, " OR ")}`;
+        subQtxt = qTxt;
+        break;
+      case 1:
+        //varsa ingilizce kelimelerden arama yapilir sadece..
+        qTxt = newWort.lang_En
+          .replaceAll(rRgxDom, "")
+          .replaceAll(rRgxWrd, " OR ");
+        break;
+      default:
+        //varsa odaklanmis genisletilerek ayrica almanca tanimina göre de arama yapilir
+        qTxt = !!newWort.lang_DE
+          ? `${subQtxt} OR ${newWort.lang_DE
+              .replaceAll(rRgxDom, "")
+              .replaceAll(rRgxWrd, " OR ")}`
+          : "";
+        tryCSEimg = "quitImg";
+        searchPara.push(...searchDe);
+        break;
     }
     qTxt = qTxt.replaceAll(rRgxDom, "");
-    searchApi();
+    //arama secenegine göre parametre özellestirilir
+    searchPara.length = 0; //önce parametreler sinirlanir sonra atanir...
+    tryCSE == 1 ? searchPara.push(...searchEn) : searchPara.push(...searchDe);
+    tryCSE++;
+
+    searchApi(); //belirlenen parametrelere göre arama GET ile alinir...
   };
 
   const searchApi = () => {
@@ -671,7 +673,7 @@ function getImg(newWort) {
     q=${qTxt + excludedUrl}
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-    console.log(newWort.wrt.wort, resApi.img.index,`\n`, url);
+    console.log(newWort.wrt.wort, resApi.img.index, `\n`, url);
     fetch(url)
       .then((response) => {
         console.log(newWort.wrt.wort, response.status);
@@ -689,59 +691,55 @@ function getImg(newWort) {
       })
       .then((response) => {
         //arama soonucu kontrol edilir
-        console.log("response_3:", response);
-        console.log('arama Sonucu:', response.searchInformation.totalResults)
-        if (typeof response.items !== "undefined") return response;
-        if (tryCSEimg === "quitImg") {
-          throw "noImage";
+        if (response.searchInformation.totalResults !== "0") return response;
+        //aramada sonuc bulunamaz ise
+        if (tryCSE < 3) {
+          urler(); //sonraki arama parametresine göre arama yapilir
         } else {
-          throw "tryImage";
+          tryCSE = 9;//cikis yapilir
+          throw "noImage";
         }
       })
       .then((response) => {
         console.log(response.items);
-        response.items.forEach((item, index) => {
+        response.items.forEach((item) => {
           newWort.img.push(item.image.thumbnailLink);
         });
       })
       .then(() => {
         if (newWort.img.length >= 6) {
-          tryCSEimg = "quitImg";
+          tryCSE = 9;//cikis yapilir
           return newWort;
-        } else if (tryCSEimg === "quitImg") {
-          throw "noImage";
+        } else if (tryCSE < 3) {
+          urler(); //sonraki arama parametresine göre arama yapilir
         } else {
-          throw "tryImage";
+          tryCSE = 9;//cikis yapilir
         }
       })
       .catch((err) => {
         debugger;
         switch (err) {
-          case "tryImage": //sonraki metne göre arama yapilir
-            urler();
-            break;
           case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
-            tryCSEimg = "quitImg";
-            if (newWort.img.length === 0)
+            if (newWort.img.length <1)
               consoleMsg(
                 msgTyp.warning,
-                `No Image | ${newWort.wrt.wort}`,
-                `Görsel bulunamadi! (f:getImg-searchApi)`
+                `⚠️${newWort.wrt.wort}`,
+                `Not found image! (f:getImg-searchApi)`
               );
             break;
-          case 429:
+          case 429: // server engeli halinde diger keyve id'ler ile denenir...
             if (resApi.img.index < cse.length) {
-              resApi.img.index += 1;
+              resApi.img.index++
               searchApi();
             } else {
-              resApi.lang.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
+              resApi.img.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
               consoleMsg(
                 msgTyp.warning,
                 `429 | ${newWort.wrt.wort}`,
                 `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchApi)`,
                 err
               );
-              tryCSEimg = "quitImg";
+              tryCSE = 9;//cikis yapilir
             }
             break;
           default: // diger hatalar
@@ -751,12 +749,12 @@ function getImg(newWort) {
               `Görsel alinirken hata olustu! (f:getImg-searchApi)`,
               err
             );
-            tryCSEimg = "quitImg";
+            tryCSE = 9;//cikis yapilir
             break;
         }
       });
   };
-  if (tryCSEimg !== "quitImg") urler();
+  if (tryCSE <3) urler();
   return newWort;
 }
 
