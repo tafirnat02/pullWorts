@@ -705,8 +705,10 @@ function getImg(newWort) {
         response.items.forEach((item) => {
           newWort.img.push(item.image.thumbnailLink);
         });
+        console.log('alinma sonrasi obje\n', newWort)
+        return newWort
       })
-      .then(() => {
+      .then((newWort) => {
         if (newWort.img.length >= 6) {
           tryCSE = 9;//cikis yapilir
           return newWort;
@@ -755,7 +757,8 @@ function getImg(newWort) {
       });
   };
   if (tryCSE <3) urler();
-  return newWort;
+  console.log('am ende: object ', newWort)
+  //return newWort;
 }
 
 /**** DOM Element Checker*********/
