@@ -186,11 +186,9 @@ function getWort(html) {
       //getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
       return currentWort;
     })
-    .then(async (currentWort) => {
+    .then((currentWort) => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
-        if (resApi.img.status) {
-            await getImg(currentWort); //api aktif ise: nomen ise görsel alinir
-        }
+        if (resApi.img.status) getImg(currentWort); //api aktif ise: nomen ise görsel alinir
       }
     })
     .then(() => {
@@ -778,19 +776,7 @@ q=${cseWord[tryCSE]}
   //sirali halde fonksiyonlar isleme alinir...
   const tryCSEimg = () => {
     if (tryCSE === 9) return; //uygulamadan cikilir...
-    const promise = new Promise((resolve, reject) => {
-      cseGETword()
-        .then(cseGETurl())
-        .then(searchImg())
-        .then(() => {
-          resolve();
-        })
-        .catch((error) => {
-          console.log(error);
-          reject();
-        });
-    });
-    return promise
+    cseGETword().then(cseGETurl()).then(searchImg());
   };
   tryCSEimg();
 }
