@@ -594,16 +594,197 @@ function getLangDeEng() {
 //ugulamanin basinda api sayfaya dahil edilir
 
 function getImg(currentWort) {
-  console.log(currentWort)
+  const cse = [
+      ["AIzaSyA4G2MEzMKpYk9aS88kCGXZwOXQWwIvWxw", "a3e969be698bd439c"],
+      ["AIzaSyCVS4E6QeXeDZoyEMOICbKxUR22O7uNGVM", "3a809e54711b3d927"],
+      ["AIzaSyAOzki0o1Pi1zvSOSLVY0cVWBSDb1EwtKg", "206d7b21e9b9cb1ff"],
+      ["AIzaSyCuccrJiVM6rntFedFIM4LEH-jF_uCv8Zw", "35567e479b9d748eb"],
+      ["AIzaSyDqNKbCbulrRy6XJvELDdv9LOtpSGeii8M", "25137c264a9db4dbc"],
+      ["AIzaSyAKYGVOpY9R0XjuvPiocMEE8GtdHdjuk5I", "a3e78d7388ad640cf"],
+    ],
+    imgArr = [],
+    cseWord = [];
+  var url,
+    tryCSE = 0,
+    wa_index; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
 
-  wortesArr.forEach((wrtObj, index )=>{
-    if(wrtObj.wrt.wort === currentWort){
-      console.log(wrtObj)^
-      console.log('index:', index)
-      console.log(wortesArr[index].wrt.wort)
-    }
-  })
+  wortesArr.forEach((wrtObj, index) => {
+    if (JSON.parse(wrtObj).wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
+  });
+  console.log(wa_index);
+  //öncelikle cse GET icin search urlleri düyenlenir
+  const cseGETword = async () => {
+    if (cseWord.length > 0) return; //daha önce kelimeler alinmis ise sonraki fonksiyona gecilir
 
+    const rRgxWrd = new RegExp(/,|\.|;|\//gi),
+      rRgxDom = new RegExp(/<i>|<b>|<\/i>|<\/b>|<br>|[ ]{2,}/gi),
+      rRgxOR = new RegExp(/OR OR|OR  OR| OR OR | OR  OR /g);
+    (nxtWort = JSON.parse(wortesArr[wa_index])),
+      (excludedURL =
+        " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]");
+
+    console.log(nxtWort);
+
+    //odaklanmis: Almanca singular + plurala göre arama url'i olusturulur.
+    let qTxt =
+      `"${nxtWort.wrt.wort}" OR ${nxtWort.wrt.wort}` +
+      ((nxtWort.wrt.artikel != "-" || nxtWort.wrt.plural != "-") &&
+      nxtWort.wrt.plural != nxtWort.wrt.wort
+        ? " OR " + nxtWort.wrt.plural
+        : "");
+    qTxt = qTxt.replaceAll(rRgxWrd, "OR");
+    qTxt = qTxt.replaceAll(rRgxDom, "");
+    cseWord.push(
+      (qTxt + excludedURL)
+        .replaceAll(rRgxOR, " OR ")
+        .replaceAll(" OR -logo ", " -logo ")
+    );
+
+    //varsa kelimenin ingilizce karsiligina göre arama url'i olusturulur.
+    qTxt = !!nxtWort.lang_En
+      ? nxtWort.lang_En.replaceAll(rRgxDom, "").replaceAll(rRgxWrd, " OR ")
+      : "";
+    if (!!qTxt)
+      cseWord.push(
+        (qTxt + excludedURL)
+          .replaceAll(rRgxOR, " OR ")
+          .replaceAll(" OR -logo ", " -logo ")
+      );
+
+    //varsa: odaklanmis + almanca tanimina göre arama url'i olusturulur.
+    qTxt = !!nxtWort.lang_DE
+      ? `${cseWord[0]} OR ${nxtWort.lang_DE
+          .replaceAll(rRgxDom, "")
+          .replaceAll(rRgxWrd, " OR ")}`
+      : "";
+    if (!!qTxt)
+      cseWord.push(
+        (qTxt + excludedURL)
+          .replaceAll(rRgxOR, " OR ")
+          .replaceAll(" OR -logo ", " -logo ")
+      );
+
+    cseWord.forEach((url) => {
+      console.log(url);
+    });
+  };
+
+  const cseGETurl = () => {
+    const searchPara = [],
+      searchDe = ["de", "countryDE"],
+      searchEn = ["en", "countryUS"],
+      rRgxUrl = new RegExp(/&[ ]{1,}/gi),
+      rRgxBreak = new RegExp(/\r\n|\r|\n|\t|[ ]{2,}/gi);
+
+    tryCSE == 1 ? searchPara.push(...searchEn) : searchPara.push(...searchDe);
+
+    url = `https://customsearch.googleapis.com/customsearch/v1?
+key=${cse[resApi.img.index][0]}&
+cx=${cse[resApi.img.index][1]}&
+searchType=image&
+safe=active&
+c2coff=1&
+filter=1&
+cr=${searchPara[1]}&
+gl=${searchPara[0]}&
+hl=${searchPara[0]}&
+q=${cseWord[tryCSE]}
+`;
+    url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
+    console.log("resApiNo:", resApi.img.index, `\n`, url);
+  };
+
+  const searchImg = () => {
+    tryCSE++;
+    fetch(url)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.text();
+        } else if (response.status === 429) {
+          throw 429;
+        } else {
+          throw response;
+        }
+      }) // or .json()
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((response) => {
+        if (response.searchInformation.totalResults !== "0") return response;
+        if (tryCSE < 3) {
+          //aramada sonuc bulunamaz ise
+          tryCSEimg(); //sonraki arama parametresine göre arama yapilir
+        } else {
+          tryCSE = 9; //cikis yapilir
+          throw "noImage";
+        }
+      })
+      .then((response) => {
+        response.items.forEach((item) => {
+          imgArr.push(item.image.thumbnailLink);
+        });
+      })
+      .then(() => {
+        if (imgArr.length >= 6 || tryCSE > 2) tryCSE = 9; //cikis yapilir
+        tryCSEimg(); //daha fayla sonuc icin sonraki arama parametresine göre arama yapilir
+      })
+      .then(() => {
+        if (imgArr.length < 1) throw "noImage";
+        //imgArr dizinindeki urller ilgili kelimeye dahil edilir aktarilir
+        let editArr = imgArr.map((i) => {
+          return `"${i}"`;
+        });
+        let imgURLs = '"img":[' + editArr.join(",");
+        let rRegImg = /"img":\[/gi;
+        wortesArr[wa_index] = wortesArr[wa_index].replaceAll(rRegImg, imgURLs);
+
+        setTimeout(() => {
+          console.log(JSON.parse(wortesArr[wa_index]));
+        }, 1000);
+      })
+      .catch((err) => {
+        switch (err) {
+          case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
+            if (imgArr.length < 1)
+              consoleMsg(
+                msgTyp.warning,
+                `🚨 ${currentWort}`,
+                `Not found image! (f:getImg-searchImg)`
+              );
+            break;
+          case 429: // server engeli halinde diger keyve id'ler ile denenir...
+            resApi.img.index++;
+            if (resApi.img.index < cse.length) {
+              tryCSEimg();
+            } else {
+              resApi.img.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
+              consoleMsg(
+                msgTyp.warning,
+                `429 | ${currentWort}`,
+                `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchImg)`,
+                err
+              );
+              tryCSE = 9; //cikis yapilir
+            }
+            break;
+          default: // diger hatalar
+            consoleMsg( //cikis yapilir
+              msgTyp.error,
+              `${currentWort}`,
+              `Görsel alinirken hata olustu! (f:getImg-searchImg)`,
+              err
+            );
+            tryCSE = 9;
+            break;
+        }
+      });
+  };
+  //sirali halde fonksiyonlar isleme alinir...
+  const tryCSEimg = () => {
+    if (tryCSE === 9) return; //uygulamadan cikilir...
+    cseGETword().then(cseGETurl()).then(searchImg());
+  };
+  tryCSEimg();
 }
 
 function getImg22(newWort) {
@@ -613,7 +794,7 @@ function getImg22(newWort) {
   2-Custom Search JSON API new API key 👉 https://developers.google.com/custom-search/v1/overview#search_engine_id
   3- CSE Api referanslari düzenleme icin 👉 https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
  */
-  newWort.test='giris'
+  newWort.test = "giris";
 
   const searchPara = [],
     searchDe = ["de", "countryDE"],
@@ -635,7 +816,7 @@ function getImg22(newWort) {
   var subQtxt;
   tryCSE = 0; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
   const urler = async (newWort) => {
-    newWort.test='urler'
+    newWort.test = "urler";
     switch (tryCSE) {
       case 0:
         //odaklanmis arama metni: Almanca singular + plural
@@ -668,11 +849,11 @@ function getImg22(newWort) {
     searchPara.length = 0; //önce parametreler sinirlanir sonra atanir...
     tryCSE == 1 ? searchPara.push(...searchEn) : searchPara.push(...searchDe);
     tryCSE++;
-    return newWort
+    return newWort;
   };
 
   const searchApi = (newWort) => {
-    newWort.test='searchApi'
+    newWort.test = "searchApi";
     var url = `https://customsearch.googleapis.com/customsearch/v1?
     key=${cse[resApi.img.index][0]}&
     cx=${cse[resApi.img.index][1]}&
@@ -687,7 +868,7 @@ function getImg22(newWort) {
     `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
     console.log(newWort.wrt.wort, resApi.img.index, `\n`, url);
-    
+
     fetch(url)
       .then((response) => {
         console.log(newWort.wrt.wort, response.status);
@@ -708,10 +889,10 @@ function getImg22(newWort) {
         if (response.searchInformation.totalResults !== "0") return response;
         //aramada sonuc bulunamaz ise
         if (tryCSE < 3) {
-          urler(newWort)//sonraki arama parametresine göre arama yapilir
-          .then((newWort) => {
-            return searchApi(newWort);
-          });
+          urler(newWort) //sonraki arama parametresine göre arama yapilir
+            .then((newWort) => {
+              return searchApi(newWort);
+            });
         } else {
           tryCSE = 9; //cikis yapilir
           throw "noImage";
@@ -719,7 +900,7 @@ function getImg22(newWort) {
       })
       .then((response) => {
         console.log(response.items);
-        newWort.test='image'
+        newWort.test = "image";
         response.items.forEach((item) => {
           newWort.img.push(item.image.thumbnailLink);
         });
@@ -731,10 +912,10 @@ function getImg22(newWort) {
           tryCSE = 9; //cikis yapilir
           return newWort;
         } else if (tryCSE < 3) {
-          urler(newWort)//sonraki arama parametresine göre arama yapilir
-          .then((newWort) => {
-            return searchApi(newWort);
-          });
+          urler(newWort) //sonraki arama parametresine göre arama yapilir
+            .then((newWort) => {
+              return searchApi(newWort);
+            });
         } else {
           tryCSE = 9; //cikis yapilir
         }
@@ -766,7 +947,7 @@ function getImg22(newWort) {
             }
             break;
           default: // diger hatalar
-          //cikis yapilir
+            //cikis yapilir
             consoleMsg(
               msgTyp.error,
               `${newWort.wrt.wort}`,
@@ -780,18 +961,14 @@ function getImg22(newWort) {
   };
 
   if (tryCSE < 3) {
-    debugger
-    urler(newWort)
-    .then(
-       searchApi(newWort)
-    );
-
-  }else{
+    debugger;
+    urler(newWort).then(searchApi(newWort));
+  } else {
     console.log("am ende: object ", newWort);
-    newWort.test='cikis'
-    return newWort
+    newWort.test = "cikis";
+    return newWort;
   }
-  newWort.test='amEnde...'
+  newWort.test = "amEnde...";
 }
 
 /**** DOM Element Checker*********/
@@ -818,4 +995,3 @@ function consoleMsg(msgTyp, head, txt, err = "") {
 consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
 */
 }
-
