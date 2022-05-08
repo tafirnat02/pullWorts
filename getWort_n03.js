@@ -200,8 +200,7 @@ function getWort(html) {
           consoleMsg(
             msgTyp.error,
             `"${currentWort}"`,
-            `Aranilan kelime icin gecerli sayfa bulunamadi! (f:getWort-checkDoc[multiple])`,
-            `https://www.verbformen.de/?w=${currentWort}`
+            `Aranilan kelime icin gecerli sayfa bulunamadi! (f:getWort-checkDoc[multiple]) https://www.verbformen.de/?w=${currentWort}`
           );
           getWortObj(); //multiple icin sonraki doc isleme alinir...
           break;
@@ -613,7 +612,6 @@ function getImg(currentWort) {
   wortesArr.forEach((wrtObj, index) => {
     if (wrtObj.wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
   });
-  console.log('wa_index >>>', wa_index);
   //öncelikle cse GET icin search urlleri düyenlenir
   const cseGETword = async () => {
     if (cseWord.length > 0) return; //daha önce kelimeler alinmis ise sonraki fonksiyona gecilir
