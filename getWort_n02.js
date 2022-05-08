@@ -613,19 +613,16 @@ function getImg(currentWort) {
   wortesArr.forEach((wrtObj, index) => {
     if (wrtObj.wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
   });
-  console.log(wa_index);
+  console.log('wa_index >>>', wa_index);
   //öncelikle cse GET icin search urlleri düyenlenir
   const cseGETword = async () => {
     if (cseWord.length > 0) return; //daha önce kelimeler alinmis ise sonraki fonksiyona gecilir
-
     const rRgxWrd = new RegExp(/,|\.|;|\//gi),
       rRgxDom = new RegExp(/<i>|<b>|<\/i>|<\/b>|<br>|[ ]{2,}/gi),
       rRgxOR = new RegExp(/OR OR|OR  OR| OR OR | OR  OR /g),
       nxtWort = { ...wortesArr[wa_index] },
       excludedURL =
         " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
-    console.log(nxtWort);
-
     //odaklanmis: Almanca singular + plurala göre arama url'i olusturulur.
     let qTxt =
       `"${nxtWort.wrt.wort}" OR ${nxtWort.wrt.wort}` +
@@ -664,10 +661,6 @@ function getImg(currentWort) {
           .replaceAll(rRgxOR, " OR ")
           .replaceAll(" OR -logo ", " -logo ")
       );
-
-    cseWord.forEach((url) => {
-      console.log(url);
-    });
   };
 
   const cseGETurl = () => {
@@ -692,7 +685,9 @@ hl=${searchPara[0]}&
 q=${cseWord[tryCSE]}
 `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
-    console.log("resApiNo:", resApi.img.index, `\n`, url);
+
+   // console.log("resApiNo:", resApi.img.index, `\n`, url);
+
   };
 
   const searchImg = () => {
@@ -767,7 +762,6 @@ q=${cseWord[tryCSE]}
               `Görsel alinirken hata olustu! (f:getImg-searchImg)`,
               err
             );
-            console.log(err);
             tryCSE = 9;
             break;
         }
