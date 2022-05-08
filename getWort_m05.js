@@ -146,7 +146,6 @@ function getWort(html) {
     currentWort = doc.querySelector("form>div>input").value;
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) throw "not found wort!";
-    debugger
     resolve(currentWort);
   });
 
@@ -737,6 +736,13 @@ q=${cseWord[tryCSE]}
         });
         let imgURLs = '"img":[' + editArr.join(",");
         let rRegImg = /"img":\[/gi;
+        console.log(wortesArr)
+        console.log(JSON.parse(wortesArr[wa_index]))
+        console.log(wa_index)
+        console.log(currentWort)
+
+        debugger
+
         wortesArr[wa_index] = wortesArr[wa_index].replaceAll(rRegImg, imgURLs);
 
         setTimeout(() => {
