@@ -3,7 +3,7 @@
 let script = document.createElement('script');
 //script.type = 'text/javascript';
 script.type = 'module';
-script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_getWort_multipleMod_test1.js";
+script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_getWort_multipleMod_test2.js";
 //head taginin en sonuna yerlestirilir
 document.head.appendChild(script);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
