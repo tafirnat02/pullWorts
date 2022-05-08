@@ -186,9 +186,11 @@ function getWort(html) {
       //getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
       return currentWort;
     })
-    .then((currentWort) => {
+    .then(async (currentWort) => {
       if (newWort.status.Substantiv[0] == "Substantiv") {
-        if (resApi.img.status) getImg(currentWort); //api aktif ise: nomen ise görsel alinir
+        if (resApi.img.status) {
+            await getImg(currentWort); //api aktif ise: nomen ise görsel alinir
+        }
       }
     })
     .then(() => {
@@ -732,21 +734,7 @@ q=${cseWord[tryCSE]}
       .then(() => {
         if (imgArr.length < 1) throw "noImage";
         //imgArr dizinindeki urller ilgili kelimeye dahil edilir aktarilir
-
         wortesArr[wa_index].img.push(...imgArr);
-
-        /*
-        let editArr = imgArr.map((i) => {
-          return `"${i}"`;
-        });
-        let imgURLs = '"img":[' + editArr.join(",");
-        let rRegImg = /"img":\[/gi;
-        console.log(wortesArr)
-        console.log(JSON.parse(wortesArr[wa_index]))
-        console.log(wa_index)
-        console.log(currentWort)
-        wortesArr[wa_index] = wortesArr[wa_index].replaceAll(rRegImg, imgURLs);
-*/
       })
       .catch((err) => {
         switch (err) {
@@ -790,7 +778,19 @@ q=${cseWord[tryCSE]}
   //sirali halde fonksiyonlar isleme alinir...
   const tryCSEimg = () => {
     if (tryCSE === 9) return; //uygulamadan cikilir...
-    cseGETword().then(cseGETurl()).then(searchImg());
+    const promise = new Promise((resolve, reject) => {
+      cseGETword()
+        .then(cseGETurl())
+        .then(searchImg())
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          console.log(error);
+          reject();
+        });
+    });
+    return promise
   };
   tryCSEimg();
 }
@@ -815,7 +815,7 @@ function consoleMsg(msgTyp, head, txt, err = "") {
   var stylHead = eval(`head${msgTyp}`) + bases,
     stylBody = eval(`body${msgTyp} `);
   console.log(`%c ${head} %c ${txt}  ${err}`, stylHead, stylBody);
-  if(!!err) console.log(err)
+  if (!!err) console.log(err);
   /*
 consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
 */
