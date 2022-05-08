@@ -708,6 +708,15 @@ q=${cseWord[tryCSE]}
     // console.log("resApiNo:", resApi.img.index, `\n`, url);
   };
 
+
+
+
+  resApi.img.index=4 /// test icin api sismemesi adina sonrasinda silinecek bu kod.....
+
+
+
+
+
   const searchImg = () => {
     tryCSE++;
     fetch(url)
@@ -716,10 +725,13 @@ q=${cseWord[tryCSE]}
           resApi.img.subArr.length=0//basarili her islem sonrasi alt index sifirlanir....
           return response.text();
         } else if (response.status === 429) {
+          console.log(url)
           throw 429;
         }else if(response.status === 503){
+          console.log(url)
            throw 503
         } else {
+          console.log(url)
           throw response;
         }
       }) // or .json()

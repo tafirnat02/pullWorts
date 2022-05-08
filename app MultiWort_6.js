@@ -23,7 +23,7 @@ const subWortList = [],
     wortList:
       "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
     getWort:
-      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n05.js",
+      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n07.js",
     check() {
       let e_getWort = document.querySelectorAll(
           `script[src="${this.getWort}"]`
