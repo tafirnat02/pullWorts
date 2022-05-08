@@ -620,11 +620,10 @@ function getImg(currentWort) {
 
     const rRgxWrd = new RegExp(/,|\.|;|\//gi),
       rRgxDom = new RegExp(/<i>|<b>|<\/i>|<\/b>|<br>|[ ]{2,}/gi),
-      rRgxOR = new RegExp(/OR OR|OR  OR| OR OR | OR  OR /g);
-    (nxtWort = JSON.parse(wortesArr[wa_index])),
-      (excludedURL =
-        " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]");
-
+      rRgxOR = new RegExp(/OR OR|OR  OR| OR OR | OR  OR /g),
+      nxtWort = { ...wortesArr[wa_index] },
+      excludedURL =
+        " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]";
     console.log(nxtWort);
 
     //odaklanmis: Almanca singular + plurala göre arama url'i olusturulur.
@@ -734,7 +733,7 @@ q=${cseWord[tryCSE]}
         if (imgArr.length < 1) throw "noImage";
         //imgArr dizinindeki urller ilgili kelimeye dahil edilir aktarilir
 
-        wortesArr[wa_index].img.push(...imgArr)
+        wortesArr[wa_index].img.push(...imgArr);
 
         /*
         let editArr = imgArr.map((i) => {
@@ -775,13 +774,14 @@ q=${cseWord[tryCSE]}
             }
             break;
           default: // diger hatalar
-            consoleMsg( //cikis yapilir
+            consoleMsg(
+              //cikis yapilir
               msgTyp.error,
               `${currentWort}`,
               `Görsel alinirken hata olustu! (f:getImg-searchImg)`,
               err
             );
-            console.log(err)
+            console.log(err);
             tryCSE = 9;
             break;
         }
