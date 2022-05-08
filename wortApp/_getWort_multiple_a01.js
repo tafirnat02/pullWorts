@@ -1,7 +1,3 @@
-const Car = require('./module/car.js');
+import {myFunc} from "./module/test.js"
  
-function showCar() {
-  console.log('About my car: ' + Car.specialty);
-}
- 
-showCar();
+console.log(myFunc(5))
