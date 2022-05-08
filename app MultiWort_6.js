@@ -23,7 +23,7 @@ const subWortList = [],
     wortList:
       "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
     getWort:
-      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n02.js",
+      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n04.js",
     check() {
       let e_getWort = document.querySelectorAll(
           `script[src="${this.getWort}"]`
@@ -167,14 +167,7 @@ const getWortObj = () => {
       return;
     }
     //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir...
-    consoleMsg(
-      msgTyp.successful,
-      `Document Islemi Tamamlanadi`,
-      `Keliemlere ait sayfalar alindi... (f:nextDoc)`
-    );
-    setTimeout(() => {
-      printWort()
-    }, 1000);
+    printChecker()
   } catch (err) {
     consoleMsg(
       msgTyp.error,
@@ -185,13 +178,40 @@ const getWortObj = () => {
   }
 };
 
+
+const printChecker=()=>{
+  consoleMsg(
+    msgTyp.successful,
+    `Document Islemi Tamamlanadi`,
+    `Keliemlere ait veriler aliniyor... (f:printChecker)`
+  );
+  let clear =true;
+  //döngüsel zaman atanir
+  const int_ID = setInterval(() => {
+    wortesArr.forEach((wrtObj) => {
+      if(wrtObj.img.length>0){
+        clear=false
+        clearInterval(int_ID)
+        printWort()
+      }
+    })
+  }, 100); // döngüyü tekrarlar
+  //max time sonrasi cikilir
+  const clearInt = setTimeout(() => {
+    if (clear) printWort()
+    clearInterval(int_ID);
+  }, 1000);
+  clearInt;
+  int_ID;
+}
+
 const printWort = () => {
   //console.log(wortesArr) // >> Tüm JSON obje olarak tutulen kelimelere ait dizin. getWort'ten push() edilir.
   wortesArr.forEach((wrtObj) => {
     consoleMsg(
       msgTyp.successful,
       wrtObj.wrt.wort,
-      `kelimesine ait sonuclar (f:nextDoc)`
+      `kelimesine ait sonuclar (f:printWort)`
     );
     console.log(JSON.stringify(wrtObj));
     console.log(wrtObj);

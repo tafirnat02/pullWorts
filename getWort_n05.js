@@ -183,7 +183,8 @@ function getWort(html) {
       return currentWort;
     })
     .then((currentWort) => {
-      //getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      //resApi.lang.status, kontrolü fonksiyon icinde yapilir...
+      getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
       return currentWort;
     })
     .then((currentWort) => {
@@ -439,7 +440,13 @@ function addTrVal(e, obj) {
 }
 
 /**** kelimenin TR  karsiligi alinir */
-function getLang(newWort) {
+function getLang(currentWort) {
+
+  var wa_index; //API ile alinirken gecime sebebiyle ilgili wortObj secimi icin index no alinir
+  wortesArr.forEach((wrtObj, index) => {
+    if (wrtObj.wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
+  });
+ 
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -448,22 +455,17 @@ function getLang(newWort) {
     srcL1 = doc.querySelector('span[lang="tr"]'); //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
     if (checkEl(srcL1)) {
-      newWort.lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
+      wortesArr[wa_index].lang_TR = srcL1.innerText.replaceAll(rpRegExp, empty);
     } else if (checkEl(srcL2)) {
-      newWort.lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
+      wortesArr[wa_index].lang_TR = srcL2.innerText.replaceAll(rpRegExp, empty);
     } else {
       if (resApi.lang.status) getApiLang(); //api aktif ise: Tükcesi icin  apiye yönlendirilir
     }
   };
 
-  /*
-      let kNo = 0; << google translate api siniri sebebiyle 
-                      uygulama tam aktif olana degin key No 10 olarak 
-                      uygulanacak.
-  */
-  let kNo = 10;
+  resApi.lang.index= 10;
   const getApiLang = () => {
-    const ky = [
+    const langVal = [
       "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
       "4169b729a4mshdfbcf80a2cd8e6cp15bd53jsnaf3a9c946fa8",
       "92ce60f8d0mshc350c83f2271d57p1fc85cjsn6cc325b66603",
@@ -487,7 +489,7 @@ function getLang(newWort) {
         "content-type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-        "X-RapidAPI-Key": ky[kNo],
+        "X-RapidAPI-Key": langVal[resApi.lang.index],
       },
       body: encodedParams,
     };
@@ -500,25 +502,26 @@ function getLang(newWort) {
       .then((response) => {
         if (typeof response.message === "string") {
           //api sorgu limiti
-          if (kNo <= 10) {
+          if (resApi.lang.index < langVal.length) {
             consoleMsg(
               msgTyp.warning,
-              `API Limit | ${newWort.wrt.wort} `,
-              `google-translate1 rapidapi >>  key no:${kNo} (f:getLang-multiple)`
+              `API Limit | ${currentWort} `,
+              `google-translate1 rapidapi >>  key no:${resApi.lang.index} (f:getLang-multiple)`
             );
-            kNo++; //diger keyler denenir..
+            resApi.lang.index++; //diger keyler denenir..
             getApiLang();
           } else {
             //tüm keyler limit asimi ise
+            resApi.lang.status=false
             consoleMsg(
               msgTyp.error,
               `API Limit`,
-              `google-translate1 rapidapi -> all keys limit... | ${newWort.wrt.wort} (f:getLang-multiple)`
+              `google-translate1 rapidapi -> all keys limit... | ${currentWort} (f:getLang-multiple)`
             );
           }
         } else {
           //basarili sekilde veri alindi
-          newWort.lang_TR = response.data[
+          wortesArr[wa_index].lang_TR = response.data[
             "translations"
           ][0].translatedText.replaceAll(rpRegExp, empty);
           // if(newWort.status.Substantiv[0] == "Substantiv") callback() //isim ise görsel alinacak degilse sonraki ögeye gecilir
@@ -527,17 +530,16 @@ function getLang(newWort) {
       .catch((err) => {
         consoleMsg(
           msgTyp.error,
-          `${newWort.wrt.wort}`,
-          "Google translate API error. (f:getLang-multiple)"
+          `${currentWort}`,
+          "Google translate API error. (f:getLang-multiple)", err
         );
-        console.log(err);
       });
-    return newWort;
+      return
   };
 
   //initialization hatasi almamak icin en alttan cargildi
   getDocForLang.call();
-  return newWort;
+
 }
 
 //varsa kelimeye dair örnekler alinir
