@@ -12,7 +12,7 @@ const subWortList=[],arrDocument=[]
     jFs ={
     gApi:"https://apis.google.com/js/api.js",
     wortList:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
-    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_m01.js",
+    getWort:"https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_m06.js",
     check(){
          let e_getWort = document.querySelectorAll(`script[src="${this.getWort}"]`).length,
              e_gApi = document.querySelectorAll(`script[src="${this.gApi}"]`).length
@@ -145,7 +145,16 @@ const getWortObj = () =>{
         `Keliemlere ait sayfalar alindi... (f:nextDoc)`
       );
         //console.log(wortesArr) // >> Tüm JSON obje olarak tutulen kelimelere ait dizin. getWort'ten push() edilir.
-        wortesArr.forEach((wrt) => {
+        wortesArr.forEach((wrtObj) => {
+        consoleMsg(
+          msgTyp.successful,
+          wrtObj.wrt.wort,
+          `kelimesine ait sonuclar (f:nextDoc)`
+        );
+        console.log(JSON.stringify(wrt));
+        console.log(wrtObj);
+
+/*
         let rsltWrt = JSON.parse(wrt);
         consoleMsg(
           msgTyp.successful,
@@ -154,6 +163,7 @@ const getWortObj = () =>{
         );
         console.log(wrt);
         console.log(rsltWrt);
+        */
       });
   } catch (err) {
     consoleMsg(

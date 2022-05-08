@@ -177,6 +177,9 @@ function getWort(html) {
       getSatze();
       /***almanca ingilizce tanimlari alinir */
       getLangDeEng();
+      /********* */
+      wortesArr.push(newWort); //alinan kelimeye dair obje nesne olarak wortesArr dizinine aktarilir
+      //wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       return currentWort;
     })
     .then((currentWort) => {
@@ -189,7 +192,6 @@ function getWort(html) {
       }
     })
     .then(() => {
-      wortesArr.push(JSON.stringify(newWort)); //alinan kelimeye dair obje JSON olarak wortesArr dizinine aktarilir
       getWortObj(); //(multiple icin)sonraki doc isleme alinir...
     })
     .catch((error) => {
@@ -609,7 +611,7 @@ function getImg(currentWort) {
     wa_index; //tryCSE: sonuc bulunmaz ise arama sonuclari farkli kritere göre tekrar denenir
 
   wortesArr.forEach((wrtObj, index) => {
-    if (JSON.parse(wrtObj).wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
+    if (wrtObj.wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
   });
   console.log(wa_index);
   //öncelikle cse GET icin search urlleri düyenlenir
@@ -731,6 +733,10 @@ q=${cseWord[tryCSE]}
       .then(() => {
         if (imgArr.length < 1) throw "noImage";
         //imgArr dizinindeki urller ilgili kelimeye dahil edilir aktarilir
+
+        wortesArr[wa_index].img.push(...imgArr)
+
+        /*
         let editArr = imgArr.map((i) => {
           return `"${i}"`;
         });
@@ -740,14 +746,8 @@ q=${cseWord[tryCSE]}
         console.log(JSON.parse(wortesArr[wa_index]))
         console.log(wa_index)
         console.log(currentWort)
-
-        debugger
-
         wortesArr[wa_index] = wortesArr[wa_index].replaceAll(rRegImg, imgURLs);
-
-        setTimeout(() => {
-          console.log(JSON.parse(wortesArr[wa_index]));
-        }, 1000);
+*/
       })
       .catch((err) => {
         switch (err) {
