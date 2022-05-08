@@ -792,7 +792,8 @@ function consoleMsg(msgTyp, head, txt, err = "") {
       "font-weight: bold; color: white; font-size: 12px; padding: 3px 5px; border-radius: 5px;";
   var stylHead = eval(`head${msgTyp}`) + bases,
     stylBody = eval(`body${msgTyp} `);
-  console.log(`%c ${head} %c ${txt}  ${err}`, stylHead, stylBody);
+
+  console.log(`%c ${head} %c ${txt}`, stylHead, stylBody);
   if (!!err) console.log(err);
   /*
 consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
