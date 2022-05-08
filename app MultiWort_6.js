@@ -23,7 +23,7 @@ const subWortList = [],
     wortList:
       "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/test03.json",
     getWort:
-      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n04.js",
+      "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getWort_n05.js",
     check() {
       let e_getWort = document.querySelectorAll(
           `script[src="${this.getWort}"]`
@@ -163,11 +163,14 @@ const getWortObj = () => {
   try {
     if (arrDocument.length > 0) {
       let html = arrDocument.shift();
-      getWort(html); //her kelimeye ait ham html verileri getWort ile Json data olarak ayristirilir
+      getWort(html); //her kelimeye ait ham html verileri getWort ile js obje olarak ayristirilir
       return;
     }
-    //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir...
-    printChecker()
+    //json veri olusturma islemi bittikten sonra --docs arrayinde öge kalmayinca-- sonuc ekrana bastirlir..
+    setTimeout(() => {
+      printChecker()
+    }, 200);
+    
   } catch (err) {
     consoleMsg(
       msgTyp.error,
@@ -178,7 +181,7 @@ const getWortObj = () => {
   }
 };
 
-
+/*------------- [ 9. Kisim / Islem sonrasi alinan kelimelere dair js objelerin ciktisi basilir] -------------*/
 const printChecker=()=>{
   consoleMsg(
     msgTyp.successful,
@@ -207,14 +210,14 @@ const printChecker=()=>{
 
 const printWort = () => {
   //console.log(wortesArr) // >> Tüm JSON obje olarak tutulen kelimelere ait dizin. getWort'ten push() edilir.
-  wortesArr.forEach((wrtObj) => {
+  wortesArr.forEach((itmObj) => {
     consoleMsg(
       msgTyp.successful,
-      wrtObj.wrt.wort,
+      itmObj.wrt.wort,
       `kelimesine ait sonuclar (f:printWort)`
     );
-    console.log(JSON.stringify(wrtObj));
-    console.log(wrtObj);
+    console.log(itmObj);
+    console.log(JSON.stringify(itmObj));
   });
 };
 

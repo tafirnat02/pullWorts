@@ -16,6 +16,26 @@ const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
     img: {
       status: true,
       index: 0,
+      subArr: [],
+      subInx() {
+        let newSubVal;
+        if (this.subArr.length < cseArr.length) {
+          if (this.subArr.length > 0) {
+            newSubVal =
+              this.subArr[this.subArr.length - 1] < cseArr.length
+                ? this.subArr[this.subArr.length - 1] + 1
+                : 0;
+          } else {
+            newSubVal = this.index < cseArr.length ? this.index + 1 : 0;
+          }
+          this.subArr.push(newSubVal);
+          return newSubVal;
+        }
+        return false;
+      },
+      nextIndex(){
+        return  this.subArr.length>0? this.subArr[this.subArr.length-1]: this.index
+     }
     },
   };
 
@@ -441,12 +461,11 @@ function addTrVal(e, obj) {
 
 /**** kelimenin TR  karsiligi alinir */
 function getLang(currentWort) {
-
   var wa_index; //API ile alinirken gecime sebebiyle ilgili wortObj secimi icin index no alinir
   wortesArr.forEach((wrtObj, index) => {
     if (wrtObj.wrt.wort === currentWort) wa_index = index; //kelimenin wortesArr dizin no alinir..
   });
- 
+
   const getDocForLang = () => {
     //documandan ilgili veriler alinir
     let srcL1 = "",
@@ -463,7 +482,7 @@ function getLang(currentWort) {
     }
   };
 
-  resApi.lang.index= 10;
+  resApi.lang.index = 10;
   const getApiLang = () => {
     const langVal = [
       "7a7b531352msh47e6e582c9a0340p181ba8jsnfd06f4a6b0e3",
@@ -512,7 +531,7 @@ function getLang(currentWort) {
             getApiLang();
           } else {
             //tüm keyler limit asimi ise
-            resApi.lang.status=false
+            resApi.lang.status = false;
             consoleMsg(
               msgTyp.error,
               `API Limit`,
@@ -531,15 +550,15 @@ function getLang(currentWort) {
         consoleMsg(
           msgTyp.error,
           `${currentWort}`,
-          "Google translate API error. (f:getLang-multiple)", err
+          "Google translate API error. (f:getLang-multiple)",
+          err
         );
       });
-      return
+    return;
   };
 
   //initialization hatasi almamak icin en alttan cargildi
   getDocForLang.call();
-
 }
 
 //varsa kelimeye dair örnekler alinir
@@ -673,8 +692,8 @@ function getImg(currentWort) {
     tryCSE == 1 ? searchPara.push(...searchEn) : searchPara.push(...searchDe);
 
     url = `https://customsearch.googleapis.com/customsearch/v1?
-key=${cse[resApi.img.index][0]}&
-cx=${cse[resApi.img.index][1]}&
+key=${cse[resApi.img.nextIndex()][0]}&
+cx=${cse[resApi.img.nextIndex()][1]}&
 searchType=image&
 safe=active&
 c2coff=1&
@@ -686,8 +705,7 @@ q=${cseWord[tryCSE]}
 `;
     url = url.replaceAll(rRgxBreak, "").replaceAll(rRgxUrl, "&");
 
-   // console.log("resApiNo:", resApi.img.index, `\n`, url);
-
+    // console.log("resApiNo:", resApi.img.index, `\n`, url);
   };
 
   const searchImg = () => {
@@ -695,9 +713,12 @@ q=${cseWord[tryCSE]}
     fetch(url)
       .then((response) => {
         if (response.status === 200) {
+          resApi.img.subArr.length=0//basarili her islem sonrasi alt index sifirlanir....
           return response.text();
         } else if (response.status === 429) {
           throw 429;
+        }else if(response.status === 503){
+           throw 503
         } else {
           throw response;
         }
@@ -749,6 +770,19 @@ q=${cseWord[tryCSE]}
                 msgTyp.warning,
                 `429 | ${currentWort}`,
                 `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchImg)`,
+                err
+              );
+              tryCSE = 9; //cikis yapilir
+            }
+            break;
+            case 503: // server cevap vermeme halinde...sirayla diger cse lerle denenir...
+           if(resApi.img.subInx() !== false) {
+              tryCSEimg();
+            } else {
+              consoleMsg(
+                msgTyp.warning,
+                `503 | ${currentWort}`,
+                `HTTP 503 the server is currently unable to handle the incoming requests! (f:getImg-searchImg)`,
                 err
               );
               tryCSE = 9; //cikis yapilir
