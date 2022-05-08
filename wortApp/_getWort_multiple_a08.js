@@ -1,9 +1,3 @@
-import {myFunc} from "./module/test1.js"
- 
-//console.log(myFunc(5))
-var testMyFunc = myFunc.bind()
-testMyFunc(9)
-
 
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 let script = document.createElement('script');
@@ -15,4 +9,13 @@ document.head.appendChild(script);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
   let bdy = document.querySelector('body')
   bdy.insertBefore(script, bdy.firstChild);
+
+
+import {myFunc} from "./module/test1.js"
+ 
+//console.log(myFunc(5))
+var testMyFunc = myFunc.bind()
+testMyFunc(9)
+console.log(testMyFunc)
+
 
