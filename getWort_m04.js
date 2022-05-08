@@ -775,6 +775,7 @@ q=${cseWord[tryCSE]}
               `Görsel alinirken hata olustu! (f:getImg-searchImg)`,
               err
             );
+            console.log(err)
             tryCSE = 9;
             break;
         }
