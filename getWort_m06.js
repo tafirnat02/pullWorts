@@ -180,7 +180,7 @@ function getWort(html) {
       return currentWort;
     })
     .then((currentWort) => {
-      getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
+      //getLang(currentWort); //api aktif ise: dil durumu kontrol edilir TR yoksa API ile ceviri eklenir...
       return currentWort;
     })
     .then((currentWort) => {
