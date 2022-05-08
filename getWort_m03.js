@@ -146,6 +146,7 @@ function getWort(html) {
     currentWort = doc.querySelector("form>div>input").value;
     //kelime kontrolü yapilir-gecersiz kelime bildirimi yapilip sonraki html'e gecilir...
     if (!checkEl(doc.querySelector("section.rBox"))) throw "not found wort!";
+    debugger
     resolve(currentWort);
   });
 
@@ -184,7 +185,7 @@ function getWort(html) {
       return currentWort;
     })
     .then((currentWort) => {
-      if (newWort.status.Substantiv[0] == "Substantiv" && currentWort !=='undefined') {
+      if (newWort.status.Substantiv[0] == "Substantiv") {
         if (resApi.img.status) getImg(currentWort); //api aktif ise: nomen ise görsel alinir
       }
     })
