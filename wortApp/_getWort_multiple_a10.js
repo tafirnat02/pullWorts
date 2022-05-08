@@ -3,7 +3,7 @@
 let script = document.createElement('script');
 //script.type = 'text/javascript';
 script.type = 'module';
-script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_getWort_multiple_a08.js";
+script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_getWort_multiple_a10.js";
 //head taginin en sonuna yerlestirilir
 document.head.appendChild(script);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
@@ -11,11 +11,11 @@ document.head.appendChild(script);
   bdy.insertBefore(script, bdy.firstChild);
 
 
-import {myFunc} from "./module/test1.js"
+//import {myFunc} from "./module/test1.js"
  
 //console.log(myFunc(5))
-var testMyFunc = myFunc.bind()
-testMyFunc(9)
-console.log(testMyFunc)
+//var testMyFunc = myFunc.bind()
+//testMyFunc(9)
+//console.log(testMyFunc)
 
 
