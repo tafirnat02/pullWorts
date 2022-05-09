@@ -8,7 +8,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {getWortList, wortList} from "./module/_wortList_a20.js" //kullanilacak kelimleri alir
+import {getWortList, wortList} from "./module/_wortList_a21.js" //kullanilacak kelimleri alir
 import {test} from "./module/_zBase_a06.js" //genel kullanilacak islemleri tutar
 
 /**  --- ekran bildirimi--- */
