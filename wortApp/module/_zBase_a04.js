@@ -2,9 +2,7 @@
  * Burada tüm modüllerde kullanilacak olan ögeler yer almakta...
  */
 
-export {test}
-
 /*  --- Fonksiyonlar vd. --- */
- const   test =  ()=>{
+ export default function test (){
     console.log('base js...')
 }
