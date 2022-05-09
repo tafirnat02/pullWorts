@@ -7,7 +7,7 @@
 let scrpt = document.createElement('script');
 //script.type = 'text/javascript';
 scrpt.type = 'module';
-scrpt.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/WortApp/_importModuls_a06.js";
+scrpt.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a06.js";
 //head taginin en sonuna yerlestirilir
 document.head.appendChild(scrpt);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
@@ -22,8 +22,8 @@ Dizin Yapisi:
 📂
   |_📇appStarter.js         .../appStarter.js"
   |_📇getMosuls_*.js        .../getMosuls_*.js"  📍
-  |_📂WortApp               .../WortApp
-    |_📇_importModuls_*.js  .../WortApp/_importModuls_*.js  🟡
+  |_📂WortApp               .../wortApp
+    |_📇_importModuls_*.js  .../wortApp/_importModuls_*.js  🟡
     |_📂module                  ./module
     |_📇_Documents_*.js         ./module/_Documents_*.js 
     |_📇_img_*.js               ./module/_img_*.js 

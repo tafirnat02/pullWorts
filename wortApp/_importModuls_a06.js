@@ -11,7 +11,7 @@
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {test,getWort} from "./module/_wortList_a05" //kullanilacak kelimleri alir
+import {test,getWort} from "./module/_wortList_a05.js" //kullanilacak kelimleri alir
 //import {myFunc} from "./module/_zBase_a00" //genel kullanilacak islemleri tutar
  
 debugger
@@ -27,10 +27,10 @@ Dizin Yapisi:
 📂
   |_📇appStarter.js         .../appStarter.js"
   |_📇getMosuls_*.js        .../getMosuls_*.js"  
-  |_📂WortApp               .../WortApp
-    |_📇_importModuls_*.js  .../WortApp/_importModuls_*.js  📍
+  |_📂WortApp               .../wortApp
+    |_📇_importModuls_*.js  .../wortApp/_importModuls_*.js  📍
     |_📂module                  ./module
-    |_📇_Documents_*.js         ./module/_Documents_*.js 
+    |_📇_Documents_*.js         ./module/_documents_*.js 
     |_📇_img_*.js               ./module/_img_*.js 
     |_📇_lang_*.js              ./module/_lang_*.js
     |_📇_wortList_*.js          ./module/_wortList_*.js   🟡
