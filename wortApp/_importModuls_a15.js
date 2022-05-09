@@ -18,6 +18,7 @@ import {test} from "./module/_zBase_a03" //genel kullanilacak islemleri tutar
 
 try {
 //console.log(import.meta) //_zBase_a*
+debugger
 test() //
   console.log('run moduls organizator...')
   window.getWortList=getWortList //kelime listesi alinir
