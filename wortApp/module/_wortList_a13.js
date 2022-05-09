@@ -2,16 +2,13 @@
 Modul Baglami: Kelime listasini dahil eder... 
 */
 
-/*-------- Modul Disina Aktarilanlar ---------*/
-export { getWortList };
-
-/*-------- Modul Icerigindeki Islemler ---------*/
-//url dogru ise ilgili kelime listesi arr olara dönderilir...
- function getWortList(newList = "") {
- console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");  
-
  const u_JSONwortList =
   "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json"; 
+
+/*-------- Modul Default Olarak Disa Aktarimi ---------*/
+//url dogru ise ilgili kelime listesi arr olara dönderilir...
+export default function getWortList(newList = "") {
+ console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");  
 
   if (checkFile(u_JSONwortList))
     return () => {
