@@ -19,6 +19,8 @@ windows.* ile bu degiskenlere consolden/browserdan erisimi istenilen
     -dizin vs 
     hepsini burada window nesnesi altinda tanimlanmalidir.
 */
+console.log('run wortApp moduls...')
+
 window.wortList = wortList
 
 console.log(wortList)
