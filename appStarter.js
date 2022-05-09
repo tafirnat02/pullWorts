@@ -8,9 +8,9 @@
 
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a43.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a44.js";
 
-  window.checkFile = checkFile
+window.checkFile = checkFile;
 
 if (checkFile(url_getModuls)) {
   let script = document.createElement("script");
@@ -41,19 +41,24 @@ Dizin Yapisi:
 */
 
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
-function checkFile(url, pos='') {
-  return fetch(url)
-      .then((response) => {
-        if (response.status === 404) throw 404;
-         return true
-      })
-      .catch((err) => {
-        switch (err) {
-          case 404:
-            console.log(`Dosya konumu hatali! url'yi kontrol edin ${pos}.\n${url}`);
-          default:
-            console.log(err);
-            break;
-        }
-      });
-  }
+//islem sonrasi kontrol icin sonuc url eslestirilerek bu nesneden check edilir.
+const urlChecker = { url: undefined };
+
+async function checkFile(url, pos = "") {
+  urlChecker.url = false; //obje degeri default hale getirilir...
+  await fetch(url)
+    .then((response) => {
+      if (response.status === 404) throw 404;
+      urlChecker.url = true; //url erisilebilir...
+    })
+    .catch((err) => {
+      if (err === 404) {
+        console.log(
+          `Dosya konumu hatali! url'yi kontrol edin ${pos}.\n${url}`,
+          err
+        );
+      } else {
+        console.log("Hata meydana geldi! (m:appStarter, f:checkFile)", err);
+      }
+    });
+}
