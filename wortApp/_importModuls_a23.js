@@ -12,7 +12,7 @@
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
 import getWortList from "./module/_wortList_a12.js" //kullanilacak kelimleri alir
-import test from "./module/_zBase_a03" //genel kullanilacak islemleri tutar
+import test from "./module/_zBase_a03.js" //genel kullanilacak islemleri tutar
 
 
 console.log('run moduls organizator...')
