@@ -3,17 +3,19 @@ Modul Baglami: Kelime listasini dahil eder...
 */
 
 /*-------- Modul Disina Aktarilanlar ---------*/
-export const getWortList=(newList="")=>{
-    console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");
-    if(!!newList) return //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
-    loadList()
-    //kelimeler dosyadan array olarak sayfaya dahil edilir...
- return wortList
-}
+console.log('wortList..runing..')
+export const wortList =[]
 
 /*-------- Modul Icerigindeki Islemler ---------*/
 const url='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/oldFiles/wortlist.json'
-const wortList =[]
+
+(function getWortList(newList=""){
+  console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");
+  if(!!newList) return //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
+  loadList()
+  //kelimeler dosyadan array olarak sayfaya dahil edilir...
+return wortList
+}).call()
 
 function loadList () {
     //resolve(loadWort());//promise ile sirali olarak js filler eklenir...

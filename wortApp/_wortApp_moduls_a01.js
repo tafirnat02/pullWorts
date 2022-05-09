@@ -4,12 +4,12 @@
  * window.* ile global bir degisken olarak atar...
  */
 
-import {myFunc} from "./module/_Documents_a00" //document/HTML dizin olarak ham verileri tutar
-import {myFunc} from "./module/_img_a00" //image islemlerini yapar
-import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
-import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {myFunc} from "./module/_wortList_a00" //kullanilacak kelimleri alir
-import {myFunc} from "./module/_zBase_a00" //genel kullanilacak islemleri tutar
+//import {myFunc} from "./module/_Documents_a00" //document/HTML dizin olarak ham verileri tutar
+//import {myFunc} from "./module/_img_a00" //image islemlerini yapar
+//import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
+//import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
+import {wortList} from "./module/_wortList_a01" //kullanilacak kelimleri alir
+//import {myFunc} from "./module/_zBase_a00" //genel kullanilacak islemleri tutar
  
 /*
 windows.* ile bu degiskenlere consolden/browserdan erisimi istenilen 
@@ -19,7 +19,7 @@ windows.* ile bu degiskenlere consolden/browserdan erisimi istenilen
     -dizin vs 
     hepsini burada window nesnesi altinda tanimlanmalidir.
 */
-window.wortList = getWortList()
+window.wortList = wortList
 
 console.log(wortList)
 
