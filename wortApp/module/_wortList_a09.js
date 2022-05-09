@@ -20,7 +20,7 @@ function getWortList(newList=""){
 
  const  loadWords =  () => {
     //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
-   return fetch(url)
+   return fetch(u_JSONwortList)
       .then((response) => {
         return response.text();
       }) // or .json()

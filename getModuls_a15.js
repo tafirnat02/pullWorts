@@ -4,7 +4,7 @@
  *
  */
 const url_importModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a10.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a11.js";
 
 //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...  
 if (checkFile(url_getModuls)) {
