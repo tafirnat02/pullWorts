@@ -8,7 +8,7 @@ export const wortList = []
 export function  getWort(){getWortList()}
 
 /*-------- Modul Icerigindeki Islemler ---------*/
-const url='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/oldFiles/wortlist.json'
+const url='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json'
 
 function getWortList(newList=""){
   console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");
