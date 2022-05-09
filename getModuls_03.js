@@ -13,4 +13,5 @@ document.head.appendChild(scrpt);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
   let head_ = document.querySelector('body')
   head_.insertBefore(scrpt, head_.firstChild);
+  debugger
 console.log('run import module...')
