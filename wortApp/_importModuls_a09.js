@@ -11,22 +11,18 @@
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {test,getWort} from "./module/_wortList_a07.js" //kullanilacak kelimleri alir
+import {test,getWort} from "./module/_wortList_a08.js" //kullanilacak kelimleri alir
+//import {checkFile} from "./module/_zBase_a00" //genel kullanilacak islemleri tutar
+
 
 try {
-  
-  //import {myFunc} from "./module/_zBase_a00" //genel kullanilacak islemleri tutar
-   
-  debugger
+  console.log(import.meta)
   console.log('run wortApp moduls...')
   console.log(test(3))
   
   //window.wortList = wortList
   window.getWort=getWort
   window.test=test
-
-
-
 
 } catch (error) {
   console.log(error)

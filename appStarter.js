@@ -1,22 +1,25 @@
 /**
  * Buradaki kod console yapistirilip run edilerek baslatilir.
- * 
+ *
  * Bu kod ile moduller yüklenir sayfaya ve esrisilir hale getirilir...
  * Asil islem yapilacak kodlar burada dahil edilen js dosyasindadir...
- * 
+ *
  */
 
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
-let script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a11.js";
-//head taginin en sonuna yerlestirilir
-document.head.appendChild(script);
-//belirli bir ögeden hemen sonra bulunmasi istenilirse:
-  let head = document.querySelector('head')
+const url_getModuls =
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a12.js";
+
+if (checkFile(url_getModuls)) {
+  let script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = url_getModuls;
+  //head taginin en sonuna yerlestirilir
+  document.head.appendChild(script);
+  //belirli bir ögeden hemen sonra bulunmasi istenilirse:
+  let head = document.querySelector("head");
   head.insertBefore(script, head.firstChild);
-
-
+}
 
 /*
 Dizin Yapisi:
@@ -34,3 +37,21 @@ Dizin Yapisi:
     |_📇_zBase_*.js             ./module/_zBase_*.js
     |_📇wortList.json           ./module/wortList.json    
 */
+
+/* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
+function checkFile(url) {
+  return fetch(url)
+      .then((response) => {
+        if (response.status === 404) throw 404;
+         return true
+      })
+      .catch((err) => {
+        switch (err) {
+          case 404:
+            console.log(`Dosya konumu hatali! url'yi kontrol edin: \n${url}`);
+          default:
+            console.log(err);
+            break;
+        }
+      });
+  }

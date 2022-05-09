@@ -1,21 +1,22 @@
-
 /*
  * Bu file, 'appStarter,js' ile görüntülenen web sayfasina buradaki =="importModules"== dosyasi
  *  icerisnde bildirilen modlulleri sayfaya dahil eder
- * 
+ *
  */
-let scrpt = document.createElement('script');
-//script.type = 'text/javascript';
-scrpt.type = 'module';
-scrpt.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a08.js";
-//head taginin en sonuna yerlestirilir
-document.head.appendChild(scrpt);
-//belirli bir ögeden hemen sonra bulunmasi istenilirse:
-  let head_ = document.querySelector('body')
-  head_.insertBefore(scrpt, head_.firstChild);
-  //debugger
-console.log('run import module...')
+const url_importModuls =
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a09.js";
 
+//dosya konumu kontrol edilip, moduller sayfaya dahil edilir...  
+if (checkFile(url_getModuls)) {
+//moduller sayfaya aktarilir
+let scrpt = document.createElement("script");
+scrpt.type = "module";
+scrpt.src = url_importModuls;
+document.head.appendChild(scrpt);
+let head_ = document.querySelector("body");
+head_.insertBefore(scrpt, head_.firstChild);
+console.log("run import module...");
+}
 
 /*
 Dizin Yapisi:
@@ -33,4 +34,3 @@ Dizin Yapisi:
     |_📇_zBase_*.js             ./module/_zBase_*.js
     |_📇wortList.json           ./module/wortList.json    
 */
-

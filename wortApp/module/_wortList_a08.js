@@ -3,38 +3,35 @@ Modul Baglami: Kelime listasini dahil eder...
 */
 
 /*-------- Modul Disina Aktarilanlar ---------*/
-console.log('wortList..runing..')
-export function test(){console.log('me..ok..run..')}
-export function  getWort(){getWortList()}
+export {getWortList}
 
+console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");
 /*-------- Modul Icerigindeki Islemler ---------*/
-const url='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json'
+const u_JSONwortList='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json'
+
+//url dogru ise ilgili kelime listesi arr olara dönderilir...
+if (checkFile(u_JSONwortList)) ()=> { return getWortList.call()}
 
 function getWortList(newList=""){
-  console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");
   if(!!newList) return //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
-  loadList()
+  return loadWords.call()
   //kelimeler dosyadan array olarak sayfaya dahil edilir...
-return wortList
 }
 
-function loadList () {
+ const  loadWords =  () => {
     //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
-    fetch(url)
+   return fetch(url)
       .then((response) => {
         return response.text();
       }) // or .json()
       .then((data) => {
         return JSON.parse(data);
       })
-      .then((list) => {
-        wortList.push(...list);
-      })
       .catch((err) => {
-        console.clear()
         console.log(
           `Kelime listesi alinirken hata oldu. Kelime urlini kontrol edin! (m:wortList, f:loadApp) ${url}`
         );
         console.log( err)
       });
 };
+
