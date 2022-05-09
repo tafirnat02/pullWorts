@@ -4,10 +4,19 @@
  *
  */
 const url_importModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a15.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a16.js";
 
 //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...  
+try {
+  console.log('getModuls')
+console.log('tip', typeof checkFile)
+} catch (error) {
+  console.log(error)
+}
+
+
 if (checkFile(url_getModuls)) {
+  debugger
 //moduller sayfaya aktarilir
 let scrpt = document.createElement("script");
 scrpt.type = "module";
