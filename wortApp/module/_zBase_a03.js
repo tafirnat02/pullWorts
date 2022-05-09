@@ -5,6 +5,6 @@
 export {test}
 
 /*  --- Fonksiyonlar vd. --- */
-const test =()=>{
+ const   test =  ()=>{
     console.log('base js...')
 }
