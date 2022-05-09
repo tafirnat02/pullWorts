@@ -4,7 +4,7 @@ Modul Baglami: Kelime listasini dahil eder...
 
 /*-------- Modul Disina Aktarilanlar ---------*/
 console.log('wortList..runing..')
-export const wortList = []
+export function test(){console.log('me..ok..run..')}
 export function  getWort(){getWortList()}
 
 /*-------- Modul Icerigindeki Islemler ---------*/
