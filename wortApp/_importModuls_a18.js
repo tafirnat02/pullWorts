@@ -14,11 +14,10 @@
 import {getWortList} from "./module/_wortList_a10.js" //kullanilacak kelimleri alir
 import {test} from "./module/_zBase_a03" //genel kullanilacak islemleri tutar
 
-
-
 try {
-//console.log(import.meta) //_zBase_a*
-debugger
+console.log(import.meta) //_zBase_a*
+
+//
 test() //
   console.log('run moduls organizator...')
   window.getWortList=getWortList //kelime listesi alinir
@@ -41,8 +40,8 @@ Dizin Yapisi:
     |_📇_lang_*.js              ./module/_lang_*.js
     |_📇_wortList_*.js          ./module/_wortList_*.js   🟡
     |_📇_wortObj_*.js           ./module/_wortObj_*.js
-    |_📇_zBase_*.js             ./module/_zBase_*.js
-    |_📇wortList.json           ./module/wortList.json    🟡
+    |_📇_zBase_*.js             ./module/_zBase_*.js      🟡
+    |_📇wortList.json           ./module/wortList.json    
 */
 
 
