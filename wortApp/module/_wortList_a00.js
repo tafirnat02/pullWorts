@@ -13,7 +13,7 @@ export const getWortList=(newList="")=>{
 
 /*-------- Modul Icerigindeki Islemler ---------*/
 const url='https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/oldFiles/wortlist.json'
-const mainWortList =[]
+const wortList =[]
 
 function loadList () {
     //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
