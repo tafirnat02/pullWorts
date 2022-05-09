@@ -4,7 +4,7 @@
  *
  */
 const url_importModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a18.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a20.js";
 
 //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...  
 try {
@@ -16,7 +16,7 @@ console.log('tip', typeof checkFile)
 
 
 if (checkFile(url_getModuls)) {
-  debugger
+
 //moduller sayfaya aktarilir
 let scrpt = document.createElement("script");
 scrpt.type = "module";
