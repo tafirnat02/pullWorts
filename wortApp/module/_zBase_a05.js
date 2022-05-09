@@ -4,5 +4,6 @@
 
 /*  --- Fonksiyonlar vd. --- */
  export default function test (){
+    console.log(import.meta) //_zBase_a*
     console.log('base js...')
 }
