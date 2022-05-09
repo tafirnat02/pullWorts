@@ -14,12 +14,11 @@
 import {getWortList} from "./module/_wortList_a09.js" //kullanilacak kelimleri alir
 import {test} from "./module/_zBase_a02" //genel kullanilacak islemleri tutar
 
-console.log(import.meta) //_zBase_a*
 
-test() //
 
 try {
-  
+console.log(import.meta) //_zBase_a*
+test() //
   console.log('run moduls organizator...')
   window.getWortList=getWortList //kelime listesi alinir
 
