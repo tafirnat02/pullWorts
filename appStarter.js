@@ -9,7 +9,7 @@
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 let script = document.createElement('script');
 script.type = 'text/javascript';
-script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a10.js";
+script.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a11.js";
 //head taginin en sonuna yerlestirilir
 document.head.appendChild(script);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
