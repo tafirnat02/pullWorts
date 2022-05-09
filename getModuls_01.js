@@ -7,7 +7,7 @@
 let scrpt = document.createElement('script');
 //script.type = 'text/javascript';
 scrpt.type = 'module';
-scrpt.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a02.js";
+scrpt.src = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a03.js";
 //head taginin en sonuna yerlestirilir
 document.head.appendChild(scrpt);
 //belirli bir ögeden hemen sonra bulunmasi istenilirse:
