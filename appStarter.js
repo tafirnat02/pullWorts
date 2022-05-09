@@ -1,18 +1,16 @@
 /**
  * Buradaki kod console yapistirilip run edilerek baslatilir.
- *
  * Bu kod ile moduller yüklenir sayfaya ve esrisilir hale getirilir...
  * Asil islem yapilacak kodlar burada dahil edilen js dosyasindadir...
  *
  */
 
+const urlChecker = { url: undefined };
+window.checkFile = checkFile;
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a44.js";
-
-window.checkFile = checkFile;
-
-if (checkFile(url_getModuls)) {
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a45.js";
+if (checkFile(url_getModuls,'m:appStarter, f:-')) {
   let script = document.createElement("script");
   script.type = "text/javascript";
   script.src = url_getModuls;
@@ -42,7 +40,6 @@ Dizin Yapisi:
 
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
 //islem sonrasi kontrol icin sonuc url eslestirilerek bu nesneden check edilir.
-const urlChecker = { url: undefined };
 
 async function checkFile(url, pos = "") {
   urlChecker.url = false; //obje degeri default hale getirilir...
@@ -62,3 +59,5 @@ async function checkFile(url, pos = "") {
       }
     });
 }
+
+

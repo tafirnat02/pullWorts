@@ -4,7 +4,7 @@
  *
  */
 const url_importModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a36.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a37.js";
 
 //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
 
@@ -19,18 +19,6 @@ if (checkFile(url_getModuls,'m:getModuls, f:importModuls')) {
   console.log("run import module...");
 }
 
-const msgStatus = [
-  "▰▱▱▱▱▱▱▱▱▱▱ 10%",
-  "▰▰▱▱▱▱▱▱▱▱▱ 20%",
-  "▰▰▰▱▱▱▱▱▱▱▱ 30%",
-  "▰▰▰▰▱▱▱▱▱▱▱ 40%",
-  "▰▰▰▰▰▱▱▱▱▱▱ 50%",
-  "▰▰▰▰▰▰▰▱▱▱▱ 60%",
-  "▰▰▰▰▰▰▰▰▱▱▱ 70%",
-  "▰▰▰▰▰▰▰▰▰▱▱ 80%",
-  "▰▰▰▰▰▰▰▰▰▰▱ 90%",
-  "▰▰▰▰▰▰▰▰▰▰▰ 100%",
-];
 /*
 Dizin Yapisi:
 📂
