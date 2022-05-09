@@ -1,8 +1,8 @@
 /**
  * Burada tüm modüllerde kullanilacak olan ögeler yer almakta...
  */
-
+ export{test}
 /*  --- Fonksiyonlar vd. --- */
- export default function test (){
+  function test (){
     console.log('base js...')
 }
