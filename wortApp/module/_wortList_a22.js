@@ -16,13 +16,17 @@ const  pushArr = (arr)=>{
  async function  getWortList() {
  const url_wortList = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json"; 
 
+
+console.log('typeOf:', typeof checkFile)
+
+ /*
 try {
   console.log(checkFile(url_wortList,'m:wortList, f:getWortList'))
   if(!!checkFile(url_wortList,'m:wortList, f:getWortList')) return //dosyaya erisilemez ise cikis yapilir...
 } catch (error) {
   console.log(error)
 }
-
+*/
   //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
    return await fetch(url_wortList)
     .then(response => {
