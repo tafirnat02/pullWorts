@@ -3,6 +3,7 @@ Modul Baglami: Kelime listasini dahil eder...
 */
 
 
+ //     if (!!newList) return; //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 //url dogru ise ilgili kelime listesi arr olara dönderilir...
@@ -13,13 +14,8 @@ export default function getWortList() {
  const url_wortList =
  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json"; 
 
-  if (checkFile(url_wortList))
-    return () => {
-      if (!!newList) return; //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
-      return loadWords.call(url_wortList);
-      //kelimeler dosyadan array olarak sayfaya dahil edilir...
-    };
-}
+  if (checkFile(url_wortList)) return loadWords.call(url_wortList);//kelimeler dosyadan array olarak sayfaya dahil edilir...
+  };
 
 
 const loadWords = (url) => {

@@ -8,7 +8,7 @@
 
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a33.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a34.js";
 
 if (checkFile(url_getModuls)) {
   let script = document.createElement("script");
