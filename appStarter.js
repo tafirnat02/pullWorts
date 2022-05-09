@@ -8,7 +8,7 @@
 
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a39.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a41.js";
 
 if (checkFile(url_getModuls)) {
   let script = document.createElement("script");
@@ -39,7 +39,7 @@ Dizin Yapisi:
 */
 
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
-function checkFile(url) {
+function checkFile(url, pos='') {
   return fetch(url)
       .then((response) => {
         if (response.status === 404) throw 404;
@@ -48,7 +48,7 @@ function checkFile(url) {
       .catch((err) => {
         switch (err) {
           case 404:
-            console.log(`Dosya konumu hatali! url'yi kontrol edin: \n${url}`);
+            console.log(`Dosya konumu hatali! url'yi kontrol edin ${pos}.\n${url}`);
           default:
             console.log(err);
             break;

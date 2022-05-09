@@ -8,7 +8,6 @@ export{wortList,  getWortList }
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 
-
 const wortList=[]
 const  pushArr = (arr)=>{
     wortList.push(...arr)
@@ -16,6 +15,8 @@ const  pushArr = (arr)=>{
 
  async function  getWortList() {
  const url_wortList = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json"; 
+
+ if(!!checkFile(url_wortList,'m:wortList, f:getWortList')) return //dosyaya erisilemez ise cikis yapilir...
 
   //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
    return await fetch(url_wortList)
@@ -29,7 +30,7 @@ const  pushArr = (arr)=>{
     })   
     .catch((err) => {
       console.log(
-        `Kelime listesi alinirken hata oldu. Kelime urlini kontrol edin! (m:wortList, f:loadWords) ${url}`
+        `Kelime listesi alinirken hata oldu. Kelime urlini kontrol edin! (m:wortList, f:getWortList)\n ${url}`
       );
       console.log(err);
     });
