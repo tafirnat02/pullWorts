@@ -1,24 +1,20 @@
 /*
-Modul Baglami: Kelime listasini dahil eder... 
+Modul Baglami: Kelime listasini wortListe dahil eder... 
+WortList'e arrayin push edilebilmesi icin önce getWortList() cagrilmalidir.
 */
 
-//     if (!!newList) return; //eger kelime listesi elden girilmis ise dosyadan kelime alinmaz
-
-/*-------- Modul Default Olarak Disa Aktarimi ---------*/
-//url dogru ise ilgili kelime listesi arr olara dönderilir...
-
+/*-------- Disariya Cikarilan Ögeler ---------*/
 export{wortList,  getWortList }
 
-const wortList=[]
+/*-------- Modul Default Olarak Disa Aktarimi ---------*/
 
+
+const wortList=[]
 const  pushArr = (arr)=>{
     wortList.push(...arr)
-    console.log(wortList)
 }
 
  async function  getWortList() {
- console.log("🚩 running... ≣⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮");  
-     
  const url_wortList = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json"; 
 
   //resolve(loadWort());//promise ile sirali olarak js filler eklenir...
