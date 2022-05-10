@@ -5,6 +5,13 @@
  *
  */
 
+
+/*
+
+server hatasinda kalinan sayiyi storage e aktararak oradan baslatilabilir.....
+
+ */
+
 const urlChecker = { url: undefined };
 window.checkFile = checkFile;
 //ilgili urldeki js kodu sayfanin head kismina eklenir....

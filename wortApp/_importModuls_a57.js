@@ -17,8 +17,7 @@ import {setGlobalScope} from "./module/_zBase_a20.js" //bu bir dizin altindaki t
 
 setGlobalScope.call()
 getWortList.call()
-console.clear()
-console.log(msgStatus[1])
+runBar(2) //% durumu...
 
 /*
 Dizin Yapisi:
