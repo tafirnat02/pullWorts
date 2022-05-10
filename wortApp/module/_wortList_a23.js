@@ -9,9 +9,12 @@ export { wortList, getWortList };
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 
 const wortList = [];
+const testApp='testGlobal'
+
+/*
 const pushArr = (arr) => {
   wortList.push(...arr);
-};
+};*/
 
 async function getWortList() {
   const url_wortList =
