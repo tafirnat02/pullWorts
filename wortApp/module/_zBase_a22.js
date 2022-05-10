@@ -11,8 +11,9 @@ setGlobalScope().catch((err) => {
   console.log(err);
 });
 
+//============================================================
+//gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
 function setValues() {
-  //setValues icinde olmali tüm ögeler....
   //yüzde % gösterimi...______________________________________
   const msgStatus = [
     "🚩running... ▰▱▱▱▱▱▱▱▱▱▱ 10%",
@@ -51,9 +52,7 @@ function setValues() {
 
     console.log(`%c ${head} %c ${txt}`, stylHead, stylBody);
     if (!!err) console.log(err);
-    /*
-msgConsole(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
-*/
+    //msgConsole(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
   };
 
   //bir ögenin sayfada olup olmadigini kontrol eder..._______
