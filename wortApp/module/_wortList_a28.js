@@ -33,10 +33,13 @@ async function getWortList() {
           })
           .then((response) => {
             const wortList = [];
-            list = async () => {
+
+            const list = async () => {
               wortList.push(...response);
             };
-            list.then(() => {
+
+            await list()
+            .then(() => {
               window.wortList = wortList;
             });
           });
