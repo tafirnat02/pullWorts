@@ -9,7 +9,7 @@ const urlChecker = { url: undefined };
 window.checkFile = checkFile;
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
 const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a60.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a62.js";
 if (checkFile(url_getModuls,'m:appStarter, f:-')) {
   let script = document.createElement("script");
   script.type = "text/javascript";

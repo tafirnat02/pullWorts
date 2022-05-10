@@ -38,7 +38,7 @@ async function getWortList() {
               wortList.push(...response);
             };
 
-            await list()
+             list()
             .then(() => {
               window.wortList = wortList;
             });
