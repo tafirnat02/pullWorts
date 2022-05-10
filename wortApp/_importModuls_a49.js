@@ -8,7 +8,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {getWortList} from "./module/_wortList_a25.js" //kullanilacak kelimleri alir
+import {getWortList} from "./module/_wortList_a26.js" //kullanilacak kelimleri alir
 import {setGlobalScope} from "./module/_zBase_a18.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
 /**  --- ekran bildirimi--- */

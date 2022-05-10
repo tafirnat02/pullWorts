@@ -7,9 +7,6 @@ WortList'e arrayin push edilebilmesi icin önce getWortList() cagrilmalidir.
 export {getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
-
-const wortList = [];
-
 async function getWortList() {
   const url_wortList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
@@ -35,7 +32,7 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
-            //pushArr(response);
+            const wortList = [];
             wortList.push(...response)
             this.wortList=wortList //gloabe scope'a gönderilir...
           });
