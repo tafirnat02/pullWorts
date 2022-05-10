@@ -4,9 +4,10 @@
  *
  */
 const url_importModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a53.js";
+  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a54.js";
 
 //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
+
 
 if (checkFile(url_getModuls,'m:getModuls, f:importModuls')) {
   //moduller sayfaya aktarilir
@@ -16,7 +17,7 @@ if (checkFile(url_getModuls,'m:getModuls, f:importModuls')) {
   document.head.appendChild(scrpt);
   let head_ = document.querySelector("body");
   head_.insertBefore(scrpt, head_.firstChild);
-  console.log("run import module...");
+  console.log("🚩running... ▰▱▱▱▱▱▱▱▱▱▱ 10%");
 }
 
 /*
@@ -34,15 +35,4 @@ Dizin Yapisi:
     |_📇_wortObj_*.js           ./module/_wortObj_*.js
     |_📇_zBase_*.js             ./module/_zBase_*.js
     |_📇wortList.json           ./module/wortList.json   
-    
-    ['▰▱▱▱▱▱▱▱▱▱▱ 10%',
-    '▰▰▱▱▱▱▱▱▱▱▱ 20%',
-    '▰▰▰▱▱▱▱▱▱▱▱ 30%',
-    '▰▰▰▰▱▱▱▱▱▱▱ 40%',
-    '▰▰▰▰▰▱▱▱▱▱▱ 50%',
-    '▰▰▰▰▰▰▰▱▱▱▱ 60%',
-    '▰▰▰▰▰▰▰▰▱▱▱ 70%',
-    '▰▰▰▰▰▰▰▰▰▱▱ 80%',
-    '▰▰▰▰▰▰▰▰▰▰▱ 90%',
-    '▰▰▰▰▰▰▰▰▰▰▰ 100%']
 */
