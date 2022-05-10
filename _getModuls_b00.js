@@ -2,13 +2,13 @@
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
   url_importModuls =
-    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b03.js";
-
+    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b04.js";
+    console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
 if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
   () => {
     return false;
   }; //dosya yoksa cikis yapilir
-console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
+
 //sayfada yüklü olup olmadigi kontrol edilir
 if (
   !!document.querySelector(`script[type="module"][src="${url_importModuls}"]`)
@@ -16,7 +16,6 @@ if (
   () => {
     starter.call();
   };
-
 //sayfada olmadiginda, url kontrol edilir ve moduller sayfaya aktarilir
 let scrpt = document.createElement("script");
 scrpt.type = "module";
