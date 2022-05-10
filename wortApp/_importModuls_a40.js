@@ -15,7 +15,11 @@ import * as base from "./module/_zBase_a09.js" //bu bir dizin altindaki tüm ög
 //console.log('🚩 running...',msgStatus[0])
 /* --- import islemi sonrasi "windows." nesnesi altinda Global Scope tasinan ögeler --- */
 console.log(base)
-base.test()
+base.array.forEach(element => {
+  console.log(element)
+});
+test()
+//base.test()
 base.setGlobal(getWortList)
 base.setGlobal(wortList)
 
