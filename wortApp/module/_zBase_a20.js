@@ -3,9 +3,10 @@
 export {setGlobalScope};
 
 /*  --- Fonksiyonlar vd. --- */
- const  setGlobalScope= ()=>{
+ const  setGlobalScope= async ()=>{
    setValues.call()
 }
+
 
 function setValues(){
   //nesne deklare edilir
