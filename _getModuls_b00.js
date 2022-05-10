@@ -2,7 +2,7 @@
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
   url_importModuls =
-    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a57.js";
+    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_a59.js";
 
 if (checkFile(url_importModuls, "m:getModuls, f:importModuls")) {
   //url gecerli ise moduller sayfaya aktarilir
