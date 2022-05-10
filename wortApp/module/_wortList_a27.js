@@ -4,7 +4,7 @@ WortList'e arrayin push edilebilmesi icin önce getWortList() cagrilmalidir.
 */
 
 /*-------- Disariya Cikarilan Ögeler ---------*/
-export {getWortList };
+export { getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
@@ -17,7 +17,7 @@ async function getWortList() {
       return urlChecker.url;
     })
     .then((file) => {
-      if (!file){
+      if (!file) {
         throw 404; //url gecerli ise ilgili dosya isleme alinir...degilse hata firlatilir...
       }
     })
@@ -33,8 +33,12 @@ async function getWortList() {
           })
           .then((response) => {
             const wortList = [];
-            wortList.push(...response)
-            this.wortList=wortList //gloabe scope'a gönderilir...
+            list = async () => {
+              wortList.push(...response);
+            };
+            list.then(() => {
+              window.wortList = wortList;
+            });
           });
       }
     )
@@ -47,4 +51,3 @@ async function getWortList() {
       }
     });
 }
-
