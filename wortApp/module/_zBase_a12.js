@@ -21,9 +21,10 @@ function setGlobal(
   item8 = "",
   item9 = ""
 ) {
+  debugger
   for (let index = 0; index < 10; index++) {
     if (eval("item" + index) == "") break;
-    item = eval("item" + index);
+    let item = eval("item" + index);
     this[item.name] = item;
   }
 }
