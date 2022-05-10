@@ -1,12 +1,8 @@
 /* Burada tüm modüllerde kullanilacak olan ögeler yer almakta...*/
 
-export { test, msgStatus };
+export {setGlobalScope};
 
 /*  --- Fonksiyonlar vd. --- */
-function test() {
-  console.log("base js...");
-}
-
 //loading ilerleyisi....
 const msgStatus = [
   "▰▱▱▱▱▱▱▱▱▱▱ 10%",
@@ -20,6 +16,11 @@ const msgStatus = [
   "▰▰▰▰▰▰▰▰▰▰▱ 90%",
   "▰▰▰▰▰▰▰▰▰▰▰ 100%",
 ];
+
+//buradaki ögeleri global scope aktarir....
+const setGlobalScope=()=>{
+  this.msgStatus=msgStatus
+}
 
 
 

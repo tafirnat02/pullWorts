@@ -8,13 +8,15 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {getWortList, wortList} from "./module/_wortList_a23.js" //kullanilacak kelimleri alir
-import {test, msgStatus} from "./module/_zBase_a16.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import {getWortList} from "./module/_wortList_a25.js" //kullanilacak kelimleri alir
+import {setGlobalScope} from "./module/_zBase_a18.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
 /**  --- ekran bildirimi--- */
 //console.log('🚩 running...',msgStatus[0])
 /* --- import islemi sonrasi "windows." nesnesi altinda Global Scope tasinan ögeler --- */
-setGlobal(test,getWortList,wortList,msgStatus)
+
+getWortList()
+setGlobalScope()
 
 /*
 Dizin Yapisi:
@@ -32,26 +34,4 @@ Dizin Yapisi:
     |_📇_zBase_*.js             ./module/_zBase_*.js      🟡
     |_📇wortList.json           ./module/wortList.json    
 */
-
-// bir nesneyi, window/this nesnesine ait property olarak globa scope tasir...
-//tek seferde ard ardina 10'a kadar öge scope atilabilir
-function setGlobal(
-  item0 = "",
-  item1 = "",
-  item2 = "",
-  item3 = "",
-  item4 = "",
-  item5 = "",
-  item6 = "",
-  item7 = "",
-  item8 = "",
-  item9 = ""
-) {
-  debugger
-  for (let index = 0; index < 10; index++) {
-    if (eval(`item${index}`) == "") break;
-    let item = eval(`item${index}`);
-    this[item.name] = item;
-  }
-}
 
