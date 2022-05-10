@@ -9,15 +9,18 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
 import {getWortList, wortList} from "./module/_wortList_a23.js" //kullanilacak kelimleri alir
-import * as base from "./module/_zBase_a08.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import * as base from "./module/_zBase_a09.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
 /**  --- ekran bildirimi--- */
 //console.log('🚩 running...',msgStatus[0])
 /* --- import islemi sonrasi "windows." nesnesi altinda Global Scope tasinan ögeler --- */
 console.log(base)
-base.setGlobal(test)
+base.test()
 base.setGlobal(getWortList)
 base.setGlobal(wortList)
+
+base.setGlobal(base.test)
+
 /*
 window.test=test  
 window.getWortList=getWortList //kelime listesi alinir

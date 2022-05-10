@@ -1,7 +1,7 @@
 /* Burada tüm modüllerde kullanilacak olan ögeler yer almakta...*/
 
  //export{test,setGlobal}
- export * from './_zBase_a08.js'; //bu modüldeki tüm ögeleri * joker karakteri ile disa aktarilir....
+ export * from './_zBase_a09.js'; //bu modüldeki tüm ögeleri * joker karakteri ile disa aktarilir....
 
 
 /*  --- Fonksiyonlar vd. --- */
