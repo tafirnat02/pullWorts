@@ -1,4 +1,3 @@
-
 /**
 Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada import edilir....
 */
@@ -8,16 +7,23 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import {getWortList} from "./module/_wortList_a30.js" //kullanilacak kelimleri alir
-import {baseFun} from "./module/_zBase_a23.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { getWortList } from "./module/_wortList_a30.js"; //kullanilacak kelimleri alir
+import { baseFun } from "./module/_zBase_a23.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
-/**  --- ekran bildirimi--- */
-//console.log('🚩 running...',msgStatus[0])
-/* --- import islemi sonrasi "windows." nesnesi altinda Global Scope tasinan ögeler --- */
+//import sonrasi ilgili ögeler yürütülür...
+const starter = async () => {
+  //modullerdeki nesneler run edilir...
+  baseFun.call();
+  getWortList.call();
+};
+//daha sonra ilgili ögeler yürütülür....
+starter().then(() => {
+  window.starter = starter;
+  runBar(1); //%10 durumu...
+});
 
-baseFun.call()
-getWortList.call()
-runBar(2) //% durumu...
+//starter.call()//yüklenmekle yürütüöecek ögeler atanir...
+
 /*
 Dizin Yapisi:
 📂
@@ -34,4 +40,3 @@ Dizin Yapisi:
     |_📇_zBase_*.js             ./module/_zBase_*.js      🟡
     |_📇wortList.json           ./module/wortList.json    
 */
-

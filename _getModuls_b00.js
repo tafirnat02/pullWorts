@@ -2,18 +2,28 @@
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
   url_importModuls =
-    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b00.js";
+    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b03.js";
 
-if (checkFile(url_importModuls, "m:getModuls, f:importModuls")) {
-  //url gecerli ise moduller sayfaya aktarilir
-  let scrpt = document.createElement("script");
-  scrpt.type = "module";
-  scrpt.src = url_importModuls;
-  document.head.appendChild(scrpt);
-  let head_ = document.querySelector("head");
-  head_.insertBefore(scrpt, head_.lastChild);
-  console.log("🚩running... ▰▱▱▱▱▱▱▱▱▱▱ 10%");
-}
+if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
+  () => {
+    return false;
+  }; //dosya yoksa cikis yapilir
+console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
+//sayfada yüklü olup olmadigi kontrol edilir
+if (
+  !!document.querySelector(`script[type="module"][src="${url_importModuls}"]`)
+)
+  () => {
+    starter.call();
+  };
+
+//sayfada olmadiginda, url kontrol edilir ve moduller sayfaya aktarilir
+let scrpt = document.createElement("script");
+scrpt.type = "module";
+scrpt.src = url_importModuls;
+document.head.appendChild(scrpt);
+let head_ = document.querySelector("head");
+head_.insertBefore(scrpt, head_.lastChild);
 
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
 async function checkFile(url, pos) {
@@ -36,9 +46,9 @@ async function checkFile(url, pos) {
 }
 
 //ilerleme yüzdesini gösterir
-function runBar(index=""){
-  console.clear()
-  if(index!=="") console.log(msgStatus[index])
+function runBar(index = "") {
+  console.clear();
+  if (index !== "") console.log(msgStatus[index]);
 }
 
 /*
