@@ -9,7 +9,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
 import {getWortList, wortList} from "./module/_wortList_a23.js" //kullanilacak kelimleri alir
-import {test,setGlobal, msgStatus} from "./module/_zBase_a15.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import {test, msgStatus} from "./module/_zBase_a16.js" //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
 /**  --- ekran bildirimi--- */
 //console.log('🚩 running...',msgStatus[0])

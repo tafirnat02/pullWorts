@@ -1,6 +1,6 @@
 /* Burada tüm modüllerde kullanilacak olan ögeler yer almakta...*/
 
-export { test, setGlobal, msgStatus };
+export { test, msgStatus };
 
 /*  --- Fonksiyonlar vd. --- */
 function test() {
