@@ -5,9 +5,14 @@ export {setGlobalScope};
 /*  --- Fonksiyonlar vd. --- */
  const  setGlobalScope= async ()=>{
    setValues.call()
-   window.msgConsole=msgConsole
-   window.checkEl=checkEl
+   console.log()
+  
 }
+setGlobalScope()
+.catch(err=>{
+console.log(err)
+})
+
 //msgConsole icin enum
 const msgTyp = Object.freeze({
   primary: 0,
@@ -16,8 +21,8 @@ const msgTyp = Object.freeze({
   error: 3,
 })
 
-function setValues(){
-  //nesne deklare edilir
+function setValues(){//setValues icinde olmali tüm ögeler....
+//yüzde % gösterimi...______________________________________
  const msgStatus = [
     "🚩running... ▰▱▱▱▱▱▱▱▱▱▱ 10%",
     "🚩running... ▰▰▱▱▱▱▱▱▱▱▱ 20%",
@@ -30,12 +35,9 @@ function setValues(){
     "🚩running... ▰▰▰▰▰▰▰▰▰▰▱ 90%",
     "🚩running... ▰▰▰▰▰▰▰▰▰▰▰ 100%",
   ];
-  //ardindan global Scope aktarilir...
-  window.msgStatus=msgStatus
-}
 
-//console mesaj yazdirmak icin
-function msgConsole(msgTyp, head, txt, err = "") {
+//console mesaj yazdirmak icin_____________________________
+const msgConsole = (msgTyp, head, txt, err = "") => {
   const head0 = "background: DodgerBlue;", //primary
     body0 = "color: DodgerBlue;",
     head1 = "background: Green;", //successful
@@ -52,14 +54,18 @@ function msgConsole(msgTyp, head, txt, err = "") {
   console.log(`%c ${head} %c ${txt}`, stylHead, stylBody);
   if (!!err) console.log(err);
   /*
-consoleMsg(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
+msgConsole(msgTyp.primary | .successful | .warning | .error,'Baslik', 'aciklama metninin görünümü')
 */
 }
 
-//bir ögenin sayfada olup olmadigini kontrol eder...
-function checkEl(e) {
+//bir ögenin sayfada olup olmadigini kontrol eder..._______
+const checkEl=(e)=>{
   return e === null ? false : true;
 }
 
-
+//global scope a aktarilir...===============================
+window.msgStatus=msgStatus
+window.msgConsole=msgConsole
+window.checkEl=checkEl
+}//setValues icinde olmali tüm ögeler....
 
