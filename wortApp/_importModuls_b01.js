@@ -18,7 +18,7 @@ import {setGlobalScope} from "./module/_zBase_a22.js" //bu bir dizin altindaki t
 setGlobalScope.call()
 getWortList.call()
 runBar(2) //% durumu...
-
+console.log('test....me....')
 /*
 Dizin Yapisi:
 📂
