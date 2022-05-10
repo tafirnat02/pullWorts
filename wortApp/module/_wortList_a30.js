@@ -8,7 +8,7 @@ export { getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
-  if(typeof wortList !=='undefined') return //eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  if(typeof wortList !=='undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
 
   const url_wortList =

@@ -1,19 +1,14 @@
 /* Burada tüm modüllerde kullanilacak olan ögeler yer almakta...*/
 
-export { setGlobalScope };
+export { baseFun };
 
 /*  --- Fonksiyonlar vd. --- */
-const setGlobalScope = async () => {
-  setValues.call();
-  console.log();
-};
-setGlobalScope().catch((err) => {
-  console.log(err);
-});
+const baseFun = async () => setItems.call();
+baseFun().catch((err) => console.log(err));
 
 //============================================================
 //gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
-function setValues() {
+function setItems() {
   //yüzde % gösterimi...______________________________________
   const msgStatus = [
     "🚩running... ▰▱▱▱▱▱▱▱▱▱▱ 10%",
