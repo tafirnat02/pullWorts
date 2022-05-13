@@ -42,6 +42,7 @@ async function getWortList() {
 
             list().then(() => {
               window.wortList = wortList; //globale aktarilir bu array...
+              runBar(1); //%10 durumu...
             });
           });
       }
