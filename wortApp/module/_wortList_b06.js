@@ -8,7 +8,7 @@ export { getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
-  if(typeof wortList !=='undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  if(typeof wortList.length>0) return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
 
   const url_wortList =
@@ -35,13 +35,14 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
-            const wortList = [];
+            //const wortList = [];
             const list = async () => {
               wortList.push(...response);
             };
 
             list().then(() => {
-              return wortList  //listeyi dönderir...
+              console.log(wortList)
+             // return wortList  //listeyi dönderir...
             });
           });
       }
