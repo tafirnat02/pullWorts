@@ -11,25 +11,24 @@ import { getWortList } from "./module/_wortList_b07.js"; //kullanilacak kelimler
 import { baseFun } from "./module/_zBase_b02.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import {getDoc} from "./module/_documents_a04.js" //document/HTML dizin olarak ham verileri tutar
 //import sonrasi ilgili ögeler yürütülür...
-const starter = () => {
+const starter = async () => {
   const wortList=[]
   window.wortList=wortList
   const getModule = async () => {
     //modullerdeki nesneler run edilir...
-    baseFun.call()
-    getWortList.call()
-   // wortList.push( ...getWortList.call()); //runBar(1) %10 durumu...
+      await baseFun.call()
+      await getWortList.call()
   };
   //daha sonra ilgili ögeler yürütülür....
   getModule()
   .then(() => {
-    console.log(wortList)
+    console.log('importModule>>', wortList)
     window.starter = starter;
     //window.wortList = wortList; //globale aktarilir bu array...
     runBar.set(1); //%10 durumu...
   })
   .then(()=>{
-    console.log('-->', wortList)
+    console.log('++++-->', wortList)
     //getDoc() //HTMLdocs=[], olarak kelimelerin sayfasi HTMLdocumeta aktarilir...
     //runBar.set(2); //%10 durumu...
   })
