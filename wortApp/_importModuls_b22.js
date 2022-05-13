@@ -20,9 +20,11 @@ const docs=async()=>{getDoc()}
 
 //daha sonra dahil edilen 
 (async()=>{
-  await baseFun()
-  await  getWortList()
-  await  getDoc()
+  await base()
+  await  worts()
+  console.log(wortList)
+  await  docs()
+  
 })
 /*
 const starter = async () => {
