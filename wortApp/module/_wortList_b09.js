@@ -8,10 +8,11 @@ export { getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
+  debugger
   if(typeof wortList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
-  const wortList=[]
-  const url_wortList =
+  const wortList=[],
+  url_wortList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
 
   //önce dosya checkFile() kontrol edilir...
