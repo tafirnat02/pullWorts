@@ -9,10 +9,10 @@ export { getWortList };
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
   debugger
+  console.log(typeof wortList !== 'undefined')
   if(typeof wortList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
-  const wortList=[],
-  url_wortList =
+  const url_wortList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
 
   //önce dosya checkFile() kontrol edilir...
@@ -36,7 +36,7 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
-            //const wortList = [];
+            const wortList = [];
             const list = async () => {
               wortList.push(...response);
             };
