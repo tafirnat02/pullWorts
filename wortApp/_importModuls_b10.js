@@ -24,6 +24,7 @@ const starter = () => {
     runBar.set(1); //%10 durumu...
   })
   .then(()=>{
+    debugger
     getDoc() //HTMLdocs=[], olarak kelimelerin sayfasi HTMLdocumeta aktarilir...
   })
 };
