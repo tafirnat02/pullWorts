@@ -3,13 +3,13 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 */
 
 /**  --- import edilen ögeler --- */
-//import {myFunc} from "./module/_Documents_a00" //document/HTML dizin olarak ham verileri tutar
+
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
-import { getWortList } from "./module/_wortList_b00.js"; //kullanilacak kelimleri alir
+import { getWortList } from "./module/_wortList_b02.js"; //kullanilacak kelimleri alir
 import { baseFun } from "./module/_zBase_b02.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-
+import {myFunc} from "./module/_documents_a02.js" //document/HTML dizin olarak ham verileri tutar
 //import sonrasi ilgili ögeler yürütülür...
 const starter = () => {
   const getModule = async () => {
@@ -18,10 +18,14 @@ const starter = () => {
     getWortList.call();  //runBar(1) %10 durumu...
   };
   //daha sonra ilgili ögeler yürütülür....
-  getModule().then(() => {
+  getModule()
+  .then(() => {
     window.starter = starter;
     runBar.set(1); //%10 durumu...
-  });
+  })
+  .then(()=>{
+    getDoc() //HTMLdocs=[], olarak kelimelerin sayfasi HTMLdocumeta aktarilir...
+  })
 };
 starter.call()//yüklenmekle yürütülecek ögeler atanir...
 

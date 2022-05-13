@@ -1,3 +1,8 @@
+//Bu modül ile kelimelere ait HTML/documet alinir ve HTMLdocuments arrayinde tutulur...
+/*-------- Disariya Cikarilan Ögeler ---------*/
+export { getDoc };
+
+/*-------- Modul Default Olarak Disa Aktarimi ---------*/
 
 const getDoc = async () => {
     var strt=0, // >>  starter kismi storage den alinacak server hatasi sonrasi devam etmek icin...
@@ -26,6 +31,7 @@ const getDoc = async () => {
          if (max == strt) {
            finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
          } else {
+           runBar.set(5,strt-1,max); //%10 durumu...
            nextDoc();
          }
    
@@ -33,10 +39,10 @@ const getDoc = async () => {
        .catch((err) => {
            let msgHead = err===429? `429 | ${wort}`:' ⚠️ Error'
            let msgTxt = err===429? `Alinamayan kelime: ${wortList[strt]}, indeks no: ${strt}`:''
-           msgConsole(
-             msgTyp.error,
+           msg.console(
+             msg.msgTyp.error,
              msgHead,
-             `${msgTxt}(m:documents f:docHTML)`,
+             `${msgTxt}(m:documents*.js f:docHTML)`,
              err
            );
            finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
@@ -46,6 +52,8 @@ const getDoc = async () => {
        nextDoc.call()//alt fonksiyon cagrilir
    }
 
-   const  finishDoc = (docs) => { window.htmlDocArr = docs } //alinan ögeler global scope'a htmlDocArr nesnesi olarak aktarilir...
-   getDoc.call() //ana fonksiyon cagrilir
+   const  finishDoc = (HTMLdocs) => {
+         window.HTMLdocs = HTMLdocs //alinan ögeler global scope'a HTMLdocs nesnesi olarak aktarilir...
+    } 
+   //getDoc.call() //ana fonksiyon cagrilir
          
