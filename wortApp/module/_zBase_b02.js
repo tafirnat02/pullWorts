@@ -50,13 +50,11 @@ function setItems() {
         toIndex = null;
       }
 
-      //
-      if (this.lastIndex !== toIndex && this.lastIndex <= 10) {
-        console.log(
-          console.clear() //öncekiler temizlenir...
-          `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
-        );
-      }
+      if (this.lastIndex === toIndex || this.lastIndex > 10) return;
+      console.clear(); //öncekiler temizlenir...
+      console.log(
+        `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
+      );
     },
   };
 
@@ -101,5 +99,4 @@ function setItems() {
   window.runBar = runBar;
   window.msgConsole = msg;
   window.checkEl = checkEl;
-  
 } //setValues icinde olmali tüm ögeler....
