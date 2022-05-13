@@ -6,11 +6,13 @@ export { getDoc };
 
 const getDoc = async () => {
     var strt=0, // >>  starter kismi storage den alinacak server hatasi sonrasi devam etmek icin...
-        max =wortList.length   
+        max =wortList.length
+
+        console.log('getDoc-->', wortList)  
+
     const HTMLdocuments = [],
         subWortList =  [...wortList.slice(strt, max)]
    
-       
    const nextDoc = () => {if (subWortList.length > 0) docHTML(subWortList.shift())};
        
      const docHTML = (wort) => {
