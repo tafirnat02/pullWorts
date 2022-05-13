@@ -25,7 +25,7 @@ const docs=async()=>{getDoc()}
   console.log(wortList)
   await  docs()
   
-})
+}).call()
 /*
 const starter = async () => {
     //uygulama ana verileri yüklenir...
