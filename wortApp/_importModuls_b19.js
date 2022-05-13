@@ -22,6 +22,7 @@ const starter = async () => {
   //daha sonra ilgili ögeler yürütülür....
   getModule()
   .then(() => {
+    debugger
     console.log('importModule>>', wortList)
     window.starter = starter;
     //window.wortList = wortList; //globale aktarilir bu array...
