@@ -6,10 +6,10 @@ export { baseFun };
 const baseFun = async () => setItems.call();
 baseFun().catch((err) => console.log(err));
 
-//============================================================
+//=============================================================
 //gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
 function setItems() {
-  //yüzde % gösterimi...  Aciklama notion'da mevcut______________________________________
+  //yüzde % gösterimi...  Aciklama notion'da mevcut____________
   const runBar = {
     msgStatus: [
       "▱▱▱▱▱▱▱▱▱▱",
@@ -60,7 +60,7 @@ function setItems() {
     },
   };
 
-  //console mesaj yazdirmak icin_____________________________
+  //console mesaj yazdirmak icin_______________________________
   const msg = {
     msgTyp: {
       primary: 0,
@@ -89,17 +89,17 @@ function setItems() {
       console.log(`%c ${head} %c ${text}`, headStyle, bodyStyle);
       if (!!err) console.log(err);
     },
-    /*   msg.console(0||msg.msgTyp.warning,'Baslik', 'aciklama metninin görünümü')   */
+    /*   msg.console(0==msg.msgTyp.primary,'Baslik', 'aciklama metninin görünümü')   */
   };
 
-  //bir ögenin sayfada olup olmadigini kontrol eder..._______
+  //bir ögenin sayfada olup olmadigini kontrol eder...________
   const checkEl = (e) => {
     return e === null ? false : true;
   };
 
   //global scope a aktarilir...===============================
   window.runBar = runBar;
-  window.msgTyp = msgTyp;
-  window.msgConsole = msgConsole;
+  window.msgConsole = msg;
   window.checkEl = checkEl;
+  
 } //setValues icinde olmali tüm ögeler....
