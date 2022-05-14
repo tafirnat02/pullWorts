@@ -26,12 +26,8 @@ const load=async()=>{
 
 (async()=>{
   await  load()
- if(item.search('wortList',1)) {
-   console.log('------')
-   console.log(wortList) 
-  }else{
-    console.log('sonuc döndü....')
-  }
+ item.search('wortList',1, docs)
+
   runBar.set(1); 
   
   //await  docs()
