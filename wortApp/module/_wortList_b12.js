@@ -28,6 +28,7 @@ async function getWortList() {
     .then(
       //dosya konumu teyit edildikten sonra asycn() ile dosyadan veri alinir...
       async () => {
+        const wortList = [];
         await fetch(url_wortList)
           .then((response) => {
             return response.text();
@@ -36,11 +37,9 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
-            const wortList = [];
             const list = async () => {
               wortList.push(...response);
             };
-
             (async()=>{
               await list()
               await(() => {
