@@ -3,7 +3,7 @@
 export { baseFun };
 
 /*  --- Fonksiyonlar vd. --- */
-const baseFun = async () => setItems.call();
+const baseFun = async () => {return setItems.call()};
 baseFun().catch((err) => console.log(err));
 
 //=============================================================
@@ -146,7 +146,9 @@ function setItems() {
 
   //global scope a aktarilir...===============================
   window.runBar = runBar;
-  window.msgConsole = msg;
+  window.msg = msg;
   window.checkEl = checkEl;
   window.item=item;
+  //
+  return true
 } //setValues icinde olmali tüm ögeler....
