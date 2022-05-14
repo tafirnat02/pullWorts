@@ -24,7 +24,7 @@ const docs=async()=>{item.search('wortList',1, getDoc)}   //kelimelere ait sayfa
 //sub asycn yapi
 const load=async()=>{
  base()
- .then(()=> await  worts())  
+ .then(()=>{ await  worts()})  
 }
 
 //ana asycn yapi
