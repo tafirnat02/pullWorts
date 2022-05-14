@@ -38,21 +38,8 @@ async function getWortList() {
           })
           .then((response) => {
             wortList.push(...response);
-            console.log(wortList)
+            window.wortList = wortList
             return wortList
-  /*
-            const list = async () => {
-              wortList.push(...response);
-            };
-          
-            (async()=>{
-              await list()
-              await(() => {
-                window.wortList=wortList
-                console.log(wortList)
-              })
-            })()
-            */
           });
       })
     .catch((err) => {
