@@ -21,7 +21,7 @@ base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
   runBar.set(1);
-  retun 
+  return true
 })
 .then(()=>{
   console.log(wortList)
