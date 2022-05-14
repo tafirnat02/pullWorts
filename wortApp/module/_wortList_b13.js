@@ -37,9 +37,14 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
+            wortList.push(...response);
+            console.log(wortList)
+            return wortList
+  /*
             const list = async () => {
               wortList.push(...response);
             };
+          
             (async()=>{
               await list()
               await(() => {
@@ -47,9 +52,9 @@ async function getWortList() {
                 console.log(wortList)
               })
             })()
+            */
           });
-      }
-    )
+      })
     .catch((err) => {
       if (err !== 404) {
         console.log(
