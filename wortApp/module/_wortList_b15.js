@@ -8,7 +8,6 @@ export { getWortList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWortList() {
-  debugger
   console.log(typeof wortList !== 'undefined')
   if(typeof wortList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
