@@ -14,16 +14,17 @@ import {getDoc} from "./module/_documents_a05.js" //document/HTML dizin olarak h
 
 const base = new Promise ((resolve,reject)=>{
   resolve(baseFun.call())
-  //setTimeout(() => resolve(), 50);//baz kodlar dahil edilmesi beklenir.
 })
 
 base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
   runBar.set(1);
+  return
 })
 .then(()=>{
-  item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
+  getDoc()
+  //item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
 
 /*
