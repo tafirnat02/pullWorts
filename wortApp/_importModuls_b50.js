@@ -21,11 +21,9 @@ base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
   runBar.set(1);
-  return true
 })
 .then(()=>{
-  console.log(wortList)
-  getDoc()       // ---> kelimelere ait sayfanin HTML'i alinir...
+  item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
 
 /*
