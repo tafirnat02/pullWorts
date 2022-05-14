@@ -9,7 +9,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 //import {myFunc} from "./module/_wortObj_a00" //document/HTML verilerini wort Classndan nesneye dönderir
 import { getWortList } from "./module/_wortList_b15.js"; //kullanilacak kelimleri alir
 import { baseFun } from "./module/_zBase_b04.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-import {getDoc} from "./module/_documents_a04.js" //document/HTML dizin olarak ham verileri tutar
+import {getDoc} from "./module/_documents_a05.js" //document/HTML dizin olarak ham verileri tutar
 //import sonrasi ilgili ögeler yürütülür...
 
 
