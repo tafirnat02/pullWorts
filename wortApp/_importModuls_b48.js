@@ -14,15 +14,17 @@ import {getDoc} from "./module/_documents_a05.js" //document/HTML dizin olarak h
 
 const base = new Promise ((resolve,reject)=>{
   baseFun.call()
-  setTimeout(() => resolve(), 50);//baz kodlar dahil edilmesi beklenir.
+  setTimeout(() => resolve(), 500);//baz kodlar dahil edilmesi beklenir.
 })
 
 base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
   runBar.set(1);
+  retun 
 })
 .then(()=>{
+  console.log(wortList)
   getDoc()       // ---> kelimelere ait sayfanin HTML'i alinir...
 })
 
