@@ -98,7 +98,6 @@ function setItems() {
         variabel:1,   //obje vd. degiskenlerin kontrolü
     },
     search:function(str_itemName,typ,callback="",duration = 100, maxDuration = 3000){
-        console.log(typ)
         let clear;
         //döngüsel zaman atanir
         const int_ID = setInterval(() => {
@@ -125,8 +124,10 @@ function setItems() {
         
          //max time sonrasi cikilir
         const clearInt = setTimeout(() => {
-            if (!clear)console.log(`Süre Asimi: "${str_itemName}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`
-        );
+            if (!clear){
+              console.log(`Süre Asimi: "${str_itemName}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`)
+              return false
+            }
         clearInterval(int_ID); }, maxDuration);
     /*****runing********/
          clearInt;
