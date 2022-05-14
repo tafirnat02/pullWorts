@@ -23,8 +23,7 @@ base
   return
 })
 .then(()=>{
-  getDoc()
-  //item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
+  item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
 
 /*
