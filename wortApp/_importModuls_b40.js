@@ -12,23 +12,28 @@ import { baseFun } from "./module/_zBase_b04.js"; //bu bir dizin altindaki tüm 
 import {getDoc} from "./module/_documents_a05.js" //document/HTML dizin olarak ham verileri tutar
 //import sonrasi ilgili ögeler yürütülür...
 
+const base=async()=>{ baseFun()}      //baz kodlar dahil edilir
+const worts=async()=>{getWortList();  //kelimeler dahil edilir
+                      runBar.set(1); }
+//wortList varligi check edildikten sonra getDoc yürütülür...
+const docs=async()=>{item.search('wortList',1, getDoc)}   //kelimelere ait sayfanin HTML'i alinir
 
-//uygulama ana verilerindeki fonksiyonlar yüklenir asycn ile sirali olarak
-const base=async()=>{ baseFun()}
-const worts=async()=>{getWortList()}
-const docs=async()=>{getDoc()}
+        //burada kalindi....
+//HTMLdocs varligi check edildikten sonra  . .. . . siradaki fonksiyon atanacak
 
-//daha sonra dahil edilen 
+//sub asycn yapi
 const load=async()=>{
   await base()
   await  worts()
 }
 
+//ana asycn yapi
 (async()=>{
   await  load()
- item.search('wortList',1, docs)
-
-  runBar.set(1); 
+  await docs()
+  
+  //burada kalindi....
+  // ---> kelimelere ait sayfanin HTML'i aldiktan sonrakine ait asycn olarak fonksiyon cagrilmali,,,
   
   //await  docs()
 }).call()
