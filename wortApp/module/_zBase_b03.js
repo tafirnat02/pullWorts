@@ -90,6 +90,54 @@ function setItems() {
     /*   msg.console(0==msg.msgTyp.primary,'Baslik', 'aciklama metninin görünümü')   */
   };
 
+
+  //belirli bir süre icerisinde fonksiyon/degisken arar bulursa cikis yapar________________________
+  const item={
+    typ:{
+        function:0,   //fonksiyon
+        variabel:1,   //obje vd. degiskenlerin kontrolü
+    },
+    search:function(str_itemName,typ,callback="",duration = 100, maxDuration = 3000){
+        console.log(typ)
+        let clear;
+        //döngüsel zaman atanir
+        const int_ID = setInterval(() => {
+        
+        switch (typ) {
+          case 0: //fonksiyon kontrolü >> window.functionName
+            if (typeof window[str_itemName] === "function") clear = true;
+                break;
+            default: //obje, array, string vs degiskenlerin kontrolü
+                try {
+                    if (typeof eval(str_itemName) != "undefined") clear = true;
+                } catch (error) {
+                    clear = false;
+                }
+            break;
+        }         
+            if (clear) {
+                //öge varsa zamanlamayi temizler
+                clearInterval(int_ID);
+                if(callback !=="") callback();
+                return true;
+            }
+        }, duration); // döngüyü tekrarlar
+        
+         //max time sonrasi cikilir
+        const clearInt = setTimeout(() => {
+            if (!clear)console.log(`Süre Asimi: "${str_itemName}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`
+        );
+        clearInterval(int_ID); }, maxDuration);
+    /*****runing********/
+         clearInt;
+         int_ID;
+    },
+
+    /*zBsp: item.search('wortList',item.typ.function,callback)        item.typ.function || 0
+            item.search('baz',item.typ.variabel,callback,50,1200)     item.typ.variabel || 1
+    */
+}
+
   //bir ögenin sayfada olup olmadigini kontrol eder...________
   const checkEl = (e) => {
     return e === null ? false : true;
@@ -99,4 +147,5 @@ function setItems() {
   window.runBar = runBar;
   window.msgConsole = msg;
   window.checkEl = checkEl;
+  window.item=item;
 } //setValues icinde olmali tüm ögeler....
