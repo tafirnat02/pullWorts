@@ -23,19 +23,18 @@ const docs=async()=>{item.search('wortList',1, getDoc)}   //kelimelere ait sayfa
 
 //sub asycn yapi
 const load=async()=>{
-  await base()
-  await  worts()
+ base()
+ .then(()=> await  worts())  
 }
 
 //ana asycn yapi
 (async()=>{
-  await  load()
-  await docs()
-  
-  //burada kalindi....
-  // ---> kelimelere ait sayfanin HTML'i aldiktan sonrakine ait asycn olarak fonksiyon cagrilmali,,,
-  
-  //await  docs()
+ await load()
+ .then(()=>{
+    item.search('wortList',1, getDoc)  // ---> kelimelere ait sayfanin HTML'i alinir...
+ })
+ 
+ 
 }).call()
 /*
 const starter = async () => {

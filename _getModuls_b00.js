@@ -11,7 +11,7 @@
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
   url_importModuls =
-    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b19.js";
+    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_b41.js";
     
 if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
   () => {
@@ -32,6 +32,7 @@ scrpt.src = url_importModuls;
 document.head.appendChild(scrpt);
 let head_ = document.querySelector("head");
 head_.insertBefore(scrpt, head_.lastChild);
+console.clear()
 console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
 
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */

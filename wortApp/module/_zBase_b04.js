@@ -97,7 +97,7 @@ function setItems() {
         function:0,   //fonksiyon
         variabel:1,   //obje vd. degiskenlerin kontrolü
     },
-    search:function(str_itemName,typ,callback="",duration = 100, maxDuration = 3000){
+    search:function(str_itemName,typ,callback,duration = 100, maxDuration = 3000){
         let clear;
         //döngüsel zaman atanir
         const int_ID = setInterval(() => {
