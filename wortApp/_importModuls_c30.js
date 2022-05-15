@@ -36,12 +36,14 @@ const test=async()=>{
   console.log('test ---')
 }
 
-load =async()=>{
+const load =async()=>{
  await _base()
  await _wortList()
  await _HTMLdocs()
  await test()
 }
+
+load.call()
 
 
 /*
