@@ -2,7 +2,7 @@
 /*-------- Disariya Cikarilan Ögeler ---------*/
 export { getDoc };
 
-/*-------- Modul Default Olarak Disa Aktarimi ---------*/
+/*-------- Modul icerigindeki Ögeler ---------*/
 
 const getDoc = async () => {
     var strt=0, // >>  starter kismi storage den alinacak server hatasi sonrasi devam etmek icin...
