@@ -23,7 +23,7 @@ const load = (callback) => {
 const items=[baseFun,getWortList,getDoc]
 const promises =[]
 
-run=()=>{
+const run=()=>{
   items.forEach(item=>{
     promises.push(load(item))
   })
