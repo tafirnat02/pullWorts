@@ -15,22 +15,16 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 
 
 const _base = ()=>{
-   baseFun()
-   _wortList()
-}
-
-const _wortList = ()=>{
-    getWortList()
-    _HTMLdocs()
+   const _wortList = ()=>{
+     const _HTMLdocs = () =>{
+       const test=()=>{
+         console.log('test ---')
+        }
+        getDoc(()=>test.call());
+      }
+      getWortList(()=>_HTMLdocs())
   }
-
-const _HTMLdocs = () =>{
-    getDoc();
-    test()
-}
-
-const test=()=>{
-  console.log('test ---')
+  baseFun(()=>_wortList())
 }
 
 _base.call()
