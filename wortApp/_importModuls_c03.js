@@ -24,6 +24,7 @@ base
   return
 })
 .then(()=>{
+  debugger
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
 .then(()=>{
