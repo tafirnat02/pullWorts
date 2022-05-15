@@ -13,7 +13,34 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import sonrasi ilgili ögeler yürütülür...
 
-const base = async () => {
+
+const load = (callback) => {
+  return new Promise((resolve,reject) => {
+    resolve(callback.call());
+  });
+};
+
+const items=[baseFun,getWortList,getDoc]
+const promises =[]
+
+run=()=>{
+  items.forEach(item=>{
+    promises.push(load(item))
+  })
+
+  Promise.all(promises)
+  .then(()=>{
+    console.log("run me...");
+    console.log(HTMLdocs);
+  })
+}
+
+run.call()
+
+
+
+/*
+const base2 = async () => {
   return new Promise((resolve) => {
     resolve(baseFun.call());
   });
@@ -39,7 +66,7 @@ const runApp = async () => {
 };
 
 runApp.call();
-
+*/
 /*
 base
 .then(()=>{
