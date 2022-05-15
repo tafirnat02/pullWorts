@@ -14,7 +14,7 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 const base = async () => {
-  new Promise((resolve) => {
+ return new Promise((resolve) => {
     resolve(baseFun.call());
   });
 };
