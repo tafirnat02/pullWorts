@@ -28,12 +28,12 @@ const loadBase = () => {
 
 const worteList=()=>{
     getWorteList()
-    item.search(worteList,item.typ.variabel,getHTMLdoc)
+    item.search('worteList',item.typ.variabel,getHTMLdoc)
   } 
   
 const getHTMLdoc=()=>{
-  getDoc()
-  item.search(HTMLdocs,item.typ.variabel,finish)
+  getDoc()            
+  item.search('HTMLdocs',item.typ.variabel,finish)
 }
 
 const finish=()=>{
