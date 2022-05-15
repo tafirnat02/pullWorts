@@ -25,20 +25,11 @@ const _wortList = new Promise((resolve,reject) => {
 const _HTMLdocs = new Promise((resolve,reject) => {
     resolve(getDoc());
   })
+const test=()=>{
+  console.log('test ---')
+}
 
-
-_base
-.then(
-  _wortList
-)
-.then(
-  _HTMLdocs
-)
-.then(
-  ()=>{
-    console.log('yürütüldü....')
-  }
-)
+Promise.all([_base,_wortList,_HTMLdocs]).then(test())
 
 
 
