@@ -14,6 +14,7 @@ const setDoc = (callback) => {
     HTMLdocs.forEach((doc) => {
       console.log(doc);
     });
+    callback()
     myResolve(); // when successful
   });
 };
