@@ -14,28 +14,37 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 
-const load = (callback) => {
+const _base = () => {
   return new Promise((resolve,reject) => {
-    resolve(callback);
+    resolve(baseFun());
   });
 };
 
-const items=[baseFun,getWortList,getDoc]
-const promises =[]
+const _wortList = () => {
+  return new Promise((resolve,reject) => {
+    resolve(getWortList());
+  });
+};
 
-const run=()=>{
-  items.forEach(item=>{
-    promises.push(load(item))
-  })
+const _HTMLdocs = () => {
+  return new Promise((resolve,reject) => {
+    resolve(getDoc());
+  });
+};
 
-  Promise.all(promises)
-  .then(()=>{
-    console.log("run me...");
-    console.log(HTMLdocs);
-  })
-}
 
-run.call()
+_base
+.then(
+  _wortList
+)
+.then(
+  _HTMLdocs
+)
+.then(
+  ()=>{
+    console.log('yürütüldü....')
+  }
+)
 
 
 
