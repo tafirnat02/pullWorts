@@ -9,17 +9,21 @@ export { getWortObject };
 const wortObjsArr = ["henüz bos..."];
 
 const setDoc = (callback) => {
-  return new Promise((myResolve) => {
-    window.wortObjsArr = wortObjsArr;
+
     HTMLdocs.forEach((doc) => {
-      console.log(doc);
-    });
-    callback()
-    myResolve(); // when successful
+      console.log(doc)
   });
 };
 
+
+const getWortObject = () => {
+  setDoc()
+};
+
+
+/*
 const getWortObject = (callback) => {
     setDoc(callback)
     .then(console.log(wortObjsArr));
 };
+*/
