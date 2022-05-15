@@ -14,23 +14,17 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 
-const _base = () => {
-  return new Promise((resolve,reject) => {
+const _base =  new Promise((resolve,reject) => {
     resolve(baseFun());
-  });
-};
+  })
 
-const _wortList = () => {
-  return new Promise((resolve,reject) => {
+const _wortList = new Promise((resolve,reject) => {
     resolve(getWortList());
-  });
-};
+  })
 
-const _HTMLdocs = () => {
-  return new Promise((resolve,reject) => {
+const _HTMLdocs = new Promise((resolve,reject) => {
     resolve(getDoc());
-  });
-};
+  })
 
 
 _base
