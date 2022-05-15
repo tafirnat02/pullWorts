@@ -14,33 +14,26 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 
-const _base = (callback)=>{
+const _base = ()=>{
    baseFun()
-   callback()
+   _wortList()
 }
 
-const _wortList = (callback)=>{
+const _wortList = ()=>{
     getWortList()
-    callback()
+    _HTMLdocs()
   }
 
-const _HTMLdocs = (callback) =>{
+const _HTMLdocs = () =>{
     getDoc();
-    callback()
+    test()
 }
 
 const test=()=>{
   console.log('test ---')
 }
 
-const load =()=>{
-  _base(  _wortList(  _HTMLdocs(  test()
-  )
-  )
-  )
-}
-
-load.call()
+_base.call()
 
 
 /*
