@@ -13,7 +13,7 @@ import {getDoc} from "./module/_documents_a06.js"; //document/HTML dizin olarak 
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import sonrasi ilgili ögeler yürütülür...
 
-
+/*
 const base=async()=>{ baseFun()}      //baz kodlar dahil edilir
 const worts=async()=>{getWortList();  //kelimeler dahil edilir
                       runBar.set(1); }
@@ -40,10 +40,9 @@ const load=async()=>{
   //await  docs()
 }).call()
 
+*/
 
-/*
 const base = new Promise ((resolve,reject)=>{
-  debugger
   resolve(baseFun.call())
 })
 
@@ -56,7 +55,7 @@ base
   debugger
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
-*/
+
 /*
 .then(()=>{
   debugger
