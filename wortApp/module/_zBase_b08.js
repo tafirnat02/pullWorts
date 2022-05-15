@@ -101,12 +101,10 @@ function setItems() {
         let clear;
         //döngüsel zaman atanir
         const int_ID = setInterval(() => {
-
-        self_itemTyp=typeof findItem === 'function' ? 'function':typeof findItem  
         
         switch (typ) {
           case 0: //fonksiyon kontrolü >> window.functionName
-            if(self_itemTyp !== 'function'){
+            if(typeof findItem !== 'function'){
               if ( typeof window[findItem] === "function") clear = true;
             }else{
               if (typeof window.findItem === "function") clear = true;
@@ -114,7 +112,7 @@ function setItems() {
                 break;
             default: //obje, array, string vs degiskenlerin kontrolü
                 try {
-                    if(self_itemTyp === 'string'){
+                    if(typeof findItem === 'string'){
                       if (typeof eval(findItem) != "undefined") clear = true; 
                     }else{
                       if (typeof window.findItem != "undefined") clear = true; 
