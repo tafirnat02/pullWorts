@@ -16,7 +16,6 @@ import {getDoc} from "./module/_documents_a06.js"; //document/HTML dizin olarak 
 
 
 const base = new Promise ((resolve)=>{
-  debugger
   resolve(baseFun.call())
 })
 
@@ -29,6 +28,7 @@ base
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
 .then(()=>{
+  console.log('run me...')
   console.log(HTMLdocs)
   //item.search('HTMLdocs',1, getWortObject) //newWortObject) //HTMLdocs check edilir > sonra, getWortObject funksiyonu calistirilir, callback olarak da newWortObject gönderilir... 
 })
