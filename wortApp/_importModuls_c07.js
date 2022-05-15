@@ -13,6 +13,35 @@ import {getWortObject} from "./module/_getWortObj_a02" //HML  olarak alinan dizi
 import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import sonrasi ilgili ögeler yürütülür...
 
+
+const base=async()=>{ baseFun()}      //baz kodlar dahil edilir
+const worts=async()=>{getWortList();  //kelimeler dahil edilir
+                      runBar.set(1); }
+//wortList varligi check edildikten sonra getDoc yürütülür...
+const docs=async()=>{item.search('wortList',1, getDoc)}   //kelimelere ait sayfanin HTML'i alinir
+
+        //burada kalindi....
+//HTMLdocs varligi check edildikten sonra  . .. . . siradaki fonksiyon atanacak
+
+//sub asycn yapi
+const load=async()=>{
+  await base()
+  await  worts()
+}
+
+//ana asycn yapi
+(async()=>{
+  await  load()
+  await docs()
+  
+  //burada kalindi....
+  // ---> kelimelere ait sayfanin HTML'i aldiktan sonrakine ait asycn olarak fonksiyon cagrilmali,,,
+  
+  //await  docs()
+}).call()
+
+
+/*
 const base = new Promise ((resolve,reject)=>{
   debugger
   resolve(baseFun.call())
@@ -27,6 +56,7 @@ base
   debugger
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
+*/
 /*
 .then(()=>{
   debugger
