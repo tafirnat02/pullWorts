@@ -9,7 +9,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 import { getWortList } from "./module/_wortList_b16.js"; //kullanilacak kelimleri alir
 import { baseFun } from "./module/_zBase_b06.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import {getDoc} from "./module/_documents_a06.js"; //document/HTML dizin olarak ham verileri tutar
-//import {getWortObject} from "./module/_getWortObj_a03"; //HML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import {getWortObject} from "./module/_getWortObj_a03"; //HML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import sonrasi ilgili ögeler yürütülür...
 
@@ -28,16 +28,16 @@ base
 .then(()=>{
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
 })
+.then(()=>{
+  console.log(HTMLdocs)
+  //item.search('HTMLdocs',1, getWortObject) //newWortObject) //HTMLdocs check edilir > sonra, getWortObject funksiyonu calistirilir, callback olarak da newWortObject gönderilir... 
+})
 .catch(err=>{
   console.log(err)
 })
-/*
-/// devam eden kod eklenince hata veriyor ama ne hatasi o da belirli degil!!!!
-.then(()=>{
-  item.search('HTMLdocs',1, getWortObject) //newWortObject) //HTMLdocs check edilir > sonra, getWortObject funksiyonu calistirilir, callback olarak da newWortObject gönderilir... 
-})
 
-*/
+
+
 
 
 
