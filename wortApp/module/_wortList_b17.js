@@ -4,18 +4,17 @@ WortList'e arrayin push edilebilmesi icin önce getWortList() cagrilmalidir.
 */
 
 /*-------- Disariya Cikarilan Ögeler ---------*/
-export { getWortList };
+export { getWorteList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
-async function getWortList() {
-  console.log(typeof wortList !== 'undefined')
-  if(typeof wortList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+async function getWorteList() {
+  if(typeof worteList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
-  const url_wortList =
+  const url_worteList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
 
   //önce dosya checkFile() kontrol edilir...
-  await checkFile(url_wortList, "m:wortList, f:getWortList")
+  await checkFile(url_worteList, "m:wortList, f:getWorteList")
     .then(() => {
       return urlChecker.url;
     })
@@ -27,8 +26,8 @@ async function getWortList() {
     .then(
       //dosya konumu teyit edildikten sonra asycn() ile dosyadan veri alinir...
       async () => {
-        const wortList = [];
-        await fetch(url_wortList)
+        const worteList = [];
+        await fetch(url_worteList)
           .then((response) => {
             return response.text();
           }) // or .json()
@@ -36,15 +35,15 @@ async function getWortList() {
             return JSON.parse(response);
           })
           .then((response) => {
-            wortList.push(...response);
-            window.wortList = wortList
-            return wortList
+            worteList.push(...response);
+            window.worteList = worteList
+            return worteList
           });
       })
     .catch((err) => {
       if (err !== 404) {
         console.log(
-          `Kelime listesi alinirken hata meydana geldi!.. (m:wortList, f:getWortList)`,
+          `Kelime listesi alinirken hata meydana geldi!.. (m:wortList, f:getWorteList)`,
           err
         );
       }

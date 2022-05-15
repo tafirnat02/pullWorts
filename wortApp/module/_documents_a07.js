@@ -6,12 +6,12 @@ export { getDoc };
 
 const getDoc = async () => {
     var strt=0, // >>  starter kismi storage den alinacak server hatasi sonrasi devam etmek icin...
-        max =wortList.length
+        max =worteList.length
 
     const HTMLdocuments = [],
-        subWortList =  [...wortList.slice(strt, max)]
+        subWorteList =  [...worteList.slice(strt, max)]
    
-   const nextDoc = () => {if (subWortList.length > 0) docHTML(subWortList.shift())};
+   const nextDoc = () => {if (subWorteList.length > 0) docHTML(subWorteList.shift())};
        
      const docHTML = (wort) => { 
        let url = `https://www.verbformen.de/?w=${wort}`;
@@ -37,7 +37,7 @@ const getDoc = async () => {
          })
        .catch((err) => {
            let msgHead = err===429? `429 | ${wort}`:' ⚠️ Error'
-           let msgTxt = err===429? `Alinamayan kelime: ${wortList[strt]}, indeks no: ${strt}`:''
+           let msgTxt = err===429? `Alinamayan kelime: ${worteList[strt]}, indeks no: ${strt}`:''
            msg.console(
              msg.msgTyp.error,
              msgHead,

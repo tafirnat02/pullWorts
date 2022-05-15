@@ -5,8 +5,8 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 /**  --- import edilen ögeler --- */
 
 import { baseFun } from "./module/_zBase_b07.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-import { getWorteList } from "./module/_wortList_b16.js"; //kullanilacak kelimleri alir
-import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olarak ham verileri tutar
+import { getWorteList } from "./module/_wortList_b17.js"; //kullanilacak kelimleri alir
+import { getDoc } from "./module/_documents_a07.js"; //document/HTML dizin olarak ham verileri tutar
 //import {getWortObject} from "./module/_getWortObj_a03"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
@@ -28,7 +28,7 @@ const loadBase = () => {
 
 const worteList=()=>{
     getWorteList()
-    item.search(wortList,item.typ.variabel,getHTMLdoc)
+    item.search(worteList,item.typ.variabel,getHTMLdoc)
   } 
   
 const getHTMLdoc=()=>{
@@ -38,7 +38,7 @@ const getHTMLdoc=()=>{
 
 const finish=()=>{
   console.log('tüm ögeler yüklendi...')
-  console.log(wortList)
+  console.log(worteList)
   console.log(HTMLdocs)
 }
 
