@@ -16,6 +16,7 @@ import {getWortObject} from "./module/_getWortObj_a03"; //HML  olarak alinan diz
 
 
 const base = new Promise ((resolve)=>{
+  debugger
   resolve(baseFun.call())
 })
 
@@ -26,7 +27,8 @@ base
 })
 .then(()=>{
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
-}).catch(err=>{
+})
+.catch(err=>{
   console.log(err)
 })
 /*
