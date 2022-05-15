@@ -16,7 +16,7 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 
 const load = (callback) => {
   return new Promise((resolve,reject) => {
-    resolve(callback.call());
+    resolve(callback);
   });
 };
 
