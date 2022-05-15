@@ -16,11 +16,13 @@ import { baseFun } from "./module/_zBase_b06.js"; //bu bir dizin altindaki tüm 
 const loadBase = () => {
   return new Promise((resolve, reject) => {
     baseFun();
-
+    reject("baseFun() süresi icinde yüklenmedi!");
+/*
     setTimeout(() => {
       if (typeof item === "object") resolve();
       reject("baseFun() süresi icinde yüklenmedi!");
-    }, 0);
+    }, 10);
+*/
   });
 };
 
