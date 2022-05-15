@@ -97,18 +97,28 @@ function setItems() {
         function:0,   //fonksiyon
         variabel:1,   //obje vd. degiskenlerin kontrolü
     },
-    search:function(str_itemName,typ,callback,duration = 100, maxDuration = 3000){
+    search:function(findItem,typ,callback="",duration = 100, maxDuration = 3000){
         let clear;
         //döngüsel zaman atanir
         const int_ID = setInterval(() => {
+
+        self_itemTyp=typeof findItem === 'function' ? 'function':typeof findItem  
         
         switch (typ) {
           case 0: //fonksiyon kontrolü >> window.functionName
-            if (typeof window[str_itemName] === "function") clear = true;
+            if(self_itemTyp !== 'function'){
+              if ( typeof window[findItem] === "function") clear = true;
+            }else{
+              if (typeof window.findItem === "function") clear = true;
+            }
                 break;
             default: //obje, array, string vs degiskenlerin kontrolü
                 try {
-                    if (typeof eval(str_itemName) != "undefined") clear = true;
+                    if(self_itemTyp === 'string'){
+                      if (typeof eval(findItem) != "undefined") clear = true; 
+                    }else{
+                      if (typeof window.findItem != "undefined") clear = true; 
+                    }
                 } catch (error) {
                     clear = false;
                 }
@@ -117,7 +127,7 @@ function setItems() {
             if (clear) {
                 //öge varsa zamanlamayi temizler
                 clearInterval(int_ID);
-                if(callback !=="") callback();
+                if(typeof callback === 'function') callback()
                 return true;
             }
         }, duration); // döngüyü tekrarlar
@@ -125,7 +135,7 @@ function setItems() {
          //max time sonrasi cikilir
         const clearInt = setTimeout(() => {
             if (!clear){
-              console.log(`Süre Asimi: "${str_itemName}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`)
+              console.log(`Süre Asimi: "${findItem}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`)
               return false
             }
         clearInterval(int_ID); }, maxDuration);

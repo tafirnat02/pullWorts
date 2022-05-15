@@ -4,33 +4,53 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 /**  --- import edilen ögeler --- */
 
-//import {myFunc} from "./module/_img_a00" //image islemlerini yapar
-//import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
-//import { getWortList } from "./module/_wortList_b16.js"; //kullanilacak kelimleri alir
-import { baseFun } from "./module/_zBase_b06.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-//import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olarak ham verileri tutar
-//import {getWortObject} from "./module/_getWortObj_a03"; //HML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { baseFun } from "./module/_zBase_b07.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { getWortList } from "./module/_wortList_b16.js"; //kullanilacak kelimleri alir
+import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olarak ham verileri tutar
+//import {getWortObject} from "./module/_getWortObj_a03"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
+//import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
+//import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
 const loadBase = () => {
   return new Promise((resolve, reject) => {
     baseFun();
-    reject("baseFun() süresi icinde yüklenmedi!");
-/*
+    let duration =10
     setTimeout(() => {
       if (typeof item === "object") resolve();
-      reject("baseFun() süresi icinde yüklenmedi!");
-    }, 10);
-*/
+      reject(`baseFun() modülü ${duration} ms icerisinde sayfaya import edilemedi!
+      Süreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.`);
+    }, duration);
   });
 };
 
+
+const getWortList=()=>{
+    getWortList()
+    item.search(wortList,item.typ.variabel,getHTMLdoc)
+  } 
+  
+const getHTMLdoc=()=>{
+  getDoc()
+  item.search(HTMLdocs,item.typ.variabel,finish)
+}
+
+const finish=()=>{
+  console.log('tüm ögeler yüklendi...')
+  console.log(wortList)
+  console.log(HTMLdocs)
+}
+
+
 loadBase()
-  .then(console.log(typeof item.search))
-  .catch((err) => {
-    console.log(err);
-  });
+.then(
+  getWortList()
+)
+.catch(err=>{
+  console.log(err,'m:getModuls, p:loadBase.then()')
+})
+
 
 /*
 const base2 = async () => {

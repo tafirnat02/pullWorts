@@ -34,7 +34,6 @@ let head_ = document.querySelector("head");
 head_.insertBefore(scrpt, head_.lastChild);
 console.clear()
 console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
-
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
 async function checkFile(url, pos="") {
   urlChecker.url = false; //obje degeri default hale getirilir...
