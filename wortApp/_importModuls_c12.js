@@ -15,7 +15,7 @@ import {getWortObject} from "./module/_getWortObj_a03"; //HML  olarak alinan diz
 
 
 
-const base = new Promise ((resolve,reject)=>{
+const base = new Promise ((resolve)=>{
   resolve(baseFun.call())
 })
 
@@ -26,12 +26,16 @@ base
 })
 .then(()=>{
   item.search('wortList',1, getDoc) // wortList check edilerek --> kelimelere ait sayfanin HTML'i alinir...
-}).then(()=>{
+}).catch(err=>{
+  console.log(err)
+})
+/*
+/// devam eden kod eklenince hata veriyor ama ne hatasi o da belirli degil!!!!
+.then(()=>{
   item.search('HTMLdocs',1, getWortObject) //newWortObject) //HTMLdocs check edilir > sonra, getWortObject funksiyonu calistirilir, callback olarak da newWortObject gönderilir... 
 })
 
-
-
+*/
 
 
 
