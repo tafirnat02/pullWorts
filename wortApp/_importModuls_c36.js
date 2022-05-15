@@ -20,7 +20,7 @@ const loadBase = () => {
     setTimeout(() => {
       if (typeof item === "object") resolve();
       reject("baseFun() süresi icinde yüklenmedi!");
-    }, 100);
+    }, 0);
   });
 };
 
