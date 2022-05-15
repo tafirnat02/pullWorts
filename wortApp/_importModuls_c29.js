@@ -14,23 +14,34 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 
-const _base =  new Promise((resolve,reject) => {
-    resolve(baseFun());
+const _base = async()=>{
+   new Promise((resolve,reject)=>{
+    resolve (baseFun());
   })
+}
 
-const _wortList = new Promise((resolve,reject) => {
+const _wortList = async()=>{
+  new Promise((resolve,reject) => {
     resolve(getWortList());
   })
+}
 
-const _HTMLdocs = new Promise((resolve,reject) => {
+const _HTMLdocs = async() =>{
+  new Promise((resolve,reject) => {
     resolve(getDoc());
   })
-const test=()=>{
+}
+
+const test=async()=>{
   console.log('test ---')
 }
 
-Promise.all([_base,_wortList,_HTMLdocs]).then(test())
-
+load =async()=>{
+ await _base()
+ await _wortList()
+ await _HTMLdocs()
+ await test()
+}
 
 
 /*
