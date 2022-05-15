@@ -17,7 +17,7 @@ const base = new Promise ((resolve,reject)=>{
   resolve(baseFun.call())
 })
 
-base
+(base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
   runBar.set(1);
@@ -30,7 +30,10 @@ base
 .then(()=>{
   debugger
   item.search('HTMLdocs',1, getWortObject, testASCVBG) //newWortObject) //HTMLdocs check edilir > sonra, getWortObject funksiyonu calistirilir, callback olarak da newWortObject gönderilir... 
-})
+}))
+.call()
+
+
 
 /*
 Dizin Yapisi:
