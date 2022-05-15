@@ -4,7 +4,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 /**  --- import edilen ögeler --- */
 
-import { baseFun } from "./module/_zBase_b08.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_b09.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b17.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a07.js"; //document/HTML dizin olarak ham verileri tutar
 //import {getWortObject} from "./module/_getWortObj_a03"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
@@ -26,7 +26,7 @@ const loadBase = () => {
 };
 
 
-const worteList=()=>{
+const _worteList=()=>{
     getWorteList()
     item.search('worteList',item.typ.variabel,getHTMLdoc)
   } 
@@ -45,7 +45,7 @@ const finish=()=>{
 
 loadBase()
 .then(
-  worteList()
+  _worteList()
 )
 .catch(err=>{
   console.log(err,'m:getModuls, p:loadBase.then()')

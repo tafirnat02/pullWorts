@@ -3,7 +3,9 @@
 export { baseFun };
 
 /*  --- Fonksiyonlar vd. --- */
-const baseFun = async () => {return setItems.call()};
+const baseFun = async () => {
+  return setItems.call();
+};
 baseFun().catch((err) => console.log(err));
 
 //=============================================================
@@ -90,62 +92,66 @@ function setItems() {
     /*   msg.console(0==msg.msgTyp.primary,'Baslik', 'aciklama metninin görünümü')   */
   };
 
-
   //belirli bir süre icerisinde fonksiyon/degisken arar bulursa cikis yapar________________________
-  const item={
-    typ:{
-        function:0,   //fonksiyon
-        variabel:1,   //obje vd. degiskenlerin kontrolü
+  const item = {
+    typ: {
+      function: 0, //fonksiyon
+      variabel: 1, //obje vd. degiskenlerin kontrolü
     },
-    search:function(findItem,typ,callback="",duration = 100, maxDuration = 3000){
-        let clear;
-        //döngüsel zaman atanir
-        const int_ID = setInterval(() => {
-        
+    search: function (
+      string_itemName, //ilgili ögenin adi string olarak girilmeli...
+      typ,
+      callback = "",
+      duration = 100,
+      maxDuration = 3000
+    ) {
+      if (typeof string_itemName !== "string")
+        throw `Hata: Aranilan öge sitrin olarak girilmeli. (m:Base.js, o:item.search()) \n${string_itemName}`;
+
+      let clear;
+      //döngüsel zaman atanir
+      const int_ID = setInterval(() => {
         switch (typ) {
           case 0: //fonksiyon kontrolü >> window.functionName
-            if(typeof findItem !== 'function'){
-              if ( typeof window[findItem] === "function") clear = true;
-            }else{
-              if (typeof window.findItem === "function") clear = true;
-            }
-                break;
-            default: //obje, array, string vs degiskenlerin kontrolü
-                try {
-                    if(typeof findItem === 'string'){
-                      if (typeof eval(findItem) != "undefined") clear = true; 
-                    }else{
-                      if (typeof window.findItem != "undefined") clear = true; 
-                    }
-                } catch (error) {
-                    clear = false;
-                }
+            if (typeof window[string_itemName] === "function") clear = true;
             break;
-        }         
-            if (clear) {
-                //öge varsa zamanlamayi temizler
-                clearInterval(int_ID);
-                if(typeof callback === 'function') callback()
-                return true;
+          default: //obje, array, string vs degiskenlerin kontrolü
+            try {
+              if (typeof eval(string_itemName) != "undefined") clear = true;
+            } catch (error) {
+              clear = false;
             }
-        }, duration); // döngüyü tekrarlar
-        
-         //max time sonrasi cikilir
-        const clearInt = setTimeout(() => {
-            if (!clear){
-              console.log(`Süre Asimi: "${findItem}" adli ${ Object.keys(item.typ)[typ]} erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`)
-              return false
-            }
-        clearInterval(int_ID); }, maxDuration);
-    /*****runing********/
-         clearInt;
-         int_ID;
+            break;
+        }
+        if (clear) {
+          //öge varsa zamanlamayi temizler
+          clearInterval(int_ID);
+          if (typeof callback === "function") callback();
+          return true;
+        }
+      }, duration); // döngüyü tekrarlar
+
+      //max time sonrasi cikilir
+      const clearInt = setTimeout(() => {
+        if (!clear) {
+          console.log(
+            `Süre Asimi: "${string_itemName}" adli ${
+              Object.keys(item.typ)[typ]
+            } erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`
+          );
+          return false;
+        }
+        clearInterval(int_ID);
+      }, maxDuration);
+      /*****runing********/
+      clearInt;
+      int_ID;
     },
 
     /*zBsp: item.search('wortList',item.typ.function,callback)        item.typ.function || 0
             item.search('baz',item.typ.variabel,callback,50,1200)     item.typ.variabel || 1
     */
-}
+  };
 
   //bir ögenin sayfada olup olmadigini kontrol eder...________
   const checkEl = (e) => {
@@ -156,7 +162,7 @@ function setItems() {
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
-  window.item=item;
+  window.item = item;
   //
-  return true
+  return true;
 } //setValues icinde olmali tüm ögeler....
