@@ -13,23 +13,22 @@ import { baseFun } from "./module/_zBase_b06.js"; //bu bir dizin altindaki tüm 
 //import {newWortObject, testASCVBG} from "./module/_creatWortObj_a02" //HTML'den wort nesnesinin icerigini toplar
 //import sonrasi ilgili ögeler yürütülür...
 
+const loadBase = () => {
+  return new Promise((resolve, reject) => {
+    baseFun();
 
+    setTimeout(() => {
+      if (typeof item === "object") resolve();
+      reject("baseFun() süresi icinde yüklenmedi!");
+    }, 100);
+  });
+};
 
-const loadBase = ()=>{
-  return new Promise((resolve,reject)=>{
-  baseFun()
-  setTimeout(() => {
-    resolve()
-  }, 100);
-})
-}
-
-
-loadBase
-.then(
-  console.log(item)
-)
-
+loadBase()
+  .then(console.log(typeof item.search))
+  .catch((err) => {
+    console.log(err);
+  });
 
 /*
 const base2 = async () => {
