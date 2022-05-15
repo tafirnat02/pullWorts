@@ -14,18 +14,22 @@ import { getDoc } from "./module/_documents_a06.js"; //document/HTML dizin olara
 //import sonrasi ilgili ögeler yürütülür...
 
 const base = async () => {
- return new Promise((resolve) => {
+  return new Promise((resolve) => {
     resolve(baseFun.call());
   });
 };
 const load = async () => {
-  getWortList(); //kelimeler dahil edilir
-  runBar.set(1);
+  return new Promise((resolve) => {
+    getWortList(); //kelimeler dahil edilir
+    runBar.set(1);
+  });
 };
 
 const next = async () => {
-  console.log("run me...");
-  console.log(HTMLdocs);
+  return new Promise((resolve) => {
+    console.log("run me...");
+    console.log(HTMLdocs);
+  });
 };
 
 const runApp = async () => {
