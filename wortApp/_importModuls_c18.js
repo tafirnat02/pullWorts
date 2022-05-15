@@ -19,6 +19,25 @@ const base = new Promise ((resolve)=>{
   resolve(baseFun.call())
 })
 
+const load = async()=>{
+  getWortList(); //kelimeler dahil edilir
+  runBar.set(1);
+}
+
+const next=async()=>{
+  console.log('run me...')
+  console.log(HTMLdocs)
+}
+
+const runApp=async()=>{
+  await base()
+  await load()
+  await next()
+}
+
+runApp.call()
+
+/*
 base
 .then(()=>{
   getWortList(); //kelimeler dahil edilir
@@ -36,7 +55,7 @@ base
   console.log(err)
 })
 
-
+*/
 
 
 
