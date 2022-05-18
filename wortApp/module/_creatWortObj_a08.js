@@ -99,6 +99,7 @@ const checkWort = (dcmnt) => {
 };
 /*--- [2.Kisim: gelen documenti promise yapisiyla bilgileri newWortObj nesnesine aktarma] ---*/
 const newWortObject = (dcmnt) => {
+  debugger
   checkWort(dcmnt)
     .then(() => {
       //Wort sinifindan nesen olusturulmasi...

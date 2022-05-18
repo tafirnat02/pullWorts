@@ -7,11 +7,9 @@ export { getWortObject };
 
 //olusturulan kelime objeleri wortObjsArr dizininde tutulut.
 const setDoc = (callback) => {
-  console.log('HTMLdocs basladi...')
   HTMLdocs.forEach((doc) => {
     callback(doc);
   });
-  console.log('HTMLdocs bitti...')
 };
 
 const getWortObject = (callback) => {
