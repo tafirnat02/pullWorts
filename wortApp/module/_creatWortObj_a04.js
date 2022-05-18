@@ -1,6 +1,6 @@
 //bu modul ile alinan kelimelere ait HTMldocumet'daki veriler baz alinarak Wort sinifdan nesne olusturulur.
 /*-------- Disariya Cikarilan Ögeler ---------*/
-export { newWortObject, testASCVBG };
+export { newWortObject };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
 
@@ -89,19 +89,13 @@ var doc, //alinan sayfa document'i
   head; //islem gören kelime
 
 
-function testASCVBG(){
-  console.log('baska bir modüldeki fonksiyon export/import sonrasi 2. bir modüle calback olarak atandi... calisiyor... ')
-}
-
-
-
 /*--- [1.Kisim: gelen documentden kelime kontrolü ve ilgili fonksiyona yönlendirme] ---*/
 const checkWort = (dcmnt) => {
-  new Promise((resolve) => {
-    wort = doc.querySelector("form>div>input").value;
-    if (!checkEl(doc.querySelector("section.rBox"))) throw "not found wort!";
+  return new Promise((resolve) => {
+    wort = dcmnt.querySelector("form>div>input").value;
+    if (!checkEl(dcmnt.querySelector("section.rBox"))) throw "not found wort!";
     doc = dcmnt;
-    resolve();
+    resolve(doc);
   });
 };
 /*--- [2.Kisim: gelen documenti promise yapisiyla bilgileri newWortObj nesnesine aktarma] ---*/
@@ -151,6 +145,7 @@ const newWortObject = (dcmnt) => {
       getLang();
     })
     .then(() => {
+      console.log(newWortObj)
       wortObjsArr.push(newWortObj);
     });
 };
@@ -167,12 +162,12 @@ function setStatus() {
           if (checkEl(t.querySelector("span").title)) {
             newWortObj.status.Zertifikat[0] = arr[0].replaceAll(
               rpRegExp,
-              empty
+              ""
             );
             arr.shift();
           }
         } else {
-          Object.keys(newWort.status).forEach((k) => {
+          Object.keys(newWortObj.status).forEach((k) => {
             if (t.title.includes(k)) {
               newWortObj.status[k][0] =
                 newWortObj.status[k][0] == ""
@@ -185,7 +180,7 @@ function setStatus() {
     }
   });
   newWortObj.status.Other = verb
-    ? arr.join(" ").replaceAll(rpRegExp, empty)
+    ? arr.join(" ").replaceAll(rpRegExp, "")
     : "";
 }
 
@@ -208,7 +203,7 @@ function setSubEl() {
         )
       : "-";
     if (newWortObj.wrt.plural == "-") {
-      newWort.sub_Html = ""; //ohne Plural
+      newWortObj.sub_Html = ""; //ohne Plural
     } else {
       newWortObj.sub_Html =
         s_p[1].nextElementSibling.nextElementSibling.innerHTML.replaceAll(
@@ -230,7 +225,7 @@ function setMainEl() {
   newWortObj.main_Sound = subEle.querySelector(
     'a[href][onclick^="Stimme"]'
   ).href;
-  //newWort.main_Html = ele.querySelector('b').outerHTML.replaceAll(rpRegExp, empty);
+  //newWortObj.main_Html = ele.querySelector('b').outerHTML.replaceAll(rpRegExp, "");
 
   let grundArr = subEle.querySelectorAll("b");
   if (grundArr.length > 1) {
@@ -239,7 +234,7 @@ function setMainEl() {
     grundEl = grundArr[0].outerHTML;
   }
 
-  let txtEl = ele.querySelector('img[alt="Deutsch"]').nextSibling;
+  let txtEl = subEle.querySelector('img[alt="Deutsch"]').nextSibling;
   if (checkEl(txtEl) && txtEl.nodeName == "#text") {
     grundEl = txtEl.textContent + grundEl;
     grundEl = grundEl.replaceAll(rpRegExp, "");
@@ -250,7 +245,7 @@ function setMainEl() {
 
 /***** bu fonksiyon ile sadece sifatlarin derecelerini almak icin kullanilir */
 function getAdj() {
-  if (newWort.status.Adjektiv[0] != "") {
+  if (newWortObj.status.Adjektiv[0] != "") {
     //sifat dereceleri alinir
     let adjTbl = doc.querySelectorAll(".vTxtTbl>table>tbody>tr>td");
     newWortObj.adj.Positiv = adjTbl[0].innerText;
@@ -272,7 +267,7 @@ function setFall() {
             newWortObj.fall[f] = n.innerText;
           } else {
             if (f == "wechsel") {
-              //console.log(Object.values(newWort.fall[f]))
+              //console.log(Object.values(newWortObj.fall[f]))
               Object.values(newWortObj.fall[f]).forEach((w) => {
                 if (tit.includes(w)) {
                   subFall = subFall + n.innerText + " ";
@@ -313,7 +308,7 @@ function getOthrTbl() {
         delete newWortObj.othrTbls.Starke.txt;
       } else if (cnt.includes(newWortObj.othrTbls.Schwache.txt)) {
         addTrVal(itm, "Schwache");
-        delete newWort.othrTbls.Schwache.txt;
+        delete newWortObj.othrTbls.Schwache.txt;
       } else if (cnt.includes(newWortObj.othrTbls.Gemischte.txt)) {
         addTrVal(itm, "Gemischte");
         delete newWortObj.othrTbls.Gemischte.txt;
@@ -392,13 +387,13 @@ function getLang() {
         .cloneNode(true);
       let lis = bDe.querySelectorAll("li");
       lis.forEach((e) => {
-        newWort.lang_DE += e.innerHTML.replaceAll(/»|\n/gi, "") + "<br>";
+        newWortObj.lang_DE += e.innerHTML.replaceAll(/»|\n/gi, "") + "<br>";
       });
     }
   });
 
   //varsa ingilizce karsligi
-  newWort.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
+  newWortObj.lang_En = checkEl(doc.querySelector('dd[lang="en"]'))
     ? doc.querySelector('dd[lang="en"]').innerText.replaceAll("\n", "")
     : "";
 
@@ -406,8 +401,8 @@ function getLang() {
   let srcL1 = doc.querySelector('span[lang="tr"]'), //birinci dom ögesi
     srcL2 = doc.querySelector("form > span.rNobr>a"); //ikinci dom ögesi
   if (checkEl(srcL1)) {
-    wortesArr[wa_index].lang_TR = srcL1.innerText.replaceAll(rpRegExp, "");
+    newWortObj.lang_TR = srcL1.innerText.replaceAll(rpRegExp, "");
   } else if (checkEl(srcL2)) {
-    wortesArr[wa_index].lang_TR = srcL2.innerText.replaceAll(rpRegExp, "");
+    newWortObj.lang_TR = srcL2.innerText.replaceAll(rpRegExp, "");
   }
 }
