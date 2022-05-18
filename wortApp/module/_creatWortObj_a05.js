@@ -88,7 +88,6 @@ var doc, //alinan sayfa document'i
   verb,
   head; //islem gören kelime
 
-
 /*--- [1.Kisim: gelen documentden kelime kontrolü ve ilgili fonksiyona yönlendirme] ---*/
 const checkWort = (dcmnt) => {
   return new Promise((resolve) => {
@@ -113,9 +112,7 @@ const newWortObject = (dcmnt) => {
     .then(() => {
       verb = newWortObj.status.Situation[0] == "Konjugation" ? true : false;
       (head = doc.querySelector("section.rBox.rBoxWht")),
-        (ele = this.verb
-          ? head.querySelector("p")
-          : head.querySelector("header>p"));
+        (ele = verb ? head.querySelector("p") : head.querySelector("header>p"));
     })
     .then(() => {
       setStatus();
@@ -145,7 +142,7 @@ const newWortObject = (dcmnt) => {
       getLang();
     })
     .then(() => {
-      console.log(newWortObj)
+      console.log(newWortObj);
       wortObjsArr.push(newWortObj);
     });
 };
@@ -160,10 +157,7 @@ function setStatus() {
       default:
         if (verb) {
           if (checkEl(t.querySelector("span").title)) {
-            newWortObj.status.Zertifikat[0] = arr[0].replaceAll(
-              rpRegExp,
-              ""
-            );
+            newWortObj.status.Zertifikat[0] = arr[0].replaceAll(rpRegExp, "");
             arr.shift();
           }
         } else {
@@ -179,9 +173,7 @@ function setStatus() {
         break;
     }
   });
-  newWortObj.status.Other = verb
-    ? arr.join(" ").replaceAll(rpRegExp, "")
-    : "";
+  newWortObj.status.Other = verb ? arr.join(" ").replaceAll(rpRegExp, "") : "";
 }
 
 /*****  Kelimenin artikeli ve cogul durumu ve ayrica
