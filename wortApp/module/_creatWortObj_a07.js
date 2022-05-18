@@ -219,7 +219,7 @@ function setMainEl() {
   ).href;
   //newWortObj.main_Html = ele.querySelector('b').outerHTML.replaceAll(rpRegExp, "");
 
-  let grundArr = subEle.querySelectorAll("b");
+  let grundEl, grundArr = subEle.querySelectorAll("b");
   if (grundArr.length > 1) {
     grundEl = grundArr[0].outerHTML + "·" + grundArr[1].outerHTML;
   } else {
