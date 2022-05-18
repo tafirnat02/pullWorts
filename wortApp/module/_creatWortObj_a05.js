@@ -184,7 +184,7 @@ function setSubEl() {
   let subHtml = subEle.cloneNode(true);
   subHtml.lastChild.remove();
   //isim/sifat cekimleri sitiliyle beraber almakta
-  nomen = newWortObj.status.Substantiv[0] == "Substantiv" ? true : false;
+  let nomen = newWortObj.status.Substantiv[0] == "Substantiv" ? true : false;
   if (nomen) {
     let s_p = doc.querySelectorAll('th[title="Nominativ"]');
     newWortObj.wrt.artikel = s_p[0].nextElementSibling.textContent;
