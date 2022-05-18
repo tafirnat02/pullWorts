@@ -6,7 +6,7 @@ export { getWortObject };
 /*-------- Modul icerigindeki Ögeler ---------*/
 
 //olusturulan kelime objeleri wortObjsArr dizininde tutulut.
-const wortObjsArr = ["henüz bos..."];
+const wortObjsArr222 = [];
 
 const setDoc = () => {
     HTMLdocs.forEach((doc) => {
@@ -16,7 +16,7 @@ const setDoc = () => {
 
 
 const getWortObject = () => {
-  window.wortObjsArr=wortObjsArr
+  window.wortObjsArr222=wortObjsArr222
   setDoc()
 };
 
