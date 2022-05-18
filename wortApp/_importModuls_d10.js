@@ -7,7 +7,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 import { baseFun } from "./module/_zBase_b09.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b17.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a07.js"; //document/HTML dizin olarak ham verileri tutar
-//import {getWortObject} from "./module/_getWortObj_a04"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { getWortObject } from "./module/_getWortObj_a05"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 //import {newWortObject} from "./module/_creatWortObj_a04" //HTML'den wort nesnesinin icerigini toplar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
@@ -39,8 +39,7 @@ const wortObj = () => {
   console.log("tüm ögeler yüklendi...");
   console.log(worteList);
   console.log(HTMLdocs);
-  
-  getWortObject(newWortObject)
+  getWortObject();
 };
 
 loadBase()
@@ -49,9 +48,6 @@ loadBase()
     console.log(err, "m:getModuls, p:loadBase.then()");
   });
 
-
-
-
 /*  
 notlar
 buradaki kodalar dahil edilenler itibariyle düzgün calismakta....
@@ -59,30 +55,25 @@ buradaki kodalar dahil edilenler itibariyle düzgün calismakta....
 promis zinci yapisi olarak asagidaki kullanilabilir
 */
 
-const first=()=> {
+const first = () => {
   return new Promise((resolve) => {
     console.log("1st");
     resolve();
   });
-}
+};
 
-const second=()=> {
+const second = () => {
   return new Promise((resolve) => {
     console.log("2nd");
     resolve();
   });
-}
+};
 
-const third=()=> {
+const third = () => {
   console.log("3rd");
-}
+};
 
 first().then(second().then(third()));
-
-
-
-
-
 
 /*
 Dizin Yapisi:

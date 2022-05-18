@@ -8,16 +8,16 @@ export { getWortObject };
 //olusturulan kelime objeleri wortObjsArr dizininde tutulut.
 const wortObjsArr = ["henüz bos..."];
 
-const setDoc = (callback) => {
+const setDoc = () => {
     HTMLdocs.forEach((doc) => {
-      callback(doc)
+      console.log(doc)
   });
 };
 
 
-const getWortObject = (callback) => {
+const getWortObject = () => {
   window.wortObjsArr=wortObjsArr
-  setDoc(callback)
+  setDoc()
 };
 
 
