@@ -39,6 +39,7 @@ const wortObj = () => {
   console.log("tüm ögeler yüklendi...");
   console.log(worteList);
   console.log(HTMLdocs);
+  debugger
   getWortObject(newWortObject)
 };
 
