@@ -6,20 +6,21 @@ export { getWortObject };
 /*-------- Modul icerigindeki Ögeler ---------*/
 
 //olusturulan kelime objeleri wortObjsArr dizininde tutulut.
-//const wortObjsArr222 = [];
+const wortObjsArr = [];
 
-/*
+
 const setDoc = () => {
     HTMLdocs.forEach((doc) => {
       console.log(doc)
   });
 };
-*/
 
-const getWortObject = async() => {
+
+const getWortObject = () => {
   //window.wortObjsArr222=wortObjsArr222
-  //setDoc()
   console.log('run me: getWortObject....')
+  setDoc()
+  
 };
 
 
