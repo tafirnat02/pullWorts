@@ -8,14 +8,15 @@ export { getWortObject };
 //olusturulan kelime objeleri wortObjsArr dizininde tutulut.
 //const wortObjsArr222 = [];
 
+/*
 const setDoc = () => {
     HTMLdocs.forEach((doc) => {
       console.log(doc)
   });
 };
+*/
 
-
-const getWortObject = () => {
+const getWortObject = async() => {
   //window.wortObjsArr222=wortObjsArr222
   //setDoc()
   console.log('run me: getWortObject....')
