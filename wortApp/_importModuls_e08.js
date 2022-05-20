@@ -7,15 +7,18 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 import { baseFun } from "./module/_zBase_b12.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b18.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a10.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_a23.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import {runApp} from "./module/_creatWortObj_2_a07.js" //HTML'den wort nesnesinin icerigini toplar
-import {getLang} from "./module/_lang_a01.js" //dil islemlerini yapar
+import { getWortObject } from "./module/_getWortObj_a26.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { runApp } from "./module/_creatWortObj_2_a07.js"; //HTML'den wort nesnesinin icerigini toplar
+import { getLang } from "./module/_lang_a02.js"; //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
-const loadBase = async() => {
+const loadBase = async () => {
   return new Promise((resolve, reject) => {
     baseFun();
+    //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+    const byController = { test: undefined, zB: null }; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+    window.byController=byController;
     let duration = 10;
     setTimeout(() => {
       if (typeof item === "object") resolve();
@@ -25,26 +28,25 @@ const loadBase = async() => {
   });
 };
 
-const _worteList = async() => {
+const _worteList = async () => {
   getWorteList();
   item.search("worteList", item.typ.variabel, getHTMLdoc);
 };
 
-const getHTMLdoc = async() => {
+const getHTMLdoc = async () => {
   getDoc();
   item.search("HTMLdocs", item.typ.variabel, wortObj);
 };
 
-const wortObj = async() => {
+const wortObj = async () => {
   getWortObject(runApp);
   item.search("byController.worts", item.typ.variabel, get_langTR);
 };
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
-  debugger
-  delete byController.worts //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
-  getLang()//Türkce karsiligi...
+  delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  getLang(); //Türkce karsiligi...
 };
 
 await loadBase()
@@ -80,7 +82,6 @@ const third = () => {
 
 first().then(second().then(third()));
 */
-
 
 /*
 Dizin Yapisi:

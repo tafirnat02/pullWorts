@@ -10,15 +10,15 @@ let index = 0,
 //HTMLdocs ögesinden ilgili kelime icin wort classindan wortObj olusturulur ve wortObjsArr dizinine eklenir.
 const setDoc = async (callback) => {
   await callback(HTMLdocs[index]).then((obj) => {
-    index++
+    index++;
     wortObjsArr.push(obj);
     docs(callback);
   });
 };
 //HTMLdocs dizinindeki tüm ögeler icin setDoc ile islem yapilir
 const docs = async (callback) => {
-  debugger
-  console.log(byController)
+  debugger;
+  console.log(byController);
   if (len === index) byController.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
   setDoc(callback);
 };
