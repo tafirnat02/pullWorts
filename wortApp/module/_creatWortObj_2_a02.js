@@ -91,7 +91,7 @@ var doc, //alinan sayfa document'i
 
 async function runApp(dcmnt){
   return new Promise((resolve) => {
-    await getObject(dcmnt)
+    getObject(dcmnt)
     .then((val)=>{
       resolve(val);
     })
