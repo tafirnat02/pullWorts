@@ -65,15 +65,13 @@ async function test(wortObj) {
 */
 //___________________________________________________
 
-
-const gapiKeyEnd=(wort)=>{
+const gapiKeyEnd = (wort) => {
   msg.console(
     msg.msgTyp.warning,
     `API Limit | ${wort}`,
-    `Bu kelime icin translate yapilamadi! m:lang*.js f:gapiKeyEnd`,
+    `Bu kelime icin translate yapilamadi! m:lang*.js f:gapiKeyEnd`
   );
-
-}
+};
 
 async function gapiKey(wortObj, next = false) {
   //kullanilacak keyi secer ve geriye dönderi
@@ -99,79 +97,72 @@ async function gapiKey(wortObj, next = false) {
         storage.get("gapiLang").index !== null
       )
         index = storage.get("gapiLang").index + 1; //eger storagede tutulan bir deger varsa buradan devam edilir...
-        index = gapi.length <= index ? 'keysEnde':index;
+      index = gapi.length <= index ? "keysEnde" : index;
     }
-//eger api limitleri dolmus ise bildirimde bulunulur....
-if (index === 'keysEnde'){
-  gapiKeyEnd(wortObj.wrt.wort)
-  resolve()
-}else if(next){
-  gapi(wortObj)
-}else{
-        storage.set("gapiLang", index, 24);
-          resolve(gapi[index]);
-          }
+    //eger api limitleri dolmus ise bildirimde bulunulur....
+    if (index === "keysEnde") {
+      gapiKeyEnd(wortObj.wrt.wort);
+      resolve();
+    } else if (next) {
+      gapi(wortObj);
+    } else {
+      storage.set("gapiLang", index, 24);
+      resolve(gapi[index]);
+    }
   });
 }
 
 async function gapi(wortObj) {
   let key;
-try {
-  key = await gapiKey().catch((error) => {
-    throw { err: error, fun: "gapiKey" };
-  });
-
-
-  return new Promise((resolve, reject) => {
-  const encodedParams = new URLSearchParams();
-  encodedParams.append("q", wortObj.wrt.wort);
-  encodedParams.append("target", "tr");
-  encodedParams.append("source", "de");
-
-  const options = {
-    method: "POST",
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-      "Accept-Encoding": "application/gzip",
-      "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
-      "X-RapidAPI-Key": key,
-    },
-    body: encodedParams,
-  };
-
-  fetch(
-    "https://google-translate1.p.rapidapi.com/language/translate/v2",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      if (typeof response.message === "string") {
-        //api sorgu limiti
-        gapiKey(wortObj,true)
-      } else {
-        //basarili sekilde veri alindi
-        wortObj.lang_TR = response.data[
-          "translations"
-        ][0].translatedText.replaceAll(rpRegExp, empty);
-      }
-    })
-    .catch((err) => {
-      consoleMsg(
-        msgTyp.error,
-        `${currentWort}`,
-        "Google translate API error. (f:getLang-multiple)",
-        err
-      );
+  try {
+    key = await gapiKey().catch((error) => {
+      throw { err: error, fun: "gapiKey" };
     });
-  resolve(gapi[index]);
-});
-} catch (errObj) {
-  msg.console(
-    msg.msgTyp.error,
-    `Error | ${wort}`,
-    `m:lang*.js f:${errObj.fun}`,
-    errObj.err
-  );
-}
-}
 
+    return new Promise((resolve, reject) => {
+      const encodedParams = new URLSearchParams();
+      encodedParams.append("q", wortObj.wrt.wort);
+      encodedParams.append("target", "tr");
+      encodedParams.append("source", "de");
+
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "Accept-Encoding": "application/gzip",
+          "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+          "X-RapidAPI-Key": key,
+        },
+        body: encodedParams,
+      };
+
+      fetch(
+        "https://google-translate1.p.rapidapi.com/language/translate/v2",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          if (typeof response.message === "string") {
+            //api sorgu limiti
+            gapiKey(wortObj, true);
+          } else {
+            //basarili sekilde veri alindi
+            wortObj.lang_TR = response.data[
+              "translations"
+            ][0].translatedText.replaceAll(rpRegExp, empty);
+            resolve();
+          }
+        })
+        .catch((error) => {
+          throw { err: error, fun: "Google translate API error. gapi-fetch()" };
+        });
+    });
+  } catch (errObj) {
+    msg.console(
+      msg.msgTyp.error,
+      `Error | ${wort}`,
+      `m:lang*.js f:${errObj.fun}`,
+      errObj.err
+    );
+  }
+}
