@@ -93,6 +93,8 @@ async function runApp(dcmnt){
   return new Promise((resolve) => {
     getObject(dcmnt)
     .then((val)=>{
+      console.log('runApp: val', val)
+      console.log('window.newWortObj', newWortObj)
       resolve(val);
     })
   })
@@ -143,7 +145,7 @@ async function getObject(dcmnt) {
         throw { err: error, fun: "getLang" };
       })
       .then(() => {
-        console.log(newWortObj);
+        console.log('getObject:.then()', newWortObj);
         return(newWortObj)
       });
   } catch (errObj) {
@@ -356,7 +358,7 @@ function getAdjTbls() {
     const othrTbls = () => {
       let allContent = doc.querySelectorAll("div>div>section>header");
       allContent.forEach((itm) => {
-        cnt = itm.innerText;
+        let cnt = itm.innerText;
         if (cnt.includes(newWortObj.othrTbls.Starke.txt)) {
           addTrVal(itm, "Starke");
           delete newWortObj.othrTbls.Starke.txt;

@@ -12,7 +12,8 @@ const setDoc = async (callback) => {
   await callback(HTMLdocs[index])
   .then((obj) => {
     index++;
-    wortObjsArr.push(obj);
+    console.log('setDoc-return:', obj)
+    //wortObjsArr.push(obj);
     docs(callback);
   });
 };
