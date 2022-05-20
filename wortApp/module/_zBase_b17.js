@@ -11,6 +11,9 @@ baseFun().catch((err) => console.log(err));
 //=============================================================
 //gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
 function setItems() {
+  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+  const byController = { test: undefined, zB: null }; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+
   //yüzde % gösterimi...  Aciklama notion'da mevcut____________
   const runBar = {
     msgStatus: [
@@ -177,16 +180,13 @@ function setItems() {
     },
   };
 
-  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const cntrlObj = { test: "test value", }; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
-
   //global scope a aktarilir...===============================
+  window.byController = byController;
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
   window.item = item;
   window.storage = storage;
-  window.cntrlObj = cntrlObj;
   //
   return true;
 } //setValues icinde olmali tüm ögeler....

@@ -18,7 +18,7 @@ const routerLang = async () => {
 
 //wortObjArr dizinindeki tüm ögeler icin routerLang ile islem yapilir
 const trLang = async () => {
-  if (len === index) controlObj.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
+  if (len === index) byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
   routerLang();
 };
 

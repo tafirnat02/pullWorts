@@ -37,13 +37,13 @@ const getHTMLdoc = async() => {
 
 const wortObj = async() => {
   getWortObject(runApp);
-  item.search("cntrlObj.worts", item.typ.variabel, get_langTR);
+  item.search("byController.worts", item.typ.variabel, get_langTR);
 };
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
   debugger
-  delete cntrlObj.worts //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  delete byController.worts //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
   getLang()//Türkce karsiligi...
 };
 

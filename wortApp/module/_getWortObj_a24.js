@@ -18,8 +18,8 @@ const setDoc = async (callback) => {
 //HTMLdocs dizinindeki tüm ögeler icin setDoc ile islem yapilir
 const docs = async (callback) => {
   debugger
-  console.log(cntrlObj)
-  if (len === index) cntrlObj.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
+  console.log(byController)
+  if (len === index) byController.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
   setDoc(callback);
 };
 
