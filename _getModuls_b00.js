@@ -11,7 +11,7 @@
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
   url_importModuls =
-    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_d31.js";
+    "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_d33.js";
     
 if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
   () => {
@@ -54,7 +54,20 @@ async function checkFile(url, pos="") {
     });
 }
 
+/* örnek asycn */
+/*
+async function test23(val) {
+  setTimeout(() => {
+    console.log(val);
+    return 55;
+  }, 1500);
+}
 
+await test23("testVal")
+.then((val) => {
+  console.log("val", val);
+});
+*/
 
 /*
 Dizin Yapisi:

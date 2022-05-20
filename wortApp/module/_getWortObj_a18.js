@@ -11,8 +11,8 @@ let index = 0,
 const setDoc = async (callback) => {
   await callback(HTMLdocs[index])
   .then((obj) => {
+    console.log('kelime indexi:', index)
     index++;
-    console.log('setDoc-return:', obj)
     wortObjsArr.push(obj);
     docs(callback);
   });
@@ -31,17 +31,3 @@ const getWortObject = async (callback) => {
 };
 
 
-/* örnek asycn */
-/*
-async function test23(val) {
-  setTimeout(() => {
-    console.log(val);
-    return 55;
-  }, 1500);
-}
-
-await test23("testVal")
-.then((val) => {
-  console.log("val", val);
-});
-*/

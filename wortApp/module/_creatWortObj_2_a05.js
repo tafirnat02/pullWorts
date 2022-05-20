@@ -93,8 +93,6 @@ async function runApp(dcmnt){
   return new Promise((resolve) => {
     getObject(dcmnt)
     .then((val)=>{
-      console.log('runApp: val', val)
-      console.log('window.newWortObj', newWortObj)
       resolve(newWortObj);
     })
   })
@@ -145,7 +143,7 @@ async function getObject(dcmnt) {
         throw { err: error, fun: "getLang" };
       })
       .then(() => {
-        return newWortObj
+        return
       });
   } catch (errObj) {
     msg.console(

@@ -7,8 +7,8 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 import { baseFun } from "./module/_zBase_b10.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b17.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a07.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_a17.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import {runApp} from "./module/_creatWortObj_2_a04.js" //HTML'den wort nesnesinin icerigini toplar
+import { getWortObject } from "./module/_getWortObj_a18.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import {runApp} from "./module/_creatWortObj_2_a05.js" //HTML'den wort nesnesinin icerigini toplar
 //import {myFunc} from "./module/_lang_a00" //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
