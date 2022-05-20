@@ -11,9 +11,7 @@ baseFun().catch((err) => console.log(err));
 //=============================================================
 //gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
 function setItems() {
-  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const byController = { test: undefined, zB: null }; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
-
+  
   //yüzde % gösterimi...  Aciklama notion'da mevcut____________
   const runBar = {
     msgStatus: [
@@ -162,26 +160,42 @@ function setItems() {
   };
 
   //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
-  const storage = {
-    value: {
-      name: "error:429 | wort index no",
-      index: undefined,
-      date: new Date(), //uygulama yeniden yüklenirse tarih ve index sifirilanir
-    },
-    set: function () {
-      window.localStorage.setItem(this.value.name, JSON.stringify(this.value));
-      this.value.date = new Date().setHours(new Date().setHours() + 5); //5 saaten fazala index storagede kalirsa dikkate alinma
-    },
-    get: function () {
-      return JSON.parse(window.localStorage.getItem(this.value.name));
-    },
-    remove: function () {
-      window.localStorage.removeItem(this.value.name);
-    },
+    //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
+    const storage = {
+      obj: {
+        name: null,
+        index: null,
+        date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
+      },
+      set: function (name,index,hour=5) {
+          this.obj.name=`@ri5: ${name}`;
+          this.obj.index=index ;
+          this.addHour(hour)
+          //olusturulan nesne local storagee aktarilir
+          window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
+      },
+      get: function (name) {
+        return JSON.parse(window.localStorage.getItem(`@ri5: ${name}`));
+      },
+      remove: function (name) {
+        window.localStorage.removeItem(`@ri5: ${name}`);
+      },
+      addHour:function(hour){
+          //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
+          this.obj.date = new Date(new Date().setTime(new Date().getTime() + (hour*60*60*1000)))
+      }
+    /* storage.set('myVal',2,1)     //atanir
+       storage.get('myVal').index   //localden veri alinir
+       storage.remove('myVal')      //localden key/value kaldirilir
+       let trh = storage.get('myVal').date
+       new Date(trh)>new Date()
+    */
   };
+//uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
 
   //global scope a aktarilir...===============================
-  window.byController = byController;
+  window.byController=byController;
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
