@@ -7,27 +7,22 @@ export { getWortObject };
 
 let index = 0,
   len;
-//olusturulan kelime objeleri wortObjsArr dizininde tutulut.
+//HTMLdocs ögesinden ilgili kelime icin wort classindan wortObj olusturulur ve wortObjsArr dizinine eklenir.
 const setDoc = async (callback) => {
-  await callback(HTMLdocs[index])
-  .then((obj) => {
-    console.log('kelime indexi:', index)
-    index++;
+  await callback(HTMLdocs[index]).then((obj) => {
     wortObjsArr.push(obj);
     docs(callback);
   });
 };
-
+//HTMLdocs dizinindeki tüm ögeler icin setDoc ile islem yapilir
 const docs = async (callback) => {
-  if (len !== index) setDoc(callback);
+  if (len === index) controlObj.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
+  setDoc(callback);
 };
 
 const getWortObject = async (callback) => {
-  debugger
   const wortObjsArr = [];
   window.wortObjsArr = wortObjsArr;
   len = HTMLdocs.length;
   setDoc(callback);
 };
-
-

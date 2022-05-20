@@ -176,13 +176,15 @@ function setItems() {
         window.localStorage.removeItem(this.value.name)
     }
 }
-
+  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+  const controlObj={} //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
   //global scope a aktarilir...===============================
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
   window.item = item;
   window.storage = storage
+  window.controlObj=controlObj
   //
   return true;
 } //setValues icinde olmali tüm ögeler....
