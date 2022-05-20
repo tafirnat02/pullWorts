@@ -25,7 +25,7 @@ const getWortObject = async (callback) => {
   debugger
   const wortObjsArr = [];
   window.wortObjsArr = wortObjsArr;
-  len = HTMLdocs.lenght;
+  len = HTMLdocs.length;
   setDoc(callback);
 };
 
