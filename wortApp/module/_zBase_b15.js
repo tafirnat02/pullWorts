@@ -160,31 +160,32 @@ function setItems() {
 
   //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
   const storage = {
-    value:{
-      name : "error:429 | wort index no",
-      index :undefined, 
-      date: new Date() //uygulama yeniden yüklenirse tarih ve index sifirilanir
+    value: {
+      name: "error:429 | wort index no",
+      index: undefined,
+      date: new Date(), //uygulama yeniden yüklenirse tarih ve index sifirilanir
     },
-    set: function(){
-       window.localStorage.setItem(this.value.name, JSON.stringify(this.value))
-       this.value.date=new Date().setHours(new Date().setHours()+ 5) //5 saaten fazala index storagede kalirsa dikkate alinma
+    set: function () {
+      window.localStorage.setItem(this.value.name, JSON.stringify(this.value));
+      this.value.date = new Date().setHours(new Date().setHours() + 5); //5 saaten fazala index storagede kalirsa dikkate alinma
     },
-    get:function(){
-      return JSON.parse(window.localStorage.getItem(this.value.name))
+    get: function () {
+      return JSON.parse(window.localStorage.getItem(this.value.name));
     },
-    remove:function(){
-        window.localStorage.removeItem(this.value.name)
-    }
-}
+    remove: function () {
+      window.localStorage.removeItem(this.value.name);
+    },
+  };
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const cntrlObj={} //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+  const cntrlObj = {test:'test value'}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+
   //global scope a aktarilir...===============================
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
   window.item = item;
-  window.storage = storage
-  window.controlObj=cntrlObj
+  window.storage = storage;
+  window.cntrlObj = cntrlObj;
   //
   return true;
 } //setValues icinde olmali tüm ögeler....
