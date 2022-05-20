@@ -19,7 +19,7 @@ const trLang = async () => {
   if (len === index) {
     byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
   } else {
-    routerLang();
+    isEmptyLang();
   }
 };
 
