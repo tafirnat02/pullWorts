@@ -95,7 +95,7 @@ async function runApp(dcmnt){
     .then((val)=>{
       console.log('runApp: val', val)
       console.log('window.newWortObj', newWortObj)
-      resolve(val);
+      resolve(newWortObj);
     })
   })
 }
@@ -145,8 +145,7 @@ async function getObject(dcmnt) {
         throw { err: error, fun: "getLang" };
       })
       .then(() => {
-        console.log('getObject:.then()', newWortObj);
-        return(newWortObj)
+        return newWortObj
       });
   } catch (errObj) {
     msg.console(
@@ -161,9 +160,8 @@ async function getObject(dcmnt) {
 function checkWort(dcmnt) {
   return new Promise((resolve) => {
     wort = dcmnt.querySelector("form>div>input").value;
-    if (!checkEl(dcmnt.querySelector("section.rBox"))) throw "not found wort!";
+    if (!checkEl(dcmnt.querySelector("section.rBox"))) throw `Das Wort "${wort}" wurde nicht gefunden!`;
     doc = dcmnt;
-    console.log(wort);
     resolve();
   });
 }
