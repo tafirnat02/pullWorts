@@ -87,7 +87,7 @@ function setItems() {
         bodyStyle = this.style.body[msgTyp];
 
       console.log(`%c ${head} %c ${text}`, headStyle, bodyStyle);
-      if (!!err) console.log(err);
+      if (!!err) console.error(err);
     },
     /*   msg.console(0==msg.msgTyp.primary,'Baslik', 'aciklama metninin görünümü')   */
   };

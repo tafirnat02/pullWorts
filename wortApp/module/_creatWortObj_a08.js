@@ -78,8 +78,7 @@ class Wort {
   };
 }
 
-const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
-  brExp = /·/gi;
+const rpRegExp = /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi;
 
 var doc, //alinan sayfa document'i
   newWortObj, //kelime icin yeni olsturulen nesne
@@ -208,7 +207,7 @@ function setSubEl() {
     //adjektiv ve Konjugation  durumu
     newWortObj.sub_Html = subHtml.innerHTML
       .replaceAll(rpRegExp, "")
-      .replaceAll(brExp, "<br>");
+      .replaceAll(/·/gi, "<br>");
   }
 }
 
