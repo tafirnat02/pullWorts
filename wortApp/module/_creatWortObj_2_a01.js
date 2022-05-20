@@ -1,6 +1,6 @@
 //bu modul ile alinan kelimelere ait HTMldocumet'daki veriler baz alinarak Wort sinifdan nesne olusturulur.
 /*-------- Disariya Cikarilan Ögeler ---------*/
-export { getObject };
+export { runApp };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
 
@@ -89,8 +89,16 @@ var doc, //alinan sayfa document'i
 
 /*--- [1.Kisim: gelen documentden kelime kontrolü ve ilgili fonksiyona yönlendirme] ---*/
 
+async function runApp(dcmnt){
+  return new Promise((resolve) => {
+    await getObject(dcmnt)
+    .then((val)=>{
+      resolve(val);
+    })
+  })
+}
+
 async function getObject(dcmnt) {
-  return new Promise((resolve, reject) => {
   try {
     await checkWort(dcmnt).catch((error) => {
       throw { err: error, fun: "checkWort" };
@@ -126,17 +134,18 @@ async function getObject(dcmnt) {
       await getAdjTbls().catch((error) => {
         throw { err: error, fun: "getAdjTbls" };
       });
-      }
-      await getSatze().catch((error) => {
-        throw { err: error, fun: "getSatze" };
-      });
-      await getLang().catch((error) => {
+    }
+    await getSatze().catch((error) => {
+      throw { err: error, fun: "getSatze" };
+    });
+    await getLang()
+      .catch((error) => {
         throw { err: error, fun: "getLang" };
       })
-      .then(()=>{
-        console.log(newWortObj)
-        resolve(newWortObj)
-      })
+      .then(() => {
+        console.log(newWortObj);
+        return(newWortObj)
+      });
   } catch (errObj) {
     msg.console(
       msg.msgTyp.error,
@@ -144,13 +153,10 @@ async function getObject(dcmnt) {
       `m:creatWortObj*.js f:${errObj.fun}`,
       errObj.err
     );
-    reject()
   }
-});
 }
 
 function checkWort(dcmnt) {
-  console.log(dcmnt);
   return new Promise((resolve) => {
     wort = dcmnt.querySelector("form>div>input").value;
     if (!checkEl(dcmnt.querySelector("section.rBox"))) throw "not found wort!";
