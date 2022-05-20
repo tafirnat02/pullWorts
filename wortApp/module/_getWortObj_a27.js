@@ -17,14 +17,17 @@ const setDoc = async (callback) => {
 };
 //HTMLdocs dizinindeki tüm ögeler icin setDoc ile islem yapilir
 const docs = async (callback) => {
-  debugger;
-  console.log(byController);
-  if (len === index) byController.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
-  setDoc(callback);
+  if (len === index){
+    byController.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
+    return true
+  }else{
+    setDoc(callback);
+  } 
 };
 
 const getWortObject = async (callback) => {
   const wortObjsArr = [];
+  wortObjsArr.length=0
   window.wortObjsArr = wortObjsArr;
   len = HTMLdocs.length;
   setDoc(callback);
