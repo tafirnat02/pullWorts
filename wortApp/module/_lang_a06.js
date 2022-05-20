@@ -9,7 +9,7 @@ let index = 0,
   len;
 //wortObjArr'da tutulan her bir wort objsi index no ile sirayla kontrol edilir.
 const isEmptyLang = async () => {
-  if (wortObjsArr[index].lang_TR = "") await checkLang(wortObjsArr[index]);
+  if (wortObjsArr[index].lang_TR === "") await checkLang(wortObjsArr[index]);
   trLang();
 };
 
@@ -53,9 +53,10 @@ async function checkLang(wortObj) {
 function test(wortObj) {
   return new Promise((resolve, reject) => {
     //Wort sinifindan nesen olusturulmasi...
-    console.log(wortObj.lang_TR);
-    wortObj.writeable = true;
-    resolve();
+    setTimeout(() => {
+      console.log('setTimeOut...:', wortObj.lang_TR);
+      resolve();
+    }, 750);
   });
 }
 
