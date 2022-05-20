@@ -33,8 +33,6 @@ const getLang = () => {
   if (len > index) isEmptyLang();
 };
 
-getLang();
-
 async function checkLang(wortObj) {
   try {
     await gapi(wortObj)
