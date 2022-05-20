@@ -8,44 +8,36 @@ export { getLang };
 let index = 0,
   len;
 //wortObjArr'da tutulan her bir wort objsi index no ile sirayla kontrol edilir.
-const routerLang = async () => {
-  await checkLang(wortObjsArr[index]).then(() => {
-    console.log("indexi:", index, "obj>> ", wortObjsArr[index]);
-    index++;
-    trLang();
-  });
+const isEmptyLang = async () => {
+  if ((wortObjsArr[index].lang_TR = "")) await checkLang(wortObjsArr[index]);
+  trLang();
 };
 
 //wortObjArr dizinindeki tüm ögeler icin routerLang ile islem yapilir
 const trLang = async () => {
-  if (len === index) byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
-  routerLang();
+  index++;
+  if (len === index) {
+    byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
+  } else {
+    routerLang();
+  }
 };
 
 //modul erisimi ile wortObjArr dizini uzunlu tespit edilip routerLang ile islem yapilir
 const getLang = async () => {
-    debugger
-    len = wortObjsArr.length;
-    if (len > index) routerLang();
-  };
-
-//wortObj'de TR kismi kontrol edilir varsa sonrakina, yoksa api a yönlendirilir....
-async function isEmpyLang(wortObj) {
-  return new Promise((resolve) => {
-    if (wortObj.lang_TR != "") resolve(); //bos degil ise sonraki ogeye gecilir...
-  });
-}
+  debugger;
+  len = wortObjsArr.length;
+  if (len > index) isEmptyLang();
+};
 
 async function checkLang(wortObj) {
   try {
-    await isEmpyLang(wortObj).catch((error) => {
-      throw { err: error, fun: "isEmpyLang" };
-    });
     await test(wortObj)
       .catch((error) => {
         throw { err: error, fun: "test" };
       })
       .then(() => {
+        trLang();
         return;
       });
   } catch (errObj) {
@@ -59,13 +51,13 @@ async function checkLang(wortObj) {
 }
 
 function test(wortObj) {
-    return new Promise((resolve, reject) => {
-      //Wort sinifindan nesen olusturulmasi...
-    console.log(wortObj.lang_TR)
-    wortObj.writeable=true
-      resolve();
-    });
-  }
+  return new Promise((resolve, reject) => {
+    //Wort sinifindan nesen olusturulmasi...
+    console.log(wortObj.lang_TR);
+    wortObj.writeable = true;
+    resolve();
+  });
+}
 
 //___________________________________________________
 

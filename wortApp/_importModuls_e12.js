@@ -9,7 +9,7 @@ import { getWorteList } from "./module/_wortList_b18.js"; //kullanilacak kelimle
 import { getDoc } from "./module/_documents_a10.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_a27.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { runApp } from "./module/_creatWortObj_2_a07.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getLang } from "./module/_lang_a02.js"; //dil islemlerini yapar
+import { getLang } from "./module/_lang_a03.js"; //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
