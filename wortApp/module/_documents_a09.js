@@ -7,10 +7,11 @@ export { getDoc };
 const getDoc = async () => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var strt = 0;
-  if (storage.get().date > new Date() && storage.get().index !== undefined)
-    strt = storage.get().index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+  if (storage.get() !== null) {
+    if (storage.get().date > new Date() && storage.get().index !== undefined)
+      strt = storage.get().index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+  }
   max = worteList.length;
-
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt, max)];
 
