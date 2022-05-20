@@ -561,32 +561,6 @@ function getLang(currentWort) {
   getDocForLang.call();
 }
 
-//varsa kelimeye dair örnekler alinir
-function getSatze() {
-  let allContent = doc.querySelectorAll("div>div>section>header>h2");
-  allContent.forEach((itm) => {
-    if (itm.innerText.includes("Beispiele")) {
-      const divs = itm.closest("section").querySelectorAll("div>ul");
-      if (!!divs) satzeRun(divs);
-    }
-  });
-
-  let zBel = doc.querySelectorAll(".vBsp>ul");
-  if (!!zBel) satzeRun(zBel);
-}
-
-function satzeRun(el) {
-  el.forEach((z) => {
-    let zB = z.cloneNode(true);
-    let lis = zB.querySelectorAll("li");
-    lis.forEach((e) => {
-      if (!!e.querySelector("a")) {
-        e.querySelector("a").remove();
-        newWort.zB.push(e.innerHTML.replaceAll(rpRegExp, empty));
-      }
-    });
-  });
-}
 
 //varsa kelimenin almanca tanimlari alinir
 function getLangDeEng() {
