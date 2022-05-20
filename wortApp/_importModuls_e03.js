@@ -7,7 +7,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 import { baseFun } from "./module/_zBase_b12.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b18.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a10.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_a20.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { getWortObject } from "./module/_getWortObj_a21.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {runApp} from "./module/_creatWortObj_2_a07.js" //HTML'den wort nesnesinin icerigini toplar
 import {getLang} from "./module/_lang_a01.js" //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
@@ -37,13 +37,13 @@ const getHTMLdoc = async() => {
 
 const wortObj = async() => {
   getWortObject(runApp);
-  item.search("controlObj.worts", item.typ.variabel, get_langTR);
+  item.search("cntrlObj.worts", item.typ.variabel, get_langTR);
 };
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
   debugger
-  delete controlObj.worts //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  delete cntrlObj.worts //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
   getLang()//Türkce karsiligi...
 };
 
