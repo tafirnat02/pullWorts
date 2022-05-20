@@ -10,6 +10,7 @@ let index = 0,
 //HTMLdocs ögesinden ilgili kelime icin wort classindan wortObj olusturulur ve wortObjsArr dizinine eklenir.
 const setDoc = async (callback) => {
   await callback(HTMLdocs[index]).then((obj) => {
+    index++
     wortObjsArr.push(obj);
     docs(callback);
   });
