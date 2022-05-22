@@ -91,7 +91,7 @@ var doc, //alinan sayfa document'i
 
 async function runApp(dcmnt) {
   return new Promise((resolve) => {
-    getObject(dcmnt).then((val) => {
+    getObject(dcmnt).then(() => {
       resolve(newWortObj);
     });
   });
@@ -101,7 +101,7 @@ async function getObject(dcmnt) {
   try {
     await checkWort(dcmnt).catch((error) => {
       throw { err: error, fun: "checkWort" };
-    })
+    });
     await newWortObject().catch((error) => {
       throw { err: error, fun: "newWortObject" };
     });
@@ -159,7 +159,8 @@ function checkWort(dcmnt) {
     wort = dcmnt.querySelector("form>div>input").value;
     if (!checkEl(dcmnt.querySelector("section.rBox")))
       throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
-      resolve()
+    doc = dcmnt;
+    resolve();
   });
 }
 
