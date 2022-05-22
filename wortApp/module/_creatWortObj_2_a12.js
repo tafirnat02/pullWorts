@@ -103,7 +103,7 @@ async function getObject(dcmnt) {
       throw { err: error, fun: "checkWort" };
     }).then((result)=>{
       console.log(result)
-      if(result == 'remove_Doc') resolve(result)
+      if(result == 'remove_Doc'){return result}
     });
     await newWortObject().catch((error) => {
       throw { err: error, fun: "newWortObject" };
