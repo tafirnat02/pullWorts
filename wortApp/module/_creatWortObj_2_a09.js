@@ -89,13 +89,12 @@ var doc, //alinan sayfa document'i
 
 /*--- [1.Kisim: gelen documentden kelime kontrolü ve ilgili fonksiyona yönlendirme] ---*/
 
-async function runApp(dcmnt){
+async function runApp(dcmnt) {
   return new Promise((resolve) => {
-    getObject(dcmnt)
-    .then((val)=>{
+    getObject(dcmnt).then((val) => {
       resolve(newWortObj);
-    })
-  })
+    });
+  });
 }
 
 async function getObject(dcmnt) {
@@ -143,7 +142,7 @@ async function getObject(dcmnt) {
         throw { err: error, fun: "getLang" };
       })
       .then(() => {
-        return
+        return;
       });
   } catch (errObj) {
     msg.console(
@@ -158,8 +157,17 @@ async function getObject(dcmnt) {
 function checkWort(dcmnt) {
   return new Promise((resolve) => {
     wort = dcmnt.querySelector("form>div>input").value;
-    if (!checkEl(dcmnt.querySelector("section.rBox"))) throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
-    doc = dcmnt;
+    if (!checkEl(dcmnt.querySelector("section.rBox")))
+      throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
+      //bulunamayan kelime dizinden kaldirilir
+      console.log('islem baslangic:',HTMLdocs)
+       const HTMLdocObject = HTMLdocs.find(({docObject}) => docObject === dcmt)
+        console.log('bulunan sonuc',dcmt)
+        const index =HTMLdocs.findIndex((item)=>item===HTMLdocObject)
+        console.log('bulunan index',index)
+        array.splice(index,1)
+        console.log('islem sonucu:',HTMLdocs)
+    //doc = dcmnt;
     resolve();
   });
 }

@@ -8,7 +8,7 @@ import { baseFun } from "./module/_zBase_b20.js"; //bu bir dizin altindaki tüm 
 import { getWorteList } from "./module/_wortList_b19.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_a28.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import { runApp } from "./module/_creatWortObj_2_a08.js"; //HTML'den wort nesnesinin icerigini toplar
+import { runApp } from "./module/_creatWortObj_2_a09.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getLang } from "./module/_lang_a11.js"; //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
