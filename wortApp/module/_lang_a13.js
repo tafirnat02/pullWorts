@@ -88,7 +88,6 @@ async function gapiTranslate(wortObj) {
         },
         body: encodedParams,
       };
-      debugger;
       fetch(
         "https://google-translate1.p.rapidapi.com/language/translate/v2",
         options
@@ -107,6 +106,8 @@ async function gapiTranslate(wortObj) {
               ) + " @gApi"; //@gApi ile ceviri olarak eklendigi bildirilir...
             resolve(true); //ceviri basarili sekilde yapildi...
           }
+        }).catch((error) => {
+          reject (error);//hata alinmasi halinde bu reject ile dönderilir...
         });
     } else {
       resolve("apiLimit");

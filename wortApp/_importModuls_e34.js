@@ -9,7 +9,7 @@ import { getWorteList } from "./module/_wortList_b19.js"; //kullanilacak kelimle
 import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_a31.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { runApp } from "./module/_creatWortObj_2_a16.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getLang } from "./module/_lang_a12.js"; //dil islemlerini yapar
+import { getLang } from "./module/_lang_a13.js"; //dil islemlerini yapar
 //import {myFunc} from "./module/_img_a00" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
@@ -53,31 +53,40 @@ await loadBase()
   });
 
 /*  
-notlar
-buradaki kodalar dahil edilenler itibariyle düzgün calismakta....
+yapilacaklar
 
-promis zinci yapisi olarak asagidaki kullanilabilir
+% ilerleyisini runBar.set(); ile göster
+ilerleyis esnasinda 
+kritik olmayan, beklenen ve kontrollü hatalari bir objeye msg.console nesnesi olarak tutulmali, daha sonra
+ilerleme durumu gösterildikten sonra 
+uygulama bitti denilsin, sonuclar gosterilmeden önce varsa alinan hatalar ekrana basilsin
+Ör: notWort hatasi
+    gapiLimit hatasi
+    imageApi hatasi gibi
+    kontrollü hatalar...
+  ancak kritik olan hatalar icin zaten uygulama devam etmemeli ve bu hata gösterilmeli hemen ardindan
+    ör: wort list alinamiyor ise,
+        fetch islemlerinde bir hata varsa vs...
+  
+  sadece image kismi kaldi... bunun ilerleyisi de 
+  oluturulan wortObj in forEach ile alinip
+  tüm kelimler teker teker sorgulanmali 
+  sorgu kimina da %de eklenmeli
 
+  % ilerleyisi:
 
-const first = () => {
-  return new Promise((resolve) => {
-    console.log("1st");
-    resolve();
-  });
-};
-
-const second = () => {
-  return new Promise((resolve) => {
-    console.log("2nd");
-    resolve();
-  });
-};
-
-const third = () => {
-  console.log("3rd");
-};
-
-first().then(second().then(third()));
+       ->giris yapildi
+        %0  (index no 5 without runApp)
+       ▱▱▱▱▱▱▱▱▱▱
+      doc islemleri
+        %10-%40  (index no 5)
+       ▰▰▰▰▱▱▱▱▱▱
+       lang_TR islemleri
+       %50-%70   (index no 8)
+       ▰▰▰▰▰▰▰▱▱▱
+       lang_TR islemleri 
+       %80-%100  (index no 10)
+       ▰▰▰▰▰▰▰▰▰▰
 */
 
 /*
