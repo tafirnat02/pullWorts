@@ -10,12 +10,6 @@ let gapiAllLimit = false, //api limiti halinde translate islemi döngüde atlani
 
 const isEmptyLang = () => {
   if (wortObjsArr[index].lang_TR == "") {
-    console.log(
-      "wortObj index:",
-      index,
-      "TR Yok - wort:",
-      wortObjsArr[index].wrt.wort
-    );
     if (gapiAllLimit) {
       //eger api limitine ulasilmis ise ekrana msg gösterimi yapilir isleme devam edilmez...
       gapiKeyEnd(wortObjsArr[index].wrt.wort);
@@ -111,7 +105,6 @@ async function gapiTranslate(wortObj) {
                 /»|⁰|¹|²|³|⁴|⁵|⁶|⁷|⁸|⁹|\(|\)|\n/gi,
                 ""
               ) + " @gApi"; //@gApi ile ceviri olarak eklendigi bildirilir...
-            console.log(wortObj.lang_TR);
             resolve(true); //ceviri basarili sekilde yapildi...
           }
         });
