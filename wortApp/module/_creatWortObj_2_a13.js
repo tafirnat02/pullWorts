@@ -101,10 +101,7 @@ async function getObject(dcmnt) {
   try {
     await checkWort(dcmnt).catch((error) => {
       throw { err: error, fun: "checkWort" };
-    }).then((result)=>{
-      console.log(result)
-      if(result == 'remove_Doc'){return result}
-    });
+    })
     await newWortObject().catch((error) => {
       throw { err: error, fun: "newWortObject" };
     });
@@ -162,18 +159,7 @@ function checkWort(dcmnt) {
     wort = dcmnt.querySelector("form>div>input").value;
     if (!checkEl(dcmnt.querySelector("section.rBox")))
       throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
-      //bulunamayan kelime dizinden kaldirilir
-      /*
-      console.log('islem baslangic:',HTMLdocs)
-       const HTMLdocObject = HTMLdocs.find(({docObject}) => docObject === dcmnt)
-        console.log('bulunan sonuc',dcmt)
-        const index =HTMLdocs.findIndex((item)=>item===HTMLdocObject)
-        console.log('bulunan index',index)
-        array.splice(index,1)
-        console.log('islem sonucu:',HTMLdocs)
-    //doc = dcmnt;
-    */
-    resolve('remove_Doc');
+      resolve()
   });
 }
 
