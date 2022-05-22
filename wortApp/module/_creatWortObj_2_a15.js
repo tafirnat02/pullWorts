@@ -159,8 +159,9 @@ function checkWort(dcmnt) {
     wort = dcmnt.querySelector("form>div>input").value;
     if (!checkEl(dcmnt.querySelector("section.rBox")))
       throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
-    doc = dcmnt;
-    resolve();
+      byController.notFound=true //bu obje wortObjsArr eklenmemesi icin 
+      doc = dcmnt;
+      resolve();
   });
 }
 
