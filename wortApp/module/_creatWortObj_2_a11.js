@@ -101,8 +101,9 @@ async function getObject(dcmnt) {
   try {
     await checkWort(dcmnt).catch((error) => {
       throw { err: error, fun: "checkWort" };
-    }).then((resolve)=>{
-      console.log(resolve)
+    }).then((result)=>{
+      console.log(result)
+      if(result == 'remove_Doc') resolve(result)
     });
     await newWortObject().catch((error) => {
       throw { err: error, fun: "newWortObject" };
@@ -172,7 +173,7 @@ function checkWort(dcmnt) {
         console.log('islem sonucu:',HTMLdocs)
     //doc = dcmnt;
     */
-    resolve('kelimeyi sil....');
+    resolve('remove_Doc');
   });
 }
 
