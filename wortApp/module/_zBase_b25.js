@@ -11,7 +11,6 @@ baseFun().catch((err) => console.log(err));
 //=============================================================
 //gloabale atanacak öge biödirimi ve globale aktarimi. setValues icinde olmali tüm ögeler....
 function setItems() {
-  
   //yüzde % gösterimi...  Aciklama notion'da mevcut____________
   const runBar = {
     msgStatus: [
@@ -29,7 +28,6 @@ function setItems() {
     ],
     lastIndex: 0,
     set: function (toIndex, min = 0, max = 0) {
-    
       if (toIndex < 0 || toIndex > 10) return;
       if (max !== 0) {
         if (this.rate === undefined) {
@@ -42,8 +40,13 @@ function setItems() {
 
         if (min % this.rate === this.dif % this.rate) this.lastIndex++;
         if (min === max) {
+          this.lastIndex = toIndex;
+          toIndex == 'finish';
+          /*
           this.lastIndex = this.index;
           toIndex == this.index;
+          */
+          this.lastIndex = toIndex;
           delete this.rate;
           delete this.dif;
           delete this.index;
@@ -54,7 +57,7 @@ function setItems() {
         toIndex = null;
       }
 
-      if(toIndex === 8) debugger
+      if (toIndex === 8) debugger;
       if (this.lastIndex === toIndex || this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
@@ -162,30 +165,32 @@ function setItems() {
   };
 
   //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
-    //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
-    const storage = {
-      obj: {
-        name: null,
-        index: null,
-        date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
-      },
-      set: function (name,index,hour=5) {
-          this.obj.name=`@ri5: ${name}`;
-          this.obj.index=index ;
-          this.addHour(hour)
-          //olusturulan nesne local storagee aktarilir
-          window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
-      },
-      get: function (name) {
-        return JSON.parse(window.localStorage.getItem(`@ri5: ${name}`));
-      },
-      remove: function (name) {
-        window.localStorage.removeItem(`@ri5: ${name}`);
-      },
-      addHour:function(hour){
-          //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
-          this.obj.date = new Date(new Date().setTime(new Date().getTime() + (hour*60*60*1000)))
-      }
+  //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
+  const storage = {
+    obj: {
+      name: null,
+      index: null,
+      date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
+    },
+    set: function (name, index, hour = 5) {
+      this.obj.name = `@ri5: ${name}`;
+      this.obj.index = index;
+      this.addHour(hour);
+      //olusturulan nesne local storagee aktarilir
+      window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
+    },
+    get: function (name) {
+      return JSON.parse(window.localStorage.getItem(`@ri5: ${name}`));
+    },
+    remove: function (name) {
+      window.localStorage.removeItem(`@ri5: ${name}`);
+    },
+    addHour: function (hour) {
+      //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
+      this.obj.date = new Date(
+        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000)
+      );
+    },
     /* storage.set('myVal',2,1)     //atanir
        storage.get('myVal').index   //localden veri alinir
        storage.remove('myVal')      //localden key/value kaldirilir
@@ -193,11 +198,11 @@ function setItems() {
        new Date(trh)>new Date()
     */
   };
-//uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+  const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
 
   //global scope a aktarilir...===============================
-  window.byController=byController;
+  window.byController = byController;
   window.runBar = runBar;
   window.msg = msg;
   window.checkEl = checkEl;
