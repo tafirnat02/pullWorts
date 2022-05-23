@@ -25,6 +25,7 @@ const isEmptyLang = () => {
 //wortObjArr dizinindeki tüm ögeler icin routerLang ile islem yapilir
 const trLang = () => {
   index++;
+  debugger
   runBar.set(8, index, len)
   if (index >= len) {
     byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
