@@ -42,11 +42,6 @@ function setItems() {
         if (min === max) {
           this.lastIndex = toIndex;
           toIndex == 'finish';
-          /*
-          this.lastIndex = this.index;
-          toIndex == this.index;
-          */
-          this.lastIndex = toIndex;
           delete this.rate;
           delete this.dif;
           delete this.index;
@@ -54,10 +49,9 @@ function setItems() {
       } else {
         if (toIndex === this.lastIndex) return;
         this.lastIndex = toIndex < this.lastIndex ? this.lastIndex : toIndex;
-        toIndex = null;
+        toIndex = 'finish';
       }
 
-      if (toIndex === 8) debugger;
       if (this.lastIndex === toIndex || this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(

@@ -70,22 +70,21 @@ async function checkLang(wortObj) {
 }
 
 async function gapiTranslate(wortObj) {
-  let key = await gapiKey(wortObj);
-  return new Promise((resolve, reject) => {
-    /** api islem sonucu basarili iee true, ancak key limiti ise key limit geriye dönderilir**/
-    
     /**
      *  Api limiti icin sonraki islemlere gecmeden 
      * resolve(true) ile 
      * dönüs yaptirilir. */
-     wortObj.lang_TR ='... @gApi'
+     wortObj.lang_TR ='return... @gApi'
     resolve(true)
+    return
     /* 
      * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
      * fetch islemi yapilabilir...
      */
 
-
+  let key = await gapiKey(wortObj);
+  return new Promise((resolve, reject) => {
+    /** api islem sonucu basarili iee true, ancak key limiti ise key limit geriye dönderilir**/
     if (!!key) {
       const encodedParams = new URLSearchParams();
       encodedParams.append("q", wortObj.wrt.wort);
