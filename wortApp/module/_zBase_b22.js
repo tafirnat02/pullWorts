@@ -54,7 +54,7 @@ function setItems() {
         toIndex = null;
       }
       console.log('toIndex',toIndex, 'min', min, 'max', max )
-      if (this.lastIndex >= toIndex || this.lastIndex > 10) return;
+      if (this.lastIndex === toIndex || this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
