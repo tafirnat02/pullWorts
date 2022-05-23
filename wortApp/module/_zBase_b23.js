@@ -54,6 +54,7 @@ function setItems() {
         toIndex = null;
       }
       console.log('toIndex',toIndex, 'min', min, 'max', max )
+      if(toIndex === 8) debugger
       if (this.lastIndex === toIndex || this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
