@@ -75,7 +75,6 @@ async function gapiTranslate(wortObj) {
      * resolve(true) ile 
      * dönüs yaptirilir. */
      wortObj.lang_TR ='return... @gApi'
-    resolve(true)
     return
     /* 
      * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
