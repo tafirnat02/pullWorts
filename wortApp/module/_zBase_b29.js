@@ -28,9 +28,9 @@ function setItems() {
     ],
     lastIndex: 0,
     set: function (toIndex, min = 0, max = 0) {
-      if(toIndex>6) debugger
       if (toIndex < 0 || toIndex > 10) return;
       if (max !== 0) {
+        debugger
         if (this.rate === undefined) {
           this.dif = toIndex - this.lastIndex;
           this.rate = Math.round((max - min) / this.dif);
