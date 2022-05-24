@@ -28,9 +28,9 @@ function setItems() {
     ],
     lastIndex: 0,
     set: function (toIndex, min = 0, max = 0) {
+      console.log('1>> toIndex', toIndex, 'min', min ,'max', max)
       if (toIndex < 0 || toIndex > 10) return;
       if (max !== 0) {
-        debugger
         if (this.rate === undefined) {
           this.dif = toIndex - this.lastIndex;
           this.rate = Math.round((max - min) / this.dif);
@@ -50,7 +50,7 @@ function setItems() {
         this.lastIndex = toIndex //< this.lastIndex ? this.lastIndex : toIndex;
         //toIndex = -1;
       }
-
+      console.log('2>> toIndex', toIndex, 'min', min ,'max', max)
       if (0 <= this.lastIndex   && this.lastIndex <= 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
