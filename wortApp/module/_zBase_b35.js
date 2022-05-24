@@ -34,24 +34,20 @@ function setItems() {
         if (this.rate === undefined) {
           this.dif = toIndex - this.lastIndex;
           this.rate = Math.round((max - min) / this.dif);
-          //this.index = toIndex;
         }
         toIndex = this.lastIndex;
         if (min % this.rate === this.dif % this.rate) this.lastIndex++;
         if (min === max) {
-         // this.lastIndex = this.index;
-          //toIndex = -1;
           delete this.rate;
           delete this.dif;
-          //delete this.index;
         }
       } else {
         if (toIndex <= this.lastIndex  || this.lastIndex > 10) return;
         this.lastIndex = toIndex //< this.lastIndex ? this.lastIndex : toIndex;
-        //toIndex = -1;
+        toIndex=-1
       }
       console.log('2>> toIndex', toIndex, 'min', min ,'max', max, '<<>> this.lastIndex',this.lastIndex,'this.index',this.index)     
-     if (0 < this.lastIndex   && this.lastIndex > 10) return;
+     if (this.lastIndex <= toIndex &&  this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
