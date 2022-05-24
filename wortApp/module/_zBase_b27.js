@@ -35,24 +35,22 @@ function setItems() {
           this.rate = Math.round((max - min) / this.dif);
           this.index = toIndex;
         }
-
         toIndex = this.lastIndex;
-
         if (min % this.rate === this.dif % this.rate) this.lastIndex++;
         if (min === max) {
           this.lastIndex = toIndex;
-          toIndex == 'finish';
+          toIndex = -1;
           delete this.rate;
           delete this.dif;
           delete this.index;
         }
       } else {
-        if (toIndex === this.lastIndex) return;
-        this.lastIndex = toIndex < this.lastIndex ? this.lastIndex : toIndex;
-        toIndex = 'finish';
+        if (toIndex <= this.lastIndex  || this.lastIndex > 10) return;
+        this.lastIndex = toIndex //< this.lastIndex ? this.lastIndex : toIndex;
+        toIndex = -1;
       }
 
-      if (this.lastIndex === toIndex || this.lastIndex > 10) return;
+      if (toIndex !== -1 && (toIndex <= this.lastIndex   || this.lastIndex > 10)) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`

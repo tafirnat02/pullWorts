@@ -4,7 +4,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 /**  --- import edilen ögeler --- */
 
-import { baseFun } from "./module/_zBase_b26.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_b27.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_b19.js"; //kullanilacak kelimleri alir
 import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_a31.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
