@@ -47,7 +47,7 @@ function setItems() {
         toIndex=-1
       }
       console.log('2>> toIndex', toIndex, 'min', min ,'max', max, '<<>> this.lastIndex',this.lastIndex,'this.index',this.index)     
-     if (this.lastIndex <= toIndex &&  this.lastIndex > 10) return;
+     if (this.lastIndex <= toIndex ||  this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
