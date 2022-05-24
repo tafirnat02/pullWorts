@@ -34,16 +34,16 @@ function setItems() {
         if (this.rate === undefined) {
           this.dif = toIndex - this.lastIndex;
           this.rate = Math.round((max - min) / this.dif);
-          this.index = toIndex;
+          //this.index = toIndex;
         }
         toIndex = this.lastIndex;
         if (min % this.rate === this.dif % this.rate) this.lastIndex++;
         if (min === max) {
-          this.lastIndex = this.index;
+         // this.lastIndex = this.index;
           //toIndex = -1;
           delete this.rate;
           delete this.dif;
-          delete this.index;
+          //delete this.index;
         }
       } else {
         if (toIndex <= this.lastIndex  || this.lastIndex > 10) return;
