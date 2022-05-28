@@ -53,7 +53,7 @@ const get_Image=async()=>{
   item.search("byController.image", item.typ.variabel, finish);
 }
 
-const finis = async()=>{
+const finish = async()=>{
   delete byController.image
   console.log(wortObjsArr)
 }
