@@ -10,7 +10,7 @@ import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_a31.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { runApp } from "./module/_creatWortObj_2_a16.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getLang } from "./module/_lang_a22.js"; //dil islemlerini yapar
-//import {getImg} from "./module/_img_a01" //image islemlerini yapar
+import {getImg} from "./module/_img_a02.js" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
 const loadBase = async () => {
@@ -49,7 +49,6 @@ const get_langTR = async () => {
 
 const get_Image=async()=>{
   delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
-  debugger
   getImg() //görseller alinir...
   item.search("byController.image", item.typ.variabel, finish);
 }
