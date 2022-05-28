@@ -8,8 +8,9 @@ export { getImg };
 //ugulamanin basinda api sayfaya dahil edilir
 runBar.lastIndex = 7;
 let url,
-  imgArr = [];
-(index = 0), (len = wortObjsArr.length);
+  imgArr = [],
+  index = 0,
+  len = wortObjsArr.length;
 
 const api = {
     index: 0,
@@ -224,16 +225,16 @@ const searchImg = async () => {
 
 const getImg = async () => {
   imgArr.length = 0;
-  api.cse = 0;//aramadaki kelime grubu sifirlanir...
+  api.cse = 0; //aramadaki kelime grubu sifirlanir...
   if (!!wortObjsArr[index].status.Substantiv[0]) {
     await setObj(wortObjsArr[index]);
     await searchImg();
   }
   runBar.set(10, index, len);
   index++;
-  if (index < len && api.status !== false){
+  if (index < len && api.status !== false) {
     getImg();
-  }else{
-    byController.image=true
-  } 
+  } else {
+    byController.image = true;
+  }
 };

@@ -74,14 +74,15 @@ async function gapiTranslate(wortObj) {
      *  Api limiti icin sonraki islemlere gecmeden 
      * resolve(true) ile 
      * dönüs yaptirilir. */
-     return new Promise((resolve, reject) => {
+     
+    /*   
+     * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
+     * fetch islemi yapilabilir...
+     * 
+    return new Promise((resolve, reject) => { 
      wortObj.lang_TR ='return... @gApi'
      resolve(true)
      })
-    
-    /* 
-     * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
-     * fetch islemi yapilabilir...
      */
 
   let key = await gapiKey(wortObj);
