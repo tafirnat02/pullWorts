@@ -6,12 +6,11 @@ export { getImg };
 
 //ugulamanin basinda api sayfaya dahil edilir
 //ugulamanin basinda api sayfaya dahil edilir
-runBar.lastIndex = 7;
+
 let url,
   imgArr = [],
   index = 0,
-  len = wortObjsArr.length;
-
+  len = undefined;
 const api = {
     index: 0,
     cse: 0,
@@ -224,6 +223,7 @@ const searchImg = async () => {
 };
 
 const getImg = async () => {
+  if(len === undefined) len = wortObjsArr.length 
   imgArr.length = 0;
   api.cse = 0; //aramadaki kelime grubu sifirlanir...
   if (!!wortObjsArr[index].status.Substantiv[0]) {

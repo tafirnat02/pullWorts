@@ -10,7 +10,7 @@ import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_a31.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { runApp } from "./module/_creatWortObj_2_a16.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getLang } from "./module/_lang_a23.js"; //dil islemlerini yapar
-import {getImg} from "./module/_img_a03.js" //image islemlerini yapar
+import {getImg} from "./module/_img_a04.js" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
 const loadBase = async () => {
