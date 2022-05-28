@@ -28,7 +28,6 @@ function setItems() {
     ],
     lastIndex: 0,
     set: function (toIndex, min = 0, max = 0) {
-      console.log('1>> toIndex', toIndex, 'min', min ,'max', max, '<<>> this.lastIndex',this.lastIndex,'this.index',this.index)
       if (toIndex < 0 || toIndex > 10) return;
       if (max !== 0) {
         if (this.rate === undefined) {
@@ -46,7 +45,6 @@ function setItems() {
         this.lastIndex = toIndex //< this.lastIndex ? this.lastIndex : toIndex;
         toIndex=-1
       }
-      console.log('2>> toIndex', toIndex, 'min', min ,'max', max, '<<>> this.lastIndex',this.lastIndex,'this.index',this.index)     
      if (this.lastIndex <= toIndex ||  this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(

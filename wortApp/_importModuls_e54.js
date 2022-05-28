@@ -9,8 +9,8 @@ import { getWorteList } from "./module/_wortList_b19.js"; //kullanilacak kelimle
 import { getDoc } from "./module/_documents_a11.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_a31.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { runApp } from "./module/_creatWortObj_2_a16.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getLang } from "./module/_lang_a21.js"; //dil islemlerini yapar
-//import {myFunc} from "./module/_img_a00" //image islemlerini yapar
+import { getLang } from "./module/_lang_a22.js"; //dil islemlerini yapar
+import {getImg} from "./module/_img_a01" //image islemlerini yapar
 //import sonrasi ilgili ögeler yürütülür...
 
 const loadBase = async () => {
@@ -44,7 +44,19 @@ const wortObj = async () => {
 const get_langTR = async () => {
   delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
   getLang(); //Türkce karsiligi...
+  item.search("byController.trLang", item.typ.variabel, get_Image);
 };
+
+const get_Image=async()=>{
+  delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
+  getImg() //görseller alinir...
+  item.search("byController.image", item.typ.variabel, finish);
+}
+
+const finis = async()=>{
+  delete byController.image
+  console.log(wortObjsArr)
+}
 
 await loadBase()
   .then(_worteList())
