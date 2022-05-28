@@ -117,18 +117,31 @@ const searchImg = async () => {
   api.cse++;
   await fetch(url)
     .then((response) => {
+      switch (response.status) {
+        case 200:
+          return response.text();
+          break;
+        case 429:
+          throw 429;
+          break;
+        case 503:
+          throw 503;
+          break;
+        default:
+          throw response;
+          break;
+      }
+      /*
       if (response.status === 200) {
         return response.text();
       } else if (response.status === 429) {
-        console.log(url);
         throw 429;
       } else if (response.status === 503) {
-        console.log(url);
         throw 503;
       } else {
-        console.log(url);
         throw response;
       }
+      */
     }) // or .json()
     .then((response) => {
       return JSON.parse(response);
@@ -157,7 +170,6 @@ const searchImg = async () => {
     .then(() => {
       if (imgArr.length < 1) throw "noImage";
       //imgArr dizinindeki urller ilgili kelimeye dahil edilir aktarilir
-      console.log(api);
       wortObjsArr[index].img.push(...imgArr);
     })
     .catch((err) => {
@@ -171,42 +183,34 @@ const searchImg = async () => {
             );
           break;
         case 429: // server engeli halinde diger keyler id'ler ile denenir...
-          api.index++;
-          if (api.index < cse.length) {
-            nextCse();
-          } else {
-            api.status = false; //api engeli tespiti, sonraki kelimeler icin görsel api kapatilir
-            msg.console(
-              msg.msgTyp.warning,
-              `429 | ${currentWort}`,
-              `HTTP 429 Too Many Requests: rate limiting! (f:getImg-searchImg)`,
-              err
-            );
-            cse = null; //cikis yapilir
-          }
-          break;
         case 503: // server cevap vermeme halinde...sirayla diger cse lerle denenir...
           api.index++;
           if (api.index > cse.length) api.status = false;
           if (api.status !== false) {
             nextCse();
           } else {
-            consoleMsg(
-              msg.msgTyp.warning,
-              `503 | ${currentWort}`,
-              `HTTP 503 the server is currently unable to handle the incoming requests! (f:getImg-searchImg)`,
-              err
-            );
-            cse = null; //cikis yapilir
+            let txt429 = [
+                429,
+                `HTTP 429 Too Many Requests: rate limiting!`,
+              ],
+              txt503 = [
+                503,
+                `HTTP 503 the server is currently unable to handle the incoming requests!`,
+              ];
+            txt = err === 429 ? txt429 : txt503;
+            msg.console(msg.msgTyp.warning, 
+              `${txt[0]} | ${currentWort}`,
+              `${txt[1]} (f:getImg-searchImg)`
+              );
+          cse = null; //cikis yapilir
           }
-
           break;
         default: // diger hatalar
           msg.console(
             //cikis yapilir
             msg.msgTyp.error,
             `${currentWort}`,
-            `Görsel alinirken hata olustu! (f:getImg-searchImg)`,
+            `Görsel alinirken hata olustu! (f:getImg-searchImg) ${url}`,
             err
           );
           cse = null;
@@ -223,7 +227,7 @@ const searchImg = async () => {
 };
 
 const getImg = async () => {
-  if(len === undefined) len = wortObjsArr.length 
+  if (len === undefined) len = wortObjsArr.length;
   imgArr.length = 0;
   api.cse = 0; //aramadaki kelime grubu sifirlanir...
   if (!!wortObjsArr[index].status.Substantiv[0]) {
