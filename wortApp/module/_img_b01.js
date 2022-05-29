@@ -176,7 +176,7 @@ const searchImg = async () => {
       switch (err) {
         case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
           if (imgArr.length < 1)
-            newMsg(
+            msg.add(
               2,
               `🚨 ${currentWort}`,
               `Not found image! (f:getImg-searchImg)`
@@ -195,7 +195,7 @@ const searchImg = async () => {
                 `HTTP 503 the server is currently unable to handle the incoming requests!`,
               ];
             txt = err === 429 ? txt429 : txt503;
-            newMsg(
+            msg.add(
               2,
               `${txt[0]} | ${currentWort}`,
               `${txt[1]} (f:getImg-searchImg)`
@@ -204,7 +204,7 @@ const searchImg = async () => {
           }
           break;
         default: // diger hatalar
-          newMsg(
+          msg.add(
             //cikis yapilir
             1,
             `${currentWort}`,
@@ -219,7 +219,7 @@ const searchImg = async () => {
   //sirali halde fonksiyonlar isleme alinir...
   async function nextCse() {
     if (cse === null){
-      getAllMsg()
+      msg.allPrint()
       return; //uygulamadan cikilir...
     } 
     await setObj();
