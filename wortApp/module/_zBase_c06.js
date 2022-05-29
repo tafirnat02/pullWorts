@@ -199,11 +199,10 @@ function setItems() {
   window.checkEl = checkEl;
   window.item = item;
   window.storage = storage;
-  window.getAllMsg = getAllMsg;
-  window.newMsg = newMsg;
   window.msgContainer = msgContainer;
-  //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
-  window.console.msg = msg;
+  window.msg = msg;
+  window.getAllMsg = getAllMsg;
+  window.printMsg=printMsg;
   //
   return true;
 } //setValues icinde olmali tüm ögeler....

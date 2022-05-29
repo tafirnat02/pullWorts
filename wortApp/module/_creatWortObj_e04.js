@@ -145,13 +145,14 @@ async function getObject(dcmnt) {
         return;
       });
   } catch (errObj) {
-    newMsg(
+    //msg():yeni mesaji dizine ekler, printMsg():hatayi dogrudan ekrana bastirir...
+    let funSelect = errObj.fun === "checkWort" ? "msg" : "printMsg";
+    window[funSelect](
       3,
       `Error | ${wort}`,
       `m:creatWortObj*.js f:${errObj.fun}`,
       errObj.err
     );
-    //Kritik hata: tüm mesajlar ekrana basilir
   }
 }
 
