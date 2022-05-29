@@ -147,37 +147,26 @@ function setItems() {
     },
   };
 
-  //mesaj bildirim islemlerine dair
-  const getAllMsg = () => {
-    debugger
-    //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
-    if (msgContainer.length < 1) return;
-    msgContainer.sort();
-    msgContainer.forEach((msg) => {
-      console.msg(msg[0], msg[1], msg[2], msg[3]);
-    });
-  };
-
-  const newMsg = (msgTyp, head, text, add = "") => {
+ /**** mesaj bildirim islemlerine dair ****/
+ //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
+ const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
+//gelen mesajlari msgContainer'a aktarilmasi
+  const msg = (msgTyp, head, text, add = "") => {
     //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
     let msgArr = [msgTyp, head, text, add];
     msgContainer.push(msgArr);
   };
 
-  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
-  const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
-  //global scope a aktarilir...===============================
-  window.byController = byController;
-  window.runBar = runBar;
-  window.checkEl = checkEl;
-  window.item = item;
-  window.storage = storage;
-  window.getAllMsg = getAllMsg;
-  window.newMsg = newMsg;
-  window.msgContainer = msgContainer;
-  //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
-  window.console.msg = (msgTyp, head, text, add) => {
+ //alinan mesajlarin ekrana bastirilmasi
+ const getAllMsg = () => {
+  //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
+  if (msgContainer.length < 1) return;
+  msgContainer.sort();
+  msgContainer.forEach((msg) => {
+    printMsg(msg[0], msg[1], msg[2], msg[3]);
+  });
+};
+  const printMsg = (msgTyp, head, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
     (this.style = {
       head: [
@@ -202,6 +191,19 @@ function setItems() {
 
     //Exampel: console.msg(0,'Baslik', 'aciklama metninin görünümü','ek satir')
   };
+  //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+  const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
+  //global scope a aktarilir...===============================
+  window.byController = byController;
+  window.runBar = runBar;
+  window.checkEl = checkEl;
+  window.item = item;
+  window.storage = storage;
+  window.getAllMsg = getAllMsg;
+  window.newMsg = newMsg;
+  window.msgContainer = msgContainer;
+  //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
+  window.console.msg = msg;
   //
   return true;
 } //setValues icinde olmali tüm ögeler....
