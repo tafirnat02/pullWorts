@@ -45,12 +45,14 @@ const getDoc = async () => {
         }
       })
       .catch((err) => {
-        let msgHead = err === 429 ? `429 | ${wort}` : " ⚠️ Error";
+        let title = err === 429 ? `429 | ${wort}` : " ⚠️ Error";
         let msgTxt =
           err === 429
             ? `Alinamayan kelime: ${worteList[strt]}, indeks no: ${strt}`
-            : "";
-        newMsg(3, msgHead, `${msgTxt}(m:documents*.js f:docHTML)`, err);
+            : "Islem esnasinda hata olustu!";
+        let selectFun=err===429?'msg.add()':'msg.print()'//msg:dizine ekler, printMsg:ekrana basilir...
+        //mesaj basilir veya dizine eklenir...
+        window[selectFun](3, title, `${msgTxt}(m:documents*.js f:docHTML)`, err);
 
         //localStorage islemleri
         storage.set("wortList", strt, 5); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir

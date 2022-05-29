@@ -145,8 +145,8 @@ async function getObject(dcmnt) {
         return;
       });
   } catch (errObj) {
-    //msg():yeni mesaji dizine ekler, printMsg():hatayi dogrudan ekrana bastirir...
-    let funSelect = errObj.fun === "checkWort" ? "msg" : "printMsg";
+    //msg.add():yeni mesaji dizine ekler, msg.print():hatayi dogrudan ekrana bastirir...
+    let funSelect = errObj.fun === "checkWort" ? "msg.add()" : "msg.print()";
     window[funSelect](
       3,
       `Error | ${wort}`,

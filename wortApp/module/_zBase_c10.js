@@ -148,16 +148,85 @@ function setItems() {
   };
 
   /**** mesaj bildirim islemlerine dair ****/
-  //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
+  const msg = {
+    style:{
+        titleColor:[
+            "background: DodgerBlue;", //primary
+            "background: Green;", //successful
+            "background: DarkGoldenRod;", //warning
+            "background: Red;", //error
+              ],
+        bodyColor:[
+            "color: DeepSkyBlue;",
+            "color: LimeGreen;",
+            "color:DarkGoldenRod;",
+            "color: Red;",
+          ],
+        title:function(typ){
+            return `${this.titleColor[typ]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;},
+        body:function(typ){ return this.bodyColor[typ]}
+    }, 
+    container:[],
+    add:function(msgTyp, title, text, add = ""){
+        let newMsg =[msgTyp,title,text,add]
+        this.container.push(newMsg)
+    },
+    print:function(typ, title, text, add=""){
+         console.log(`%c ${title} %c ${text}`, this.style.title(typ), this.style.body(typ));
+         if (!!add)  console[typ == 3 ? "error" : typ == 2 ? "warn" : "info"](add);
+    },
+    allPrint:function(){
+        if(this.container.length<1) return
+        this.container.forEach(msg=>{
+            let msgTyp, title, text, add;
+            [msgTyp, title, text, add]= msg//degiskenlere array degerleri atanir
+            this.print(msgTyp, title, text, add)
+        })
+    }
+  }
+  //alinan mesajlarin ekrana bastirilmasi
+  /*
+   //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
   const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
   //gelen mesajlari msgContainer'a aktarilmasi
-  const msg = (msgTyp, title, text, add = "") => {
+  const msg2 = (msgTyp, title, text, add = "") => {
     //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
     let msgArr = [msgTyp, title, text, add];
     msgContainer.push(msgArr);
   };
 
-  //alinan mesajlarin ekrana bastirilmasi
+  const msg = {
+    style:{
+      head:[
+        "background: DodgerBlue;", //primary
+        "background: Green;", //successful
+        "background: DarkGoldenRod;", //warning
+        "background: Red;", //error
+      ],
+      body:[
+        "color: DeepSkyBlue;",
+        "color: LimeGreen;",
+        "color:DarkGoldenRod;",
+        "color: Red;",
+      ],
+    },
+    msgContainer:{},
+    add:(msgTyp, title, text, add = "")=>{
+
+    }
+  
+
+    this.headStyle = `${this.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;
+    this.bodyStyle = this.body[msgTyp];
+
+    console.log(`%c ${title} %c ${text}`, this.headStyle, this.bodyStyle);
+    if (!!add)
+      console[msgTyp == 3 ? "error" : msgTyp == 2 ? "warn" : "info"](add);
+
+    //Exampel: console.msg(0,'Baslik', 'aciklama metninin görünümü','ek satir')
+  }
+
+
   const getAllMsg = () => {
     //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
     if (msgContainer.length < 1) return;
@@ -166,7 +235,7 @@ function setItems() {
       printMsg(msg[0], msg[1], msg[2], msg[3]);
     });
   };
-  const printMsg = (msgTyp, title, text, add) => {
+  const printMsg2 = (msgTyp, title, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
     this.head=[
         "background: DodgerBlue;", //primary
@@ -190,6 +259,7 @@ function setItems() {
 
     //Exampel: console.msg(0,'Baslik', 'aciklama metninin görünümü','ek satir')
   };
+  */
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
   const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
   //global scope a aktarilir...===============================
@@ -198,10 +268,12 @@ function setItems() {
   window.checkEl = checkEl;
   window.item = item;
   window.storage = storage;
-  window.msgContainer = msgContainer;
   window.msg = msg;
+  /*
+  window.msgContainer = msgContainer;
   window.getAllMsg = getAllMsg;
   window.printMsg = printMsg;
+  */
   //
   return true;
 } //setValues icinde olmali tüm ögeler....
