@@ -146,8 +146,9 @@ async function getObject(dcmnt) {
       });
   } catch (errObj) {
     //msg.add():yeni mesaji dizine ekler, msg.print():hatayi dogrudan ekrana bastirir...
-    let funSelect = errObj.fun === "checkWort" ? "msg.add()" : "msg.print()";
-    window[funSelect](
+    let method = errObj.fun === "checkWort" ? "add" : "print";
+
+    window.msg[method](
       3,
       `Error | ${wort}`,
       `m:creatWortObj*.js f:${errObj.fun}`,
