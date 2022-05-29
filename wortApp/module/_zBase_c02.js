@@ -156,11 +156,11 @@ function setItems() {
     });
   };
 
-  const newMsg=(msgTyp, head, text, add = "")=>{
+  const newMsg = (msgTyp, head, text, add = "") => {
     //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
-    let msgArr=[msgTyp, head, text, add]
-    msgContainer.push(msgArr)
-  }
+    let msgArr = [msgTyp, head, text, add];
+    msgContainer.push(msgArr);
+  };
 
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
   const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
@@ -172,8 +172,8 @@ function setItems() {
   window.item = item;
   window.storage = storage;
   window.getAllMsg = getAllMsg;
-  window.newMsg=newMsg
-  window.msgContainer=msgContainer
+  window.newMsg = newMsg;
+  window.msgContainer = msgContainer;
   //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
   window.console.msg = (msgTyp, head, text, add = "") => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
@@ -194,7 +194,7 @@ function setItems() {
       (this.headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`),
       (this.bodyStyle = this.style.body[msgTyp]);
 
-    console.log(`%c ${head} %c ${text}`, headStyle, bodyStyle);
+    console.log(`%c ${head} %c ${text}`, this.headStyle, this.bodyStyle);
     if (!!add)
       console[msgTyp == 3 ? "error" : msgTyp == 2 ? "warn" : "info"](add);
 
