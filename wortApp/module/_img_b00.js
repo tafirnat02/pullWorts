@@ -176,8 +176,8 @@ const searchImg = async () => {
       switch (err) {
         case "noImage": //tüm secimlik metin aramasi sonucu image bulunamamasi durumu
           if (imgArr.length < 1)
-            msg.console(
-              msg.msgTyp.warning,
+            newMsg(
+              2,
               `🚨 ${currentWort}`,
               `Not found image! (f:getImg-searchImg)`
             );
@@ -189,26 +189,24 @@ const searchImg = async () => {
           if (api.status !== false) {
             nextCse();
           } else {
-            let txt429 = [
-                429,
-                `HTTP 429 Too Many Requests: rate limiting!`,
-              ],
+            let txt429 = [429, `HTTP 429 Too Many Requests: rate limiting!`],
               txt503 = [
                 503,
                 `HTTP 503 the server is currently unable to handle the incoming requests!`,
               ];
             txt = err === 429 ? txt429 : txt503;
-            msg.console(msg.msgTyp.warning, 
+            newMsg(
+              2,
               `${txt[0]} | ${currentWort}`,
               `${txt[1]} (f:getImg-searchImg)`
-              );
-          cse = null; //cikis yapilir
+            );
+            cse = null; //cikis yapilir
           }
           break;
         default: // diger hatalar
-          msg.console(
+          newMsg(
             //cikis yapilir
-            msg.msgTyp.error,
+            1,
             `${currentWort}`,
             `Görsel alinirken hata olustu! (f:getImg-searchImg) ${url}`,
             err
@@ -220,7 +218,10 @@ const searchImg = async () => {
 
   //sirali halde fonksiyonlar isleme alinir...
   async function nextCse() {
-    if (cse === null) return; //uygulamadan cikilir...
+    if (cse === null){
+      getAllMsg()
+      return; //uygulamadan cikilir...
+    } 
     await setObj();
     searchImg();
   }

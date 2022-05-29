@@ -41,48 +41,16 @@ function setItems() {
           delete this.dif;
         }
       } else {
-        if (toIndex <= this.lastIndex  || this.lastIndex > 10) return;
-        this.lastIndex = toIndex //< this.lastIndex ? this.lastIndex : toIndex;
-        toIndex=-1
+        if (toIndex <= this.lastIndex || this.lastIndex > 10) return;
+        this.lastIndex = toIndex; //< this.lastIndex ? this.lastIndex : toIndex;
+        toIndex = -1;
       }
-     if (this.lastIndex <= toIndex ||  this.lastIndex > 10) return;
+      if (this.lastIndex <= toIndex || this.lastIndex > 10) return;
       console.clear(); //öncekiler temizlenir...
       console.log(
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
       );
     },
-  };
-
-  //console mesaj yazdirmak icin_______________________________
-  const msg = {
-    msgTyp: {
-      primary: 0,
-      successful: 1,
-      warning: 2,
-      error: 3,
-    },
-    style: {
-      head: [
-        "background: DodgerBlue;", //primary
-        "background: Green;", //successful
-        "background: DarkGoldenRod;", //warning
-        "background: Red;", //error
-      ],
-      body: [
-        "color: DeepSkyBlue;",
-        "color: LimeGreen;",
-        "color:DarkGoldenRod;",
-        "color: Red;",
-      ],
-    },
-    console: function (msgTyp, head, text, err = "") {
-      let headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`,
-        bodyStyle = this.style.body[msgTyp];
-
-      console.log(`%c ${head} %c ${text}`, headStyle, bodyStyle);
-      if (!!err) console.error(err);
-    },
-    /*   msg.console(0==msg.msgTyp.primary,'Baslik', 'aciklama metninin görünümü')   */
   };
 
   //belirli bir süre icerisinde fonksiyon/degisken arar bulursa cikis yapar________________________
@@ -152,7 +120,6 @@ function setItems() {
   };
 
   //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
-  //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
   const storage = {
     obj: {
       name: null,
@@ -178,23 +145,61 @@ function setItems() {
         new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000)
       );
     },
-    /* storage.set('myVal',2,1)     //atanir
-       storage.get('myVal').index   //localden veri alinir
-       storage.remove('myVal')      //localden key/value kaldirilir
-       let trh = storage.get('myVal').date
-       new Date(trh)>new Date()
-    */
   };
+
+  //mesaj bildirim islemlerine dair
+  const getAllMsg = () => {
+    //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
+    msgContainer.sort();
+    msgContainer.forEach((msg) => {
+      console.msg(msg[0], msg[1], msg[2], msg[3]);
+    });
+  };
+
+  const newMsg=(msgTyp, head, text, add = "")=>{
+    //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
+    let msgArr=[msgTyp, head, text, add]
+    msgContainer.push(msgArr)
+  }
+
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
   const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
-
+  const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
   //global scope a aktarilir...===============================
   window.byController = byController;
   window.runBar = runBar;
-  window.msg = msg;
   window.checkEl = checkEl;
   window.item = item;
   window.storage = storage;
+  window.getAllMsg = getAllMsg;
+  window.newMsg=newMsg
+  window.msgContainer=msgContainer
+  //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
+  window.console.msg = (msgTyp, head, text, add = "") => {
+    //types => primary: 0, successful: 1, warning: 2, error: 3,
+    (this.style = {
+      head: [
+        "background: DodgerBlue;", //primary
+        "background: Green;", //successful
+        "background: DarkGoldenRod;", //warning
+        "background: Red;", //error
+      ],
+      body: [
+        "color: DeepSkyBlue;",
+        "color: LimeGreen;",
+        "color:DarkGoldenRod;",
+        "color: Red;",
+      ],
+    }),
+      (this.headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`),
+      (this.bodyStyle = this.style.body[msgTyp]);
+
+    console.log(`%c ${head} %c ${text}`, headStyle, bodyStyle);
+    if (!!add)
+      console[msgTyp == 3 ? "error" : msgTyp == 2 ? "warn" : "info"](add);
+
+    //Exampel: console.msg(0,'Baslik', 'aciklama metninin görünümü','ek satir')
+  };
   //
   return true;
 } //setValues icinde olmali tüm ögeler....

@@ -8,9 +8,12 @@ const getDoc = async () => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var max = worteList.length,
     strt = 0;
-  if (storage.get('wortList') !== null) {
-    if (new Date(storage.get('wortList').date) > new Date() && storage.get('wortList').index !== null)
-      strt = storage.get('wortList').index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+  if (storage.get("wortList") !== null) {
+    if (
+      new Date(storage.get("wortList").date) > new Date() &&
+      storage.get("wortList").index !== null
+    )
+      strt = storage.get("wortList").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
   }
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt, max)];
@@ -34,7 +37,7 @@ const getDoc = async () => {
       .then(() => {
         strt++;
         if (max == strt) {
-          storage.remove('wortList')//islem tamamlanmasi sonrasi index local storageden kaldirilir. 
+          storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
           finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
           runBar.set(5, strt - 1, max); //%10 durumu...
@@ -47,14 +50,10 @@ const getDoc = async () => {
           err === 429
             ? `Alinamayan kelime: ${worteList[strt]}, indeks no: ${strt}`
             : "";
-        msg.console(
-          msg.msgTyp.error,
-          msgHead,
-          `${msgTxt}(m:documents*.js f:docHTML)`,
-          err
-        );
+        newMsg(3, msgHead, `${msgTxt}(m:documents*.js f:docHTML)`, err);
+
         //localStorage islemleri
-        storage.set('wortList',strt,5)     //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
+        storage.set("wortList", strt, 5); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
         finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
       });
   };

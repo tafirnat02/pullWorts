@@ -24,7 +24,7 @@ const isEmptyLang = () => {
 
 //wortObjArr dizinindeki tüm ögeler icin routerLang ile islem yapilir
 const trLang = () => {
-  runBar.set(8, index, len)
+  runBar.set(8, index, len);
   index++;
   if (index >= len) {
     byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
@@ -60,8 +60,8 @@ async function checkLang(wortObj) {
         return;
       });
   } catch (error) {
-    msg.console(
-      msg.msgTyp.error,
+    newMsg(
+      3,
       `Error | ${wortObj.wrt.wort}`,
       `"Translate: gapi error!" m:lang*js f:wortObj`,
       error
@@ -70,24 +70,22 @@ async function checkLang(wortObj) {
 }
 
 async function gapiTranslate(wortObj) {
-    /**
-     *  Api limiti icin sonraki islemlere gecmeden 
-     * resolve(true) ile 
-     * dönüs yaptirilir. */
-     
- return new Promise((resolve, reject) => { 
-     wortObj.lang_TR ='return... @gApi'
-     resolve(true)
-     })
+  /**
+   *  Api limiti icin sonraki islemlere gecmeden
+   * resolve(true) ile
+   * dönüs yaptirilir. */
 
-    /*   
-     * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
-     * fetch islemi yapilabilir...
-     * 
-     * 
-     * */
-   
-     
+  return new Promise((resolve, reject) => {
+    wortObj.lang_TR = "return... @gApi";
+    resolve(true);
+  });
+
+  /*
+   * gelistirme bittikten sonra bu kod kaldirilarak normal sekilde
+   * fetch islemi yapilabilir...
+   *
+   *
+   * */
 
   let key = await gapiKey(wortObj);
   return new Promise((resolve, reject) => {
@@ -126,8 +124,9 @@ async function gapiTranslate(wortObj) {
               ) + " @gApi"; //@gApi ile ceviri olarak eklendigi bildirilir...
             resolve(true); //ceviri basarili sekilde yapildi...
           }
-        }).catch((error) => {
-          reject (error);//hata alinmasi halinde bu reject ile dönderilir...
+        })
+        .catch((error) => {
+          reject(error); //hata alinmasi halinde bu reject ile dönderilir...
         });
     } else {
       resolve("apiLimit");
@@ -188,8 +187,8 @@ async function checkStorage() {
 }
 
 async function gapiKeyEnd(wort) {
-  msg.console(
-    msg.msgTyp.warning,
+  newMsg(
+    2,
     `API Limit | ${wort}`,
     `Bu kelime icin translate yapilamadi! m:lang*.js f:gapiKeyEnd`
   );

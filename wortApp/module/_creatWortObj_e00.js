@@ -145,12 +145,14 @@ async function getObject(dcmnt) {
         return;
       });
   } catch (errObj) {
-    msg.console(
-      msg.msgTyp.error,
+    newMsg(
+      3,
       `Error | ${wort}`,
       `m:creatWortObj*.js f:${errObj.fun}`,
       errObj.err
     );
+    //Kritik hata: tüm mesajlar ekrana basilir
+    getAllMsg();
   }
 }
 
@@ -158,11 +160,11 @@ function checkWort(dcmnt) {
   return new Promise((resolve) => {
     wort = dcmnt.querySelector("form>div>input").value;
     doc = dcmnt;
-    if (!checkEl(dcmnt.querySelector("section.rBox"))){
-      byController.notFound=true //bu obje wortObjsArr eklenmemesi icin 
+    if (!checkEl(dcmnt.querySelector("section.rBox"))) {
+      byController.notFound = true; //bu obje wortObjsArr eklenmemesi icin
       throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
     }
-     resolve();
+    resolve();
   });
 }
 
@@ -303,7 +305,6 @@ function setFall() {
               newWortObj.fall[f] = n.innerText;
             } else {
               if (f == "wechsel") {
-                //console.log(Object.values(newWortObj.fall[f]))
                 Object.values(newWortObj.fall[f]).forEach((w) => {
                   if (tit.includes(w)) {
                     subFall = subFall + n.innerText + " ";
