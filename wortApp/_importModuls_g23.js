@@ -55,7 +55,7 @@ const get_Image=async()=>{
 
 const finish = async()=>{
   delete byController.image
-  clearInterval.console()
+  console.clear()
   msg.allPrint()
   //sonuclar ekrana basilir...
   wortObjsArr.forEach(w=>{
