@@ -150,6 +150,7 @@ function setItems() {
   //mesaj bildirim islemlerine dair
   const getAllMsg = () => {
     //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
+    if (msgContainer.length < 1) return;
     msgContainer.sort();
     msgContainer.forEach((msg) => {
       console.msg(msg[0], msg[1], msg[2], msg[3]);
@@ -175,7 +176,7 @@ function setItems() {
   window.newMsg = newMsg;
   window.msgContainer = msgContainer;
   //console mesaj yazdirmak icin dogrudan msg methodu eklenir console global fonksiyonunun altina_________
-  window.console.msg = (msgTyp, head, text, add = "") => {
+  window.console.msg = (msgTyp, head, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
     (this.style = {
       head: [
