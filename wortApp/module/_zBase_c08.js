@@ -168,22 +168,21 @@ function setItems() {
   };
   const printMsg = (msgTyp, head, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
-    this.style = {
-      head: [
+    this.head=[
         "background: DodgerBlue;", //primary
         "background: Green;", //successful
         "background: DarkGoldenRod;", //warning
         "background: Red;", //error
-      ],
-      body: [
+      ];
+    this.body=[
         "color: DeepSkyBlue;",
         "color: LimeGreen;",
         "color:DarkGoldenRod;",
         "color: Red;",
-      ],
-    };
-    this.headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;
-    this.bodyStyle = this.style.body[msgTyp];
+      ];
+
+    this.headStyle = `${this.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;
+    this.bodyStyle = this.body[msgTyp];
 
     console.log(`%c ${head} %c ${text}`, this.headStyle, this.bodyStyle);
     if (!!add)
