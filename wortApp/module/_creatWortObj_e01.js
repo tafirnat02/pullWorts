@@ -152,7 +152,6 @@ async function getObject(dcmnt) {
       errObj.err
     );
     //Kritik hata: tüm mesajlar ekrana basilir
-    getAllMsg();
   }
 }
 

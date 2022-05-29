@@ -4,13 +4,13 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 /**  --- import edilen ögeler --- */
 
-import { baseFun } from "./module/_zBase_c02.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-import { getWorteList } from "./module/_wortList_c00.js"; //kullanilacak kelimleri alir
+import { runApp } from "./module/_creatWortObj_e00.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getDoc } from "./module/_documents_b00.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import { runApp } from "./module/_creatWortObj_e00.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
 import {getImg} from "./module/_img_b00.js" //image islemlerini yapar
+import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
+import { baseFun } from "./module/_zBase_c02.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { getWorteList } from "./module/_wortList_c00.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
  
 const loadBase = async () => {
