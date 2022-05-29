@@ -55,6 +55,7 @@ const get_Image=async()=>{
 
 const finish = async()=>{
   delete byController.image
+  getAllMsg()
   console.log(wortObjsArr)
 }
 
