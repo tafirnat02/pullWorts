@@ -185,17 +185,17 @@ function setItems() {
     allPrint: function () {
       if (this.container.length < 1) return;
       this.container.sort();
-      console.group("%c Islem Raporu:", this.style.title(1));
-      this.container.forEach((msg) => {
-        let msgTyp, title, text, add;
-        [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
-        this.print(msgTyp, title, text, add);
-      });
-      console.groupEnd();
+      this.group(0,'Rapor','Isleme dair aciklamalar:')
+        this.container.forEach((msg) => {
+          let msgTyp, title, text, add;
+          [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
+          this.print(msgTyp, title, text, add);
+        });
+      this.group();
       this.container.length = 0;
     },
     group: function (typ = "", title = "", text = "", collapsed = true) {
-      if (!!typ) {
+      if (typ==="") {
         console.groupEnd();
         return;
       }

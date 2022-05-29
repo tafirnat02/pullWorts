@@ -9,7 +9,7 @@ import { getDoc } from "./module/_documents_b02.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b02.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c11.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_c12.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_c00.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
  
@@ -58,10 +58,13 @@ const finish = async()=>{
   msg.allPrint()
   //sonuclar ekrana basilir...
   wortObjsArr.forEach(w=>{
-    msg.group(1,w.wrt.wort,'kelimesi icin alinan sonuclar:')
+    let result=  new Promise((resolve) => {
+      msg.group(1,w.wrt.wort,' kelimesi icin alinan sonuclar:')
       console.log(JSON.stringify(w))
       console.dir(w)
-    msg.group()
+      resolve();
+     });
+     result.then(msg.group())
 })
 }
 
