@@ -120,28 +120,13 @@ const searchImg = async () => {
       switch (response.status) {
         case 200:
           return response.text();
-          break;
         case 429:
-          throw 429;
-          break;
+          throw 429; //break;
         case 503:
-          throw 503;
-          break;
+          throw 503; //break;
         default:
-          throw response;
-          break;
+          throw response; //break;
       }
-      /*
-      if (response.status === 200) {
-        return response.text();
-      } else if (response.status === 429) {
-        throw 429;
-      } else if (response.status === 503) {
-        throw 503;
-      } else {
-        throw response;
-      }
-      */
     }) // or .json()
     .then((response) => {
       return JSON.parse(response);
@@ -218,10 +203,7 @@ const searchImg = async () => {
 
   //sirali halde fonksiyonlar isleme alinir...
   async function nextCse() {
-    if (cse === null){
-      msg.allPrint()
-      return; //uygulamadan cikilir...
-    } 
+    if (cse === null) return; //uygulamadan cikilir...
     await setObj();
     searchImg();
   }
