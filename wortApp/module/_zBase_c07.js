@@ -147,28 +147,28 @@ function setItems() {
     },
   };
 
- /**** mesaj bildirim islemlerine dair ****/
- //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
- const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
-//gelen mesajlari msgContainer'a aktarilmasi
+  /**** mesaj bildirim islemlerine dair ****/
+  //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
+  const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
+  //gelen mesajlari msgContainer'a aktarilmasi
   const msg = (msgTyp, head, text, add = "") => {
     //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
     let msgArr = [msgTyp, head, text, add];
     msgContainer.push(msgArr);
   };
 
- //alinan mesajlarin ekrana bastirilmasi
- const getAllMsg = () => {
-  //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
-  if (msgContainer.length < 1) return;
-  msgContainer.sort();
-  msgContainer.forEach((msg) => {
-    printMsg(msg[0], msg[1], msg[2], msg[3]);
-  });
-};
+  //alinan mesajlarin ekrana bastirilmasi
+  const getAllMsg = () => {
+    //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
+    if (msgContainer.length < 1) return;
+    msgContainer.sort();
+    msgContainer.forEach((msg) => {
+      printMsg(msg[0], msg[1], msg[2], msg[3]);
+    });
+  };
   const printMsg = (msgTyp, head, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
-    (this.style = {
+    this.style = {
       head: [
         "background: DodgerBlue;", //primary
         "background: Green;", //successful
@@ -181,9 +181,9 @@ function setItems() {
         "color:DarkGoldenRod;",
         "color: Red;",
       ],
-    }),
-      (this.headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`),
-      (this.bodyStyle = this.style.body[msgTyp]);
+    };
+    this.headStyle = `${this.style.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;
+    this.bodyStyle = this.style.body[msgTyp];
 
     console.log(`%c ${head} %c ${text}`, this.headStyle, this.bodyStyle);
     if (!!add)
@@ -202,7 +202,7 @@ function setItems() {
   window.msgContainer = msgContainer;
   window.msg = msg;
   window.getAllMsg = getAllMsg;
-  window.printMsg=printMsg;
+  window.printMsg = printMsg;
   //
   return true;
 } //setValues icinde olmali tüm ögeler....
