@@ -3,7 +3,6 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 */
 
 /**  --- import edilen ögeler --- */
-
 import { runApp } from "./module/_creatWortObj_e07.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getDoc } from "./module/_documents_b02.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
@@ -74,44 +73,7 @@ await loadBase()
   .catch((err) => {
     console.log(err, "m:getModuls, p:loadBase.then()");
   });
-
-/*  
-yapilacaklar
-
-% ilerleyisini runBar.set(); ile göster
-ilerleyis esnasinda 
-kritik olmayan, beklenen ve kontrollü hatalari bir objeye msg.console nesnesi olarak tutulmali, daha sonra
-ilerleme durumu gösterildikten sonra 
-uygulama bitti denilsin, sonuclar gosterilmeden önce varsa alinan hatalar ekrana basilsin
-Ör: notWort hatasi
-    gapiLimit hatasi
-    imageApi hatasi gibi
-    kontrollü hatalar...
-  ancak kritik olan hatalar icin zaten uygulama devam etmemeli ve bu hata gösterilmeli hemen ardindan
-    ör: wort list alinamiyor ise,
-        fetch islemlerinde bir hata varsa vs...
   
-  sadece image kismi kaldi... bunun ilerleyisi de 
-  oluturulan wortObj in forEach ile alinip
-  tüm kelimler teker teker sorgulanmali 
-  sorgu kimina da %de eklenmeli
-
-  % ilerleyisi:
-
-       ->giris yapildi
-        %0  (index no 5 without runApp)
-       ▱▱▱▱▱▱▱▱▱▱
-      doc islemleri
-        %10-%40  (index no 5)
-       ▰▰▰▰▱▱▱▱▱▱
-       lang_TR islemleri
-       %50-%70   (index no 8)
-       ▰▰▰▰▰▰▰▱▱▱
-       lang_TR islemleri 
-       %80-%100  (index no 10)
-       ▰▰▰▰▰▰▰▰▰▰
-*/
-
 /*
 Dizin Yapisi:
 📂
