@@ -151,9 +151,9 @@ function setItems() {
   //kritik bir hata degilse mesajlar bir dizi olarak msgContainer dizininde tutulur
   const msgContainer = []; //msg'lari uygulama sonunda göstermesi icin önce burada dizin ögesi olarak tutulur.
   //gelen mesajlari msgContainer'a aktarilmasi
-  const msg = (msgTyp, head, text, add = "") => {
+  const msg = (msgTyp, title, text, add = "") => {
     //islem sonunda gösterimi yapilacak mesajlari msg-container dizinine aktarir
-    let msgArr = [msgTyp, head, text, add];
+    let msgArr = [msgTyp, title, text, add];
     msgContainer.push(msgArr);
   };
 
@@ -166,7 +166,7 @@ function setItems() {
       printMsg(msg[0], msg[1], msg[2], msg[3]);
     });
   };
-  const printMsg = (msgTyp, head, text, add) => {
+  const printMsg = (msgTyp, title, text, add) => {
     //types => primary: 0, successful: 1, warning: 2, error: 3,
     this.head=[
         "background: DodgerBlue;", //primary
@@ -184,7 +184,7 @@ function setItems() {
     this.headStyle = `${this.head[msgTyp]} font-size: 12px; font-weight: bold; padding: 3px 5px; border-radius: 5px;`;
     this.bodyStyle = this.body[msgTyp];
 
-    console.log(`%c ${head} %c ${text}`, this.headStyle, this.bodyStyle);
+    console.log(`%c ${title} %c ${text}`, this.headStyle, this.bodyStyle);
     if (!!add)
       console[msgTyp == 3 ? "error" : msgTyp == 2 ? "warn" : "info"](add);
 
