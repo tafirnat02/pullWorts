@@ -4,7 +4,7 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 /**  --- import edilen ögeler --- */
 
-import { runApp } from "./module/_creatWortObj_e00.js"; //HTML'den wort nesnesinin icerigini toplar
+import { runApp } from "./module/_creatWortObj_e02.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getDoc } from "./module/_documents_b00.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b00.js" //image islemlerini yapar

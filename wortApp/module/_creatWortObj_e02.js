@@ -145,6 +145,7 @@ async function getObject(dcmnt) {
         return;
       });
   } catch (errObj) {
+    debugger
     newMsg(
       3,
       `Error | ${wort}`,
