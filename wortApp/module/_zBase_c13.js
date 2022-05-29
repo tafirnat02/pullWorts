@@ -185,7 +185,8 @@ function setItems() {
     allPrint: function () {
       if (this.container.length < 1) return;
       this.container.sort();
-      this.group(0,'Rapor','Isleme dair aciklamalar:')
+      //islem kayit sonuclari gruplu(false=>acik) olarak gösterilir
+      this.group(0,'Rapor','Isleme dair aciklamalar:',false)
         this.container.forEach((msg) => {
           let msgTyp, title, text, add;
           [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
