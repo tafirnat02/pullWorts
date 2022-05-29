@@ -149,6 +149,7 @@ function setItems() {
 
   //mesaj bildirim islemlerine dair
   const getAllMsg = () => {
+    debugger
     //msgContainer dizininde tutulan tüm mesaj icerigini ekrana basar...
     if (msgContainer.length < 1) return;
     msgContainer.sort();
