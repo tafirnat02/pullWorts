@@ -44,8 +44,8 @@ async function getWorteList() {
     .catch((err) => {
       if (err !== 404) {
        msg.print(1,
-          'Kelieme Listesi'
-          `Kelime listesi alinirken hata meydana geldi!.. (m:wortList, f:getWorteList > checkfile)`,
+          `Kelieme Listesi`,
+          `Kelime listesi alinirken hata meydana geldi!... (m:wortList, f:getWorteList > checkfile)\n${url_worteList}`,
           err
         );
         msg.allPrint()
