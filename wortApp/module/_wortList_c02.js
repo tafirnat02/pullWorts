@@ -43,12 +43,12 @@ async function getWorteList() {
       })
     .catch((err) => {
       if (err !== 404) {
-       newMsg(1,
+       msg.print(1,
           'Kelieme Listesi'
           `Kelime listesi alinirken hata meydana geldi!.. (m:wortList, f:getWorteList > checkfile)`,
           err
         );
-        getAllMsg()
+        msg.allPrint()
       }
     });
 }
