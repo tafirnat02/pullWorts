@@ -9,10 +9,7 @@ console.clear();
 console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
 
 //modulleri import icin dosya kontrolü yapilir...
-if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
-  () => {
-    return false;
-  }; 
+if (!checkFile(url_importModuls))() => {return false;}; 
 
 //sayfada yüklü olup olmadigi kontrol edilir
 if (
@@ -32,6 +29,7 @@ let head_ = document.querySelector("head");
 head_.insertBefore(scrpt, head_.lastChild);
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
 async function checkFile(url, pos = "") {
+  pos=!!pos?pos:'m:appStarter, f:checkFile)';
   urlChecker.url = false; //obje degeri default hale getirilir...
   await fetch(url)
     .then((response) => {
@@ -39,6 +37,12 @@ async function checkFile(url, pos = "") {
       urlChecker.url = true;
     }) //url erisilebilir ise urlChecker.url nesnesine true atanir...
     .catch((err) => {
+      let txt_404 = ['warn',`Dosya konumu hatali! Url'yi kontrol edin. ${pos}\n${url}`],
+      txt_e=['error',`Hata meydana geldi! ${pos}`],
+      txt = err===404?txt_404:txt_e;
+      window.console[txt[0]](txt[1],err) 
+    });
+/*
       if (err === 404) {
         console.log(
           `Hatali dosya konumu! Url'yi kontrol edin. ${pos}\n${url}`,
@@ -47,7 +51,9 @@ async function checkFile(url, pos = "") {
       } else {
         console.log("Hata meydana geldi! (m:appStarter, f:checkFile)", err);
       }
-    });
+     */ 
+   
+    
 }
 /*
 Dizin Yapisi:

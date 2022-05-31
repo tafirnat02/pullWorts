@@ -13,11 +13,10 @@ server hatasinda kalinan sayiyi storage e aktararak oradan baslatilabilir.....
  */
 
 const urlChecker = { url: undefined };
-window.checkFile = checkFile;
 //ilgili urldeki js kodu sayfanin head kismina eklenir....
-const url_getModuls =
-  "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a65.js";
-if (checkFile(url_getModuls,'m:appStarter, f:-')) {
+const url_getModuls ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/getModuls_a65.js";
+
+if (checkFile(url_getModuls)) {
   let script = document.createElement("script");
   script.type = "text/javascript";
   script.src = url_getModuls;
@@ -27,6 +26,36 @@ if (checkFile(url_getModuls,'m:appStarter, f:-')) {
   let head = document.querySelector("head");
   head.insertBefore(script, head.firstChild);
 }
+
+/* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
+//islem sonrasi kontrol icin sonuc url eslestirilerek bu nesneden check edilir.
+async function checkFile(url, pos = "") {
+  pos=!!pos?pos:'m:appStarter, f:checkFile)';
+  urlChecker.url = false; //obje degeri default hale getirilir...
+  await fetch(url)
+    .then((response) => {
+      if (response.status === 404) throw 404;
+      urlChecker.url = true; //url erisilebilir...
+    })
+    .catch((err) => {
+      let txt404 = ['warn',`Dosya konumu hatali! url'yi kontrol edin. ${pos}\n${url}`],
+          txte=['error',`Hata meydana geldi! ${pos}`],
+          txt = err===404?txt404:txte;
+      window.console[txt[0]](txt[1],'(m:appStarter, f:checkFile)',err)
+
+      /*
+      if (err === 404) {
+        console.warn(
+          `Dosya konumu hatali! url'yi kontrol edin ${pos}.\n${url}`,
+          err
+        );
+      } else {
+        console.error("Hata meydana geldi! (m:appStarter, f:checkFile)", err);
+      }
+      */
+    });
+}
+
 
 /*
 Dizin Yapisi:
@@ -44,27 +73,3 @@ Dizin Yapisi:
     |_📇_zBase_*.js             ./module/_zBase_*.js
     |_📇wortList.json           ./module/wortList.json    
 */
-
-/* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
-//islem sonrasi kontrol icin sonuc url eslestirilerek bu nesneden check edilir.
-
-async function checkFile(url, pos = "") {
-  urlChecker.url = false; //obje degeri default hale getirilir...
-  await fetch(url)
-    .then((response) => {
-      if (response.status === 404) throw 404;
-      urlChecker.url = true; //url erisilebilir...
-    })
-    .catch((err) => {
-      if (err === 404) {
-        console.log(
-          `Dosya konumu hatali! url'yi kontrol edin ${pos}.\n${url}`,
-          err
-        );
-      } else {
-        console.log("Hata meydana geldi! (m:appStarter, f:checkFile)", err);
-      }
-    });
-}
-
-
