@@ -8,7 +8,7 @@ export { getWorteList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWorteList() {
-  if(typeof worteList !== 'undefined') return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  if(cloneWortList.lenght<1) return true//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
   const url_worteList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
@@ -26,7 +26,7 @@ async function getWorteList() {
     .then(
       //dosya konumu teyit edildikten sonra asycn() ile dosyadan veri alinir...
       async () => {
-        const worteList = [];
+       // const worteList = [];
         await fetch(url_worteList)
           .then((response) => {
             return response.text();
@@ -36,7 +36,8 @@ async function getWorteList() {
           })
           .then((response) => {
             worteList.push(...response);
-            window.worteList = worteList
+            cloneWortList.push(worteList)
+            //window.worteList = worteList
             return worteList
           });
       })

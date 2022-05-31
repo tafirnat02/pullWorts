@@ -3,22 +3,50 @@ wortList=['keliem','girisi','yapilmali'] // dizinine kelime(ler) girisi sonrasi 
 */
 
 const urlChecker = { url: undefined }, //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
-url_importModuls ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_i00.js";
+  url_importModuls ="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_i01.js";
 
-if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))() => {return false;}; //dosya yoksa cikis yapilir
+console.clear();
+console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
+
+//modulleri import icin dosya kontrolü yapilir...
+if (!checkFile(url_importModuls, "m:getModuls, f:importModuls"))
+  () => {
+    return false;
+  }; 
+
 //sayfada yüklü olup olmadigi kontrol edilir
-if (!!document.querySelector(`script[type="module"][src="${url_importModuls}"]`))() => {starter.call(); }; //yüklenmis ise sonraki islemler isin starter() cagrilir...
+if (
+  !!document.querySelector(`script[type="module"][src="${url_importModuls}"]`)
+)
+  () => {
+    starter.call();//yüklenmis ise sonraki islemler isin starter() cagrilir...
+    return
+  }; 
+
 //sayfada olmadiginda, url kontrol edilir ve moduller sayfaya aktarilir
-let scrpt = document.createElement("script");scrpt.type = "module";scrpt.src = url_importModuls;document.head.appendChild(scrpt);let head_ = document.querySelector("head");head_.insertBefore(scrpt, head_.lastChild);
-console.clear();console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
+let scrpt = document.createElement("script");
+scrpt.type = "module";
+scrpt.src = url_importModuls;
+document.head.appendChild(scrpt);
+let head_ = document.querySelector("head");
+head_.insertBefore(scrpt, head_.lastChild);
 /* --- cdn dosya yolunun gecerli olup olmadigini kontrol eder --- */
 async function checkFile(url, pos = "") {
   urlChecker.url = false; //obje degeri default hale getirilir...
   await fetch(url)
-    .then((response) => {if (response.status === 404) throw 404;urlChecker.url = true;}) //url erisilebilir ise urlChecker.url nesnesine true atanir...
+    .then((response) => {
+      if (response.status === 404) throw 404;
+      urlChecker.url = true;
+    }) //url erisilebilir ise urlChecker.url nesnesine true atanir...
     .catch((err) => {
-      if (err === 404) {console.log(`Hatali dosya konumu! Url'yi kontrol edin. ${pos}\n${url}`, err );}
-      else {console.log("Hata meydana geldi! (m:appStarter, f:checkFile)", err); }
+      if (err === 404) {
+        console.log(
+          `Hatali dosya konumu! Url'yi kontrol edin. ${pos}\n${url}`,
+          err
+        );
+      } else {
+        console.log("Hata meydana geldi! (m:appStarter, f:checkFile)", err);
+      }
     });
 }
 /*
