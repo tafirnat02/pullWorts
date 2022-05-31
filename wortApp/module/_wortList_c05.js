@@ -35,7 +35,8 @@ async function getWorteList() {
           })
           .then((response) => {
             worteList.push(...response);
-            cloneWortList =worteList;
+            cloneWortList.lenght=0
+            cloneWortList.push(worteList)
             byController.wortList=true
             return
           });
