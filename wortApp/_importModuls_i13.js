@@ -15,7 +15,7 @@ import { baseFun } from "./module/_zBase_c16.js"; //bu bir dizin altindaki tüm 
 import { getWorteList } from "./module/_wortList_c05.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
 
-const maxTime = worteList.length<5?1500:300*worteList.length
+var maxTime=1500
 
 const loadBase = async () => {
   return new Promise((resolve, reject) => {
@@ -36,8 +36,9 @@ const _worteList = async () => {
 
 const getHTMLdoc = async () => {
   delete byController.wortList
+  maxTime = worteList.length < 5 ? maxTime : 300*worteList.length
   getDoc();
-  item.search("HTMLdocs", item.typ.variabel, wortObj);
+  item.search("HTMLdocs", item.typ.variabel, wortObj,maxTime);
 };
 
 const wortObj = async () => {
