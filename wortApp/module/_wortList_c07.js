@@ -8,8 +8,7 @@ export { getWorteList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWorteList() {
-  debugger
-  if(worteList.lenght>0) return//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  if(worteList.length>0) return//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
   const url_worteList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
@@ -36,7 +35,7 @@ async function getWorteList() {
           })
           .then((response) => {
             worteList.push(...response);
-            cloneWortList.lenght=0
+            cloneWortList.length=0
             cloneWortList.push(worteList)
             byController.wortList=true
             return
