@@ -12,7 +12,7 @@ import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alin
 import {getImg} from "./module/_img_b02.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
 import { baseFun } from "./module/_zBase_c13.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-import { getWorteList } from "./module/_wortList_c04.js"; //kullanilacak kelimleri alir
+import { getWorteList } from "./module/_wortList_c05.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
  
 const loadBase = async () => {
