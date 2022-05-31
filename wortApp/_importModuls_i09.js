@@ -11,10 +11,12 @@ import { getDoc } from "./module/_documents_b03.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b02.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c13.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_c14.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_c05.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
- 
+
+const maxTime = worteList.length<5?1500:300*worteList.length
+
 const loadBase = async () => {
   return new Promise((resolve, reject) => {
     baseFun();
@@ -29,7 +31,7 @@ const loadBase = async () => {
 
 const _worteList = async () => {
   getWorteList();
-  item.search("byController.wortList", item.typ.variabel, getHTMLdoc);
+  item.search("byController.wortList", item.typ.variabel, getHTMLdoc,maxTime);
 };
 
 const getHTMLdoc = async () => {
@@ -40,20 +42,20 @@ const getHTMLdoc = async () => {
 
 const wortObj = async () => {
   getWortObject(runApp);
-  item.search("byController.worts", item.typ.variabel, get_langTR);
+  item.search("byController.worts", item.typ.variabel, get_langTR,maxTime);
 };
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
   delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
   getLang(); //Türkce karsiligi...
-  item.search("byController.trLang", item.typ.variabel, get_Image);
+  item.search("byController.trLang", item.typ.variabel, get_Image,maxTime);
 };
 
 const get_Image=async()=>{
   delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
   getImg() //görseller alinir...
-  item.search("byController.image", item.typ.variabel, finish);
+  item.search("byController.image", item.typ.variabel, finish,maxTime);
 }
 
 const finish = async()=>{

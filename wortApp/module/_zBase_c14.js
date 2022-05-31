@@ -63,11 +63,11 @@ function setItems() {
       string_itemName, //ilgili ögenin adi string olarak girilmeli...
       typ,
       callback = "",
-      duration = 100,
-      maxDuration = 3000
+      maxDuration = 3000,
+      duration = 100
     ) {
       if (typeof string_itemName !== "string")
-        throw `Hata: Aranilan öge sitrin olarak girilmeli. (m:Base.js, o:item.search()) \n${string_itemName}`;
+        throw `Hata: Aranilan öge "string" olarak girilmeli. (m:Base.js, o:item.search()) \n${string_itemName}`;
 
       let clear;
       //döngüsel zaman atanir
@@ -98,7 +98,7 @@ function setItems() {
           console.log(
             `Süre Asimi: "${string_itemName}" adli ${
               Object.keys(item.typ)[typ]
-            } erisilebilir degil!  Baglantilari ziyaret ederek check et.(f:intervalApp-clearInt)`
+            } erisilebilir degil!(f:intervalApp-clearInt) - Süre:${maxDuration}ms`
           );
           return false;
         }
@@ -217,11 +217,5 @@ function setItems() {
   window.item = item;
   window.storage = storage;
   window.msg = msg;
-  /*
-  window.msgContainer = msgContainer;
-  window.getAllMsg = getAllMsg;
-  window.printMsg = printMsg;
-  */
-  //
   return true;
 } //setValues icinde olmali tüm ögeler....
