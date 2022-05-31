@@ -95,7 +95,6 @@ function setItems() {
       //max time sonrasi cikilir
       const clearInt = setTimeout(() => {
         if (!clear) {
-          debugger
           console.log(
             `Süre Asimi: "${string_itemName}" adli ${
               Object.keys(item.typ)[typ]
