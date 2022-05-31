@@ -55,6 +55,10 @@ async function getWorteList() {
 }
 
 function finis(){
+  if(typeof cloneWortList === 'undefined') {
+    const cloneWortList=[]
+    window.cloneWortList=cloneWortList
+  }
   cloneWortList.length=0
   cloneWortList.push(worteList)
   byController.wortList=true
