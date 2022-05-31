@@ -8,7 +8,10 @@ export { getWorteList };
 
 /*-------- Modul Default Olarak Disa Aktarimi ---------*/
 async function getWorteList() {
-  if(worteList.length>0) return//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  if(worteList.length>0){
+    finis()
+    return//eger daha önce tanimlanmis ise bu durumda tekrar atanmaz.
+  } 
   //app baslatilmadan önce manuel olarak da wortList=[] nesnesi girilebilir böylece...
   const url_worteList =
     "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/module/wortList.json";
@@ -35,9 +38,7 @@ async function getWorteList() {
           })
           .then((response) => {
             worteList.push(...response);
-            cloneWortList.length=0
-            cloneWortList.push(worteList)
-            byController.wortList=true
+            finis()
             return
           });
       })
@@ -51,4 +52,10 @@ async function getWorteList() {
         msg.allPrint()
       }
     });
+}
+
+function finis(){
+  cloneWortList.length=0
+  cloneWortList.push(worteList)
+  byController.wortList=true
 }
