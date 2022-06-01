@@ -111,8 +111,7 @@ const setObj = async (wObj) => {
 };
 
 const searchImg = async () => {
-  let cse,
-    currentWort = wortObjsArr[index].wrt.wort;
+  let currentWort = wortObjsArr[index].wrt.wort;
   //url olusturulduktan sonra siradaki opsiyona gore alternatif sorgu icin qW'daki secim degistirlir:
   api.cse++;
   await fetch(url)
@@ -138,7 +137,6 @@ const searchImg = async () => {
         //aramada sonuc bulunamaz ise sonraki opsiyon qW kelimesine göre alama yapilir
         nextCse();
       } else {
-        cse = null; //cikis yapilir
         throw "noImage";
       }
     })
@@ -148,7 +146,7 @@ const searchImg = async () => {
       });
     })
     .then(() => {
-      if (imgArr.length >= 6 || api.cse > 2) cse = null; //cikis yapilir
+      if (imgArr.length >= 6 || api.cse > 2) api.finish = true; //cikis yapilir
       //eger yeteri kadar sonuc yok ise sonraki qWorte göre aeama yapilir.
       nextCse();
     })
@@ -185,7 +183,6 @@ const searchImg = async () => {
               `${txt[0]} | ${currentWort}`,
               `${txt[1]} (f:getImg-searchImg)`
             );
-            cse = null; //cikis yapilir
           }
           break;
         default: // diger hatalar
@@ -196,14 +193,13 @@ const searchImg = async () => {
             `Görsel alinirken hata olustu! (f:getImg-searchImg) ${url}`,
             err
           );
-          cse = null;
           break;
       }
     });
 
   //sirali halde fonksiyonlar isleme alinir...
   async function nextCse() {
-    if (cse === null) return; //uygulamadan cikilir...
+    if (api.finish) return; //uygulamadan cikilir...
     await setObj();
     searchImg();
   }
