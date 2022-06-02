@@ -17,8 +17,8 @@ import { getDoc } from "./module/_documents_b04.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b03.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c16.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
+import { baseFun } from "./module/_zBase_c17.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import sonrasi ilgili ögeler yürütülür...
 
 var maxTime=1500
