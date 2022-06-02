@@ -55,11 +55,7 @@ async function getWorteList() {
 }
 
 function finis(){
-  if(typeof cloneWortList === 'undefined') {
-    const cloneWortList=[]
-    window.cloneWortList=cloneWortList
-  }
-  cloneWortList.length=0
-  cloneWortList.push(worteList)
+  //son alinan kelime listesi local storagede karsilastirmak (1 saat icin) üzere tutulur...
+  storage.set('lastWortList',worteList,2)
   byController.wortList=true
 }

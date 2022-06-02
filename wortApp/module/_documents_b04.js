@@ -8,12 +8,12 @@ const getDoc = async () => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var max = worteList.length,
     strt = 0;
-  if (storage.get("wortList") !== null) {
+  if (storage.get("wortList")) {
     if (
       new Date(storage.get("wortList").date) > new Date() &&
-      storage.get("wortList").index !== null
+      storage.get("wortList").value !== null
     )
-      strt = storage.get("wortList").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+      strt = storage.get("wortList").value; //eger storagede tutulan bir deger varsa buradan devam edilir...
   }
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt, max)];
@@ -60,7 +60,7 @@ const getDoc = async () => {
         );
 
         //localStorage islemleri
-        storage.set("wortList", strt, 5); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
+        storage.set("wortList", strt, 1); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
         finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
       });
   };

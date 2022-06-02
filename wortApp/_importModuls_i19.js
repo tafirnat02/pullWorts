@@ -3,16 +3,22 @@ Kullanilacak tüm ögeler ilgili modul icinden export islemi sonrasi burada impo
 
 son kontrol:
 genetiv kismini tam olarak alinmali....
+
+storage yapisi icine tarih kontrolü konuldu
+buna göre gecxen yerler düzeltilmeli
+storage.get geriye key varsa localde tutulan objeyi yoksa false döndermekte
+
+clone array localde tutulacak....
 */
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e07.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b03.js"; //document/HTML dizin olarak ham verileri tutar
+import { getDoc } from "./module/_documents_b04.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b03.js" //image islemlerini yapar
-import { getLang } from "./module/_lang_b00.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c15.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-import { getWorteList } from "./module/_wortList_c09.js"; //kullanilacak kelimleri alir
+import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
+import { baseFun } from "./module/_zBase_c16.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
 
 var maxTime=1500

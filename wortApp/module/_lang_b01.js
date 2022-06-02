@@ -157,7 +157,8 @@ async function gapiKey(wortObj) {
       let keyIndex = 0;
       //öncelikle localStorage'de aon 24 saatte kullanilan bir index var mi kontrol edilir yoksa 0 gönderilir...
       if (localStorage) {
-        keyIndex = storage.get("gapiLang").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+          gapiAllLimit = true; //sonraki kelimler icinde limit sebebiyle translate islemi yapilmaz....
+        keyIndex = localStorage.value  /// storage.get("gapiLang").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
         if (keyIndex >= gapi.length) {
           gapiAllLimit = true; //sonraki kelimler icinde limit sebebiyle translate islemi yapilmaz....
           resolve();
@@ -175,19 +176,12 @@ async function gapiKey(wortObj) {
 async function checkStorage() {
   //localStorage'de gapiLang var mi kontrol edilir, var ve bir index no iceriyorsa bu degeri, yoksa false döner
   return new Promise((resolve, reject) => {
-    if (storage.get("gapiLang") !== null) {
-      if (
-        new Date(storage.get("gapiLang").date) > new Date() &&
-        storage.get("gapiLang").index !== null
-      )
-        resolve(true);
-    }
-    resolve(false); //yok veya index no bulunmaz veya 24 saatte eski ise false döner...
+    resolve(storage.get("gapiLang")); //yok veya index no bulunmaz veya 24 saatte eski ise false döner...
   });
 }
 
 async function gapiKeyEnd(wort) {
-  newMsg(
+  msg.add(
     2,
     `API Limit | ${wort}`,
     `Bu kelime icin translate yapilamadi! m:lang*.js f:gapiKeyEnd`

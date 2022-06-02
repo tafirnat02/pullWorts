@@ -123,18 +123,23 @@ function setItems() {
   const storage = {
     obj: {
       name: null,
-      index: null,
+      value: null,
       date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
+      //ör:   new Date(storage.get("gapiLang").date) > new Date()
     },
-    set: function (name, index, hour = 5) {
+    set: function (name, value, hour=5) {
       this.obj.name = `@ri5: ${name}`;
-      this.obj.index = index;
+      this.obj.value = value;
       this.addHour(hour);
       //olusturulan nesne local storagee aktarilir
       window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
     },
     get: function (name) {
-      return JSON.parse(window.localStorage.getItem(`@ri5: ${name}`));
+      let localObj = JSON.parse(window.localStorage.getItem(`@ri5: ${name}`))
+      if(!localObj) return false 
+      if(new Date(localObj.date) > new Date())  return localObj;// key ve tarih gecerli ise geriye obje dönderilir...
+      this.remove(name)//tarih güncel olmadiginda lokaldeki obje kaldrilir.
+      return false; 
     },
     remove: function (name) {
       window.localStorage.removeItem(`@ri5: ${name}`);
@@ -142,7 +147,7 @@ function setItems() {
     addHour: function (hour) {
       //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
       this.obj.date = new Date(
-        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000)
+        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000) // saat >> 
       );
     },
   };
