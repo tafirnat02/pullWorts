@@ -32,7 +32,7 @@ const getDoc = async () => {
       .then(() => {
         strt++;
         if (max == strt) {
-          storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
+          //storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
           finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
           runBar.set(5, strt - 1, max); //%10 durumu...
@@ -60,7 +60,7 @@ const getDoc = async () => {
       });
   };
 
-  nextDoc.call(); //alt fonksiyon cagrilir
+  if (max != strt) nextDoc.call(); //alt fonksiyon cagrilir
 };
 
 const finishDoc = (docsVal) => {
