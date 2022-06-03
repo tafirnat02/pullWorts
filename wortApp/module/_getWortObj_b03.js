@@ -22,7 +22,7 @@ const setDoc = async (callback) => {
 //HTMLdocs dizinindeki tüm ögeler icin setDoc ile islem yapilir
 const docs = async (callback) => {
   console.log(`getWortObj--  len:${len} index:${index}`)
-  if (len >= index){
+  if (index<=len){
     byController.worts = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de worts propertysi olusturulur...
     return true
   }else{
