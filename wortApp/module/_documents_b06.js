@@ -8,10 +8,10 @@ const getDoc = async () => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var max = worteList.length,
     strt = 0;
-  if (storage.get("wortList")) strt = storage.get("wortList").value; //eger storagede tutulan bir deger varsa buradan devam edilir...
+  //if (storage.get("wortList")) strt = storage.get("wortList").value; //eger storagede tutulan bir deger varsa buradan devam edilir...
   
   const HTMLdocuments = [],
-    subWorteList = [...worteList.slice(strt, max)];
+    subWorteList = [...worteList.slice(strt)];
 
   const nextDoc = () => {
     if (subWorteList.length > 0) docHTML(subWorteList.shift());
