@@ -13,8 +13,8 @@ clone array localde tutulacak....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e07.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b04.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_b00.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { getDoc } from "./module/_documents_b05.js"; //document/HTML dizin olarak ham verileri tutar
+import { getWortObject } from "./module/_getWortObj_b01.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b03.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
