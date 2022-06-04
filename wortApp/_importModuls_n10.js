@@ -13,7 +13,7 @@ clone array localde tutulacak....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e07.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b09.js"; //document/HTML dizin olarak ham verileri tutar
+import { getDoc } from "./module/_documents_b10.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b05.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b03.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
@@ -44,10 +44,11 @@ const getHTMLdoc = async () => {
   delete byController.wortList
   maxTime = worteList.length < 5 ? maxTime : 300*worteList.length
   getDoc();
-  item.search("HTMLdocs", item.typ.variabel, wortObj,maxTime);
+  item.search(" byController.docs", item.typ.variabel, wortObj,maxTime);
 };  
 
 const wortObj = async () => {
+  delete byController.docs
   getWortObject(runApp);
   item.search("byController.worts", item.typ.variabel, get_langTR,maxTime);
 };
