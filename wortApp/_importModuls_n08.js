@@ -79,9 +79,8 @@ const finish = async()=>{
      });
      result.then(msg.group())
 })
+window.finish=finish //ayni kelime grubu icin sorgu tekrarinda sonuc ekrana bastirilir sadece...
 }
-//ayni kelimelerin sorgusu icin...
-window.finish=finish //yüklendikten sonraki sorgu islemi balangicina erisim icin globale tasinir... 
 
 await loadBase()
   .then(_worteList())
