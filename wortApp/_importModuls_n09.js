@@ -46,7 +46,7 @@ const getHTMLdoc = async () => {
   getDoc();
   item.search("HTMLdocs", item.typ.variabel, wortObj,maxTime);
 };  
-window.finish=finish //modullerin yüklenmesi sonra farkli kelimeler icin yeni sorgu...    
+
 const wortObj = async () => {
   getWortObject(runApp);
   item.search("byController.worts", item.typ.variabel, get_langTR,maxTime);
@@ -79,8 +79,10 @@ const finish = async()=>{
      });
      result.then(msg.group())
 })
-window.finish=finish //ayni kelime grubu icin sorgu tekrarinda sonuc ekrana bastirilir sadece...
 }
+
+window.getHTMLdoc=getHTMLdoc //modullerin yüklenmesi sonra farkli kelimeler icin yeni sorgu...    
+window.finish=finish //ayni kelime grubu icin sorgu tekrarinda sonuclar ekrana bastirilir sadece...
 
 await loadBase()
   .then(_worteList())
