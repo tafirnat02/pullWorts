@@ -31,11 +31,13 @@ const getDoc = async () => {
       })
       .then(() => {
         strt++;
+        console.log(`strt:${strt} max:${max}`)
         if (max == strt) {
           //storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
           finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
           runBar.set(5, strt - 1, max); //%10 durumu...
+          console.log('docHTML  iceride yürütüldü---')
           nextDoc();
         }
       })
@@ -59,7 +61,7 @@ const getDoc = async () => {
         finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
       });
   };
-
+console.log('docHTML girista yürütüldü---')
   if (max != strt) nextDoc.call(); //alt fonksiyon cagrilir
 };
 
