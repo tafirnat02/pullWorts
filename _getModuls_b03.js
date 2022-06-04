@@ -1,5 +1,5 @@
-const urlChecker = {url:undefined},worteList=['Gemüse', 'Fenster','Tüte'], //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
-url_importModuls="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_g00.js";
+const urlChecker = {url:undefined},worteList=['Gemüse', 'Fenster','Tüte','Auto','Tarif'], //dosya konumu kontrol edilip, moduller sayfaya dahil edilir...
+url_importModuls="https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_n05.js";
 
 newRun.call()
 async function newRun(){
@@ -8,15 +8,17 @@ async function newRun(){
   case true:return //ilk yükleme sebeiyle kod yürütülür, cagrilmasi gerekmez
   case 'notWort':
     console.warn('Consoldan yeni kelime girin!\nIslem yapilacak kelime bulunamadi!');return
-  case false: //
+  case false: //son sorgu tekrarlanmakta
     let istek=  window.confirm('Girilen kelimeler icin islem yapildi!\nIslem tekrarlansin mi?')
     if(!istek){
        console.warn('Kelimeler icin islem tekrarlanmasi iptal edildi.\n',worteList);return
     }
-  }
+    finish()//son alinan wortObj tekrar ekrana basilir...
+  } 
 //modul impoert edilditen sonra wortList degisikliginden dolayi tekrar cagrilir.
  console.log('liste degisti, yeniden cagrilacak...')
  await localStorageControl(true)
+ HTMLdocs.length=0 //doc 
  console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
  getHTMLdoc() 
 }
