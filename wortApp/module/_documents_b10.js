@@ -18,7 +18,6 @@ const getDoc = async () => {
   };
 
   const docHTML = (wort) => {
-    
     let url = `https://www.verbformen.de/?w=${wort}`;
     fetch(url, { mode: "no-cors" })
       .then((response) => {
