@@ -91,6 +91,7 @@ var doc, //alinan sayfa document'i
 
 async function runApp(dcmnt) {
   return new Promise((resolve) => {
+    console.log('m:creatWortObj...')
     getObject(dcmnt).then(() => {
       resolve(newWortObj);
     });
@@ -161,6 +162,7 @@ function checkWort(dcmnt) {
   return new Promise((resolve) => {
     wort = dcmnt.querySelector("form>div>input").value;
     doc = dcmnt;
+    console.log('m:creatWortObj > checkWort: wort ', wort)
     if (!checkEl(dcmnt.querySelector("section.rBox"))) {
       byController.notFound = true; //bu obje wortObjsArr eklenmemesi icin
       throw `Das Wort "${wort}" wurde nicht gefunden! https://www.verbformen.de/?w=${wort}`;
