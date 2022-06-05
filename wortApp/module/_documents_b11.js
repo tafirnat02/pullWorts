@@ -9,7 +9,7 @@ const getDoc = async () => {
   var max = worteList.length,
     strt = 0;
   //if (storage.get("wortList")) strt = storage.get("wortList").value; //eger storagede tutulan bir deger varsa buradan devam edilir...
-  
+
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt)];
 
@@ -59,13 +59,16 @@ const getDoc = async () => {
         finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
       });
   };
- nextDoc.call(); //alt fonksiyon cagrilir
+  nextDoc.call(); //alt fonksiyon cagrilir
 };
 
 const finishDoc = (docsVal) => {
-  const HTMLdocs = docsVal;
-  window.HTMLdocs = HTMLdocs; //alinan ögeler global scope'a HTMLdocs nesnesi olarak aktarilir...
-  window.getDoc=getDoc
-  byController.docs=true
+  if (typeof getDoc === "undefined") window.getDoc = getDoc;
+  if (typeof HTMLdocs === "undefined") {
+    const HTMLdocs = docsVal;
+    window.HTMLdocs = HTMLdocs; //alinan ögeler global scope'a HTMLdocs nesnesi olarak aktarilir...
+  } else {
+    HTMLdocs = docsVal;
+  }
+  byController.docs = true;
 };
-//getDoc.call() //ana fonksiyon cagrilir

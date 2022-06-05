@@ -12,9 +12,9 @@ clone array localde tutulacak....
 */
 
 /**  --- import edilen ögeler --- */
-import { runApp } from "./module/_creatWortObj_e10.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b10.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_b07.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
+import { getDoc } from "./module/_documents_b11.js"; //document/HTML dizin olarak ham verileri tutar
+import { getWortObject } from "./module/_getWortObj_b08.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import {getImg} from "./module/_img_b03.js" //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
@@ -49,15 +49,12 @@ const getHTMLdoc = async () => {
 
 const wortObj = async () => {
   delete byController.docs
-  console.log('m>import... wortObje: yürütülüyor...')
   getWortObject(runApp);
-  console.log('m>import... wortObje:',wortObjsArr)
   item.search("byController.worts", item.typ.variabel, get_langTR,maxTime);
 };
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
-  console.log('import>> getLangTR', byController)
   delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
 getLang(); //Türkce karsiligi...
   item.search("byController.trLang", item.typ.variabel, get_Image,maxTime);

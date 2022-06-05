@@ -15,7 +15,6 @@ const setDoc = async (callback) => {
       delete byController.notFound; //kelime sayfasi bulunamadi ise wortObjsArr dizinine eklenmez.
     }else{
       wortObjsArr.push(obj);
-      console.log('wortObje add>>:',wortObjsArr)
     }
     docs(callback);
   });
