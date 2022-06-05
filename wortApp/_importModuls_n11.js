@@ -48,6 +48,8 @@ const getHTMLdoc = async () => {
 };  
 
 const wortObj = async () => {
+  debugger
+  
   delete byController.docs
   getWortObject(runApp);
   item.search("byController.worts", item.typ.variabel, get_langTR,maxTime);
@@ -56,7 +58,7 @@ const wortObj = async () => {
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
   delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
-  getLang(); //Türkce karsiligi...
+getLang(); //Türkce karsiligi...
   item.search("byController.trLang", item.typ.variabel, get_Image,maxTime);
 };
 
