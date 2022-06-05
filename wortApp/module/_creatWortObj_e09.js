@@ -92,7 +92,8 @@ var doc, //alinan sayfa document'i
 async function runApp(dcmnt) {
   return new Promise((resolve) => {
     console.log('m:creatWortObj...')
-    getObject(dcmnt).then(() => {
+   await getObject(dcmnt).then(() => {
+    console.log('m:creatWortObj> runApp>...')
       resolve(newWortObj);
     });
   });
