@@ -57,6 +57,7 @@ const wortObj = async () => {
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 const get_langTR = async () => {
+  console.log('import>> getLangTR', byController)
   delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
 getLang(); //Türkce karsiligi...
   item.search("byController.trLang", item.typ.variabel, get_Image,maxTime);
