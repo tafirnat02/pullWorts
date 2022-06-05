@@ -5,7 +5,7 @@ export { getWortObject };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
 
-let index = 0,
+let index,
   len;
 //HTMLdocs ögesinden ilgili kelime icin wort classindan wortObj olusturulur ve wortObjsArr dizinine eklenir.
 const setDoc = async (callback) => {
@@ -35,5 +35,6 @@ const getWortObject = async (callback) => {
   wortObjsArr.length=0
   window.wortObjsArr = wortObjsArr;
   len = HTMLdocs.length;
+  index=0;
   setDoc(callback);
 };
