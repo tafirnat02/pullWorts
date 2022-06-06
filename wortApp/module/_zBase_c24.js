@@ -51,10 +51,10 @@ function setItems() {
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
       );
     },
-    clear:function(consolePrint=false){
-      this.lastIndex=-1;
-      if(consolePrint) this.set(0)
-    }
+    clear: function (consolePrint = false) {
+      this.lastIndex = -1;
+      if (consolePrint) this.set(0);
+    },
   };
 
   /**** mesaj bildirim islemlerine dair ****/
@@ -96,17 +96,17 @@ function setItems() {
       if (this.container.length < 1) return;
       this.container.sort();
       //islem kayit sonuclari gruplu(false=>acik) olarak gösterilir
-      this.group(0,'Rapor','Isleme dair aciklamalar:',false)
-        this.container.forEach((msg) => {
-          let msgTyp, title, text, add;
-          [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
-          this.print(msgTyp, title, text, add);
-        });
+      this.group(0, "Rapor", "Isleme dair aciklamalar:", false);
+      this.container.forEach((msg) => {
+        let msgTyp, title, text, add;
+        [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
+        this.print(msgTyp, title, text, add);
+      });
       this.group();
       this.container.length = 0;
     },
     group: function (typ = "", title = "", text = "", collapsed = true) {
-      if (typ==="") {
+      if (typ === "") {
         console.groupEnd();
         return;
       }
@@ -118,7 +118,7 @@ function setItems() {
       );
     },
   };
-  
+
   //bir ögenin sayfada olup olmadigini kontrol eder...________
   const checkEl = (e) => {
     return e === null ? false : true;
@@ -132,7 +132,7 @@ function setItems() {
       date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
       //ör:   new Date(storage.get("gapiLang").date) > new Date()
     },
-    set: function (name, value, hour=5) {
+    set: function (name, value, hour = 5) {
       this.obj.name = `@ri5: ${name}`;
       this.obj.value = value;
       this.addHour(hour);
@@ -140,11 +140,11 @@ function setItems() {
       window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
     },
     get: function (name) {
-      let localObj = JSON.parse(window.localStorage.getItem(`@ri5: ${name}`))
-      if(!localObj) return false 
-      if(new Date(localObj.date) > new Date())  return localObj;// key ve tarih gecerli ise geriye obje dönderilir...
-      this.remove(name)//tarih güncel olmadiginda lokaldeki obje kaldrilir.
-      return false; 
+      let localObj = JSON.parse(window.localStorage.getItem(`@ri5: ${name}`));
+      if (!localObj) return false;
+      if (new Date(localObj.date) > new Date()) return localObj; // key ve tarih gecerli ise geriye obje dönderilir...
+      this.remove(name); //tarih güncel olmadiginda lokaldeki obje kaldrilir.
+      return false;
     },
     remove: function (name) {
       window.localStorage.removeItem(`@ri5: ${name}`);
@@ -152,14 +152,30 @@ function setItems() {
     addHour: function (hour) {
       //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
       this.obj.date = new Date(
-        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000) // saat >> 
+        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000) // saat >>
       );
     },
   };
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const byController={}
+  const byController = {};
+  const abfrageObj = {};
+  const abfrage = new Proxy(abfrageObj, {
+    set: function (target, key, value = "") {
+      if (key !== "neu") return; //sadece obje icin "neu" anahtari erisimine izin verilir
+      if (value === "cleanObject") {
+        for (const k in abfrageObj) delete abfrageObj[k]; //value eger "cleanObject" ise abfrageObj'deki tüm propertyler silinir
+        return;
+      }
+      if (abfrageObj.neu === value) return; //degisiklik kontrol edilir
+      if (value === "wiederholen") value = abfrageObj.neu  //son kelime grubuyla tekrar islem yapmak sitenilirse...
+      target[key] = value; //yeni deger isleme alinir....
+      appStarter() //yeni kelimeler icin sorgu yapilir...
+    },
+  });
+
   //global scope a aktarilir...===============================
-  window.byController=byController;
+  window.byController = byController;
+  window.abfrage = abfrage;
   window.runBar = runBar;
   window.checkEl = checkEl;
   window.storage = storage;

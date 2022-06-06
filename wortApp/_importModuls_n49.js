@@ -12,26 +12,33 @@ import { getDoc } from "./module/_documents_b16.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b06.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b08.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c23.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
-//import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
-//import sonrasi ilgili ögeler yürütülür...
+import { baseFun } from "./module/_zBase_c24.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 
-//let maxTime = 1500;
-
-
+//temel ögeler yüklenir...
 async function loadBase() {
   return new Promise((resolve, reject) => {
     window.appStarter = appStarter;
     baseFun();
     let duration = 10;
     setTimeout(() => {
-      if (typeof msg === "object") resolve();
+      if (typeof abfrage === "object") resolve();
       reject(
         `baseFun modülü ${duration} ms icerisinde sayfaya import edilemedi!\nSüreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.(m:importModul, f:loadBase)`
       );
     }, duration);
   });
 }
+
+//burada loadbase ile temel ögeler yüklendikten sonra kullanicidan kelime girisi yapilmasi istenilir...
+const reorganizer = () =>{
+    window.reorganizer=reorganizer
+    console.clear
+    msg.print(0,"Kelime Girisi Yapin",
+    "Yeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) giriniz",
+    'abfrage.neu="Tüte,Haus"')
+}
+
+//abfrage.neu = ""; // console: 'hello_world set to test'
 
 async function appStarter() {
   await controller()
@@ -40,12 +47,13 @@ async function appStarter() {
         let tryAgain = window.confirm(
           "Girilen kelimeler icin islem yapildi!\nIslem tekrarlansin mi?"
         );
-        if (!tryAgain)
-        console.clear();
+        if (!tryAgain){
+          console.clear();
           return console.warn(
             "Kelimeler icin islem tekrarlanmasi iptal edildi.\n",
             worteList
           );
+        }
         return finish(); //son alinan wortObj tekrar ekrana basilir...
       }
       runBar.clear(true)
@@ -55,8 +63,9 @@ async function appStarter() {
     .catch((error) => {
       if (error === "notWort") {
         console.warn(
-          "Islem yapilacak kelime bulunamadi!\n'neueAbfrage' ile yeni kelime girisi yapin!"
+          "Islem yapilacak kelime bulunamadi!\n'abfrage.neu' ile yeni kelime girisi yapin!"
         );
+        reorganizer()
       } else {
         console.log(error);
       }
@@ -66,8 +75,7 @@ async function appStarter() {
 //sayfada modulün olup olmadigini, varsa kelime listesinin
 async function controller() {
   return new Promise((resolve, reject) => {
-    if (neueAbfrage == "") reject("notWort");
-
+    if (abfrage.neu == "") reject("notWort");
     //if (typeof worteList === "undefined") new Promise(res => {const worteList = []; window.worteList = worteList; res()});
     if (typeof worteList === "undefined") {
       const worteList = [];
@@ -75,8 +83,7 @@ async function controller() {
       window.callNext =()=>{}
     }
     worteList.length=0
-    worteList = [...new Set (neueAbfrage.replaceAll(" ","").split(","))];
-
+    worteList = [...new Set (abfrage.neu.split(",").map(item=> item.trim()))];
     if(typeof wortObjsArr === "undefined") resolve(false)
     const lastWortList = storage.get("lastWortList")
       ? storage.get("lastWortList").value
@@ -127,7 +134,7 @@ async function finish() {
 }
 
 await loadBase()
-  .then(appStarter())
+  .then( reorganizer()) //.then(appStarter())
   .catch((err) => {
     console.log(err, "m:getModuls, p:loadBase.then()");
   });

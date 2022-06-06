@@ -1,11 +1,13 @@
+
+
 //Yeni aranacak kelimelerin arasina virgül konulmali
-var neueAbfrage="";// ör:"Gemüse,Fenster,Tüte"
+//var neueAbfrage="Tarif, Auto,Lampe,Haus ,Fenster, Gemüse ,Tüte, Teakholz, Gemüse,Fenster , Besuch, Tarif";// ör:"Gemüse,Fenster,Tüte  ,Besuch, "
 
 //modul import js dosyasi
-const modulFiles = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_n18.js"
+const modulFiles = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_n49.js"
 
 try {
-  appStarter()
+  reorganizer()
  } catch (error) {
   if (existFile(modulFiles)) loadModuls.call()
  }
@@ -26,11 +28,6 @@ http.open('HEAD', url, false);http.send();
       window.console[txt[0]](txt[1],http) 
     return false
  }
-
-
-
- 
-
 
 
 
