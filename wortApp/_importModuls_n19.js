@@ -20,8 +20,6 @@ let maxTime = 1500;
 
 async function appRun() {
   console.clear();
-  if (typeof window.appRun === "undefined") window.appRun = appRun;
-
   await controller()
     .then((result) => {
       if (result) {
@@ -72,6 +70,7 @@ async function controller() {
 
 async function loadBase() {
   return new Promise((resolve, reject) => {
+    window.appRun = appRun;
     baseFun();
     let duration = 10;
     setTimeout(() => {
@@ -96,6 +95,10 @@ async function getHTMLdoc() {
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
   getDoc();
   item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
+}{
+  delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  getLang(); //Türkce karsiligi...
+  item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
 }
 
 async function wortObj() {
@@ -105,11 +108,7 @@ async function wortObj() {
 }
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
-async function get_langTR() {
-  delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
-  getLang(); //Türkce karsiligi...
-  item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
-}
+async function get_langTR() 
 
 async function get_Image() {
   delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
