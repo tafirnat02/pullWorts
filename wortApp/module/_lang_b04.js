@@ -3,9 +3,7 @@
 export { getLang };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
-let gapiAllLimit = false, //api limiti halinde translate islemi döngüde atlanir....
-  index = 0,
-  len;
+let gapiAllLimit,index,len;
 //wortObjArr'da tutulan wortObj de TRlang kontrol edilir. Bos ise gapi den cevirisi alinmak üzere diger functionlara yönlendirilir
 
 const isEmptyLang = () => {
@@ -34,7 +32,8 @@ const trLang = () => {
 //modul erisimi ile wortObjArr dizini uzunlu tespit edilip routerLang ile islem yapilir
 const getLang = () => {
   console.log('getLang modül runn edilmeye baslandi...')
-  len = wortObjsArr.length;
+  [gapiAllLimit,index,len]=[false,0,wortObjsArr.length]
+  //gapiAllLimit =false,index=0,len = wortObjsArr.length;
   if (len > index) isEmptyLang();
 };
 
