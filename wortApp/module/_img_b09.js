@@ -35,14 +35,19 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: function (wObj) {
-      console.dir(wObj)
+      for( key in wObj)console.log(key, wObj[key])
       try {
         this.wObj = wObj;
         this.mF();
         this.eF();
         this.dF();
       } catch (error) {
-        msg.add(3,wObj.wrt.wort,'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())', error)
+        let posTex = 'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())'
+        try {
+          msg.add(3,wObj.wrt.wort,'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())', error)
+        } catch (err) {
+          msg.add(3,'Error | wObj? ','Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())', error)
+        }
       }
     },
     q: function (text) {
