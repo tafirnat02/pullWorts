@@ -51,6 +51,10 @@ function setItems() {
         `🚩running... ${this.msgStatus[this.lastIndex]} ${this.lastIndex}0%`
       );
     },
+    clear:function(consolePrint=false){
+      this.lastIndex=-1;
+      if(consolePrint) this.set(0)
+    }
   };
 
   /**** mesaj bildirim islemlerine dair ****/

@@ -12,7 +12,7 @@ import { getDoc } from "./module/_documents_b15.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b05.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b07.js"; //dil islemlerini yapar
-import { baseFun } from "./module/_zBase_c22.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_c23.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
 
@@ -34,7 +34,7 @@ async function loadBase() {
 }
 
 async function appStarter() {
-  console.clear();
+  runBar.clear(true)
   await controller()
     .then((result) => {
       if (result) {
@@ -48,7 +48,6 @@ async function appStarter() {
           );
         return finish(); //son alinan wortObj tekrar ekrana basilir...
       }
-      console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
       storage.remove("lastWortList");
       getHTMLdoc();
     })
