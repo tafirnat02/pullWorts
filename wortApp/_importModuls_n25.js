@@ -8,7 +8,7 @@ genetiv kismini tam olarak alinmali....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b11.js"; //document/HTML dizin olarak ham verileri tutar
+import { getDoc } from "./module/_documents_b12.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b09.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b03.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
@@ -96,8 +96,8 @@ async function getHTMLdoc() {
   //delete byController.wortList
   maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
-  getDoc();
-  item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
+  getDoc(wortObj);
+  //item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
 }
 async function wortObj() {
   delete byController.docs;

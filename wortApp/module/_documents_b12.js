@@ -13,7 +13,7 @@ const getDoc = async () => {
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt)];
 
-  const nextDoc = () => {
+  const nextDoc = (callback) => {
     if (subWorteList.length > 0) docHTML(subWorteList.shift());
   };
 
@@ -33,7 +33,7 @@ const getDoc = async () => {
         strt++;
         if (max == strt) {
           //storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
-          finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
+          finishDoc(HTMLdocuments,callback); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
           runBar.set(5, strt - 1, max); //%10 durumu...
           nextDoc();
@@ -56,7 +56,7 @@ const getDoc = async () => {
 
         //localStorage islemleri
         storage.set("wortList", strt, 1); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
-        finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
+        finishDoc(HTMLdocuments,callback); //hataya kadar alinan ögeler isleme alinir....
       });
   };
   nextDoc.call(); //alt fonksiyon cagrilir
@@ -70,5 +70,6 @@ const finishDoc = (docsVal) => {
   } else {
     HTMLdocs = docsVal;
   }
-  byController.docs = true;
+  callback()
+ // byController.docs = true;
 };
