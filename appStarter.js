@@ -5,7 +5,7 @@ var neueAbfrage="";// ör:"Gemüse,Fenster,Tüte"
 const modulFiles = "https://cdn.jsdelivr.net/gh/tafirnat02/pullWorts@main/wortApp/_importModuls_n18.js"
 
 try {
-  appRun()
+  appStarter()
  } catch (error) {
   if (existFile(modulFiles)) loadModuls.call()
  }
