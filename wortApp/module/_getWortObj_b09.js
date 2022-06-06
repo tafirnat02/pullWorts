@@ -31,8 +31,8 @@ const docs = async (callback) => {
 
 const getWortObject = async (callback) => {
   const wortObjsArr = [];
-  wortObjsArr.length=0
   window.wortObjsArr = wortObjsArr;
+  wortObjsArr.length=0
   len = HTMLdocs.length;
   index=0;
   setDoc(callback);

@@ -9,7 +9,7 @@ genetiv kismini tam olarak alinmali....
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
 import { getDoc } from "./module/_documents_b11.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_b08.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { getWortObject } from "./module/_getWortObj_b09.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b03.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
@@ -95,12 +95,7 @@ async function getHTMLdoc() {
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
   getDoc();
   item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
-}{
-  delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
-  getLang(); //Türkce karsiligi...
-  item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
 }
-
 async function wortObj() {
   delete byController.docs;
   getWortObject(runApp);
