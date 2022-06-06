@@ -4,7 +4,7 @@ export { getDoc };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
 
-const getDoc = async () => {
+const getDoc = async (callback) => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var max = worteList.length,
     strt = 0;
@@ -13,7 +13,7 @@ const getDoc = async () => {
   const HTMLdocuments = [],
     subWorteList = [...worteList.slice(strt)];
 
-  const nextDoc = (callback) => {
+  const nextDoc = () => {
     if (subWorteList.length > 0) docHTML(subWorteList.shift());
   };
 
