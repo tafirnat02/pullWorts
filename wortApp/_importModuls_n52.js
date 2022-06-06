@@ -35,7 +35,7 @@ const reorganizer = () =>{
     console.clear()
     msg.print(0,"Kelime Girisi Yapin",
     "\nYeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) girin.\n(Coklu kelime sorgusu icin her kelime arasina virgü-',' konulmali. )",
-    ' abfrage.neu="Tüte"   oder   abfrage.neu="Tüte, Haus, Fenster"')
+    ' abfrage.neu="Tüte"   oder   \n abfrage.neu="Tüte, Haus, Fenster"')
 }
 
 //abfrage.neu = ""; // console: 'hello_world set to test'
