@@ -35,7 +35,6 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: function (wObj) {
-      for( let key in wObj)console.log(key, wObj[key])
       try {
         this.wObj = wObj;
         this.mF();
@@ -43,6 +42,7 @@ const api = {
         this.dF();
       } catch (error) {
         console.log('hata olustu...')
+        for( let key in wObj)console.log(key, wObj[key])
         console.log(error)
         let posText = 'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())'
         try {
