@@ -34,8 +34,8 @@ const reorganizer = () =>{
     window.reorganizer=reorganizer
     console.clear()
     msg.print(0,"Kelime Girisi Yapin",
-    "Yeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) giriniz",
-    'abfrage.neu="Tüte,Haus"')
+    "\nYeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) girin.\n(Coklu kelime sorgusu icin her kelime arasina virgü-',' konulmali. )",
+    ' abfrage.neu="Tüte"   oder   abfrage.neu="Tüte, Haus, Fenster"')
 }
 
 //abfrage.neu = ""; // console: 'hello_world set to test'
