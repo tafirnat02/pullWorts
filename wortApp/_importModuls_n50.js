@@ -32,7 +32,7 @@ async function loadBase() {
 //burada loadbase ile temel ögeler yüklendikten sonra kullanicidan kelime girisi yapilmasi istenilir...
 const reorganizer = () =>{
     window.reorganizer=reorganizer
-    console.clear
+    console.clear()
     msg.print(0,"Kelime Girisi Yapin",
     "Yeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) giriniz",
     'abfrage.neu="Tüte,Haus"')
