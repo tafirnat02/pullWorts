@@ -132,6 +132,7 @@ async function finish() {
     });
     result.then(msg.group());
   });
+  reorganizer(false)
 }
 
 await loadBase()
