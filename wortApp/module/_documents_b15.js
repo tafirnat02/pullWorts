@@ -4,7 +4,7 @@ export { getDoc };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
 
-const getDoc = async (callback) => {
+const getDoc = async () => {
   //localStorage konrol edilir eger deger varsa onunla baslanir....
   var max = worteList.length,
     strt = 0;
@@ -33,7 +33,7 @@ const getDoc = async (callback) => {
         strt++;
         if (max == strt) {
           //storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
-          finishDoc(HTMLdocuments,callback); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
+          finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
           runBar.set(5, strt - 1, max); //%10 durumu...
           nextDoc();
@@ -56,13 +56,13 @@ const getDoc = async (callback) => {
 
         //localStorage islemleri
         storage.set("wortList", strt, 1); //yeni local obje icin index atanir,5 saatten kisa olanlar dikkate alinir
-        finishDoc(HTMLdocuments,callback); //hataya kadar alinan ögeler isleme alinir....
+        finishDoc(HTMLdocuments); //hataya kadar alinan ögeler isleme alinir....
       });
   };
   nextDoc.call(); //alt fonksiyon cagrilir
 };
 
-const finishDoc = (docsVal,callback) => {
+const finishDoc = (docsVal) => {
   if (typeof getDoc === "undefined") window.getDoc = getDoc;
   if (typeof HTMLdocs === "undefined") {
     const HTMLdocs = docsVal;
@@ -70,6 +70,6 @@ const finishDoc = (docsVal,callback) => {
   } else {
     HTMLdocs = docsVal;
   }
-  callback()
+  callNext()
  // byController.docs = true;
 };

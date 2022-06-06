@@ -27,7 +27,7 @@ const trLang = () => {
   runBar.set(8, index, len);
   index++;
   if (index >= len) {
-    byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
+    callNext() //byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
   } else {
     isEmptyLang(); //sonraki wortObj'deki trLang kontrol edilir
   }
@@ -37,6 +37,7 @@ const trLang = () => {
 const getLang = () => {
   len = wortObjsArr.length;
   if (len > index) isEmptyLang();
+
 };
 
 async function checkLang(wortObj) {

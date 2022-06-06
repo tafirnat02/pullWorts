@@ -8,17 +8,17 @@ genetiv kismini tam olarak alinmali....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b14.js"; //document/HTML dizin olarak ham verileri tutar
-import { getWortObject } from "./module/_getWortObj_b09.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import { getImg } from "./module/_img_b03.js"; //image islemlerini yapar
-import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
+import { getDoc } from "./module/_documents_b15.js"; //document/HTML dizin olarak ham verileri tutar
+import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
+import { getImg } from "./module/_img_b04.js"; //image islemlerini yapar
+import { getLang } from "./module/_lang_b02.js"; //dil islemlerini yapar
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
 import { baseFun } from "./module/_zBase_c17.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import sonrasi ilgili ögeler yürütülür...
 
 let maxTime = 1500;
 
-async function appRun() {
+async function appStarter() {
   console.clear();
   await controller()
     .then((result) => {
@@ -58,6 +58,7 @@ async function controller() {
     if (typeof worteList === "undefined") {
       const worteList = [];
       window.worteList = worteList;
+      window.callNext =()=>{}
     }
     worteList.length=0
     worteList = [...new Set (neueAbfrage.replaceAll(" ","").split(","))];
@@ -75,7 +76,7 @@ async function controller() {
 
 async function loadBase() {
   return new Promise((resolve, reject) => {
-    window.appRun = appRun;
+    window.appStarter = appStarter;
     baseFun();
     let duration = 10;
     setTimeout(() => {
@@ -98,30 +99,35 @@ async function getHTMLdoc() {
   //delete byController.wortList
   maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
-  getDoc(wortObj);
+  callNext= wortObj
+  getDoc();
   //item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
 }
 async function wortObj() {
-  delete byController.docs;
+  //delete byController.docs;
+  callNext=get_langTR
   getWortObject(runApp);
-  item.search("byController.worts", item.typ.variabel, get_langTR, maxTime);
+  //item.search("byController.worts", item.typ.variabel, get_langTR, maxTime);
 }
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 async function get_langTR() {
-  delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  //delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
+  callNext =get_Image;
   getLang(); //Türkce karsiligi...
-  item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
+  //item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
 }
 
 async function get_Image() {
-  delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
+  //delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
+  callNext =finish
   getImg(); //görseller alinir...
-  item.search("byController.image", item.typ.variabel, finish, maxTime);
+  //item.search("byController.image", item.typ.variabel, finish, maxTime);
 }
 
 async function finish() {
-  delete byController.image;
+  //delete byController.image;
+  callNext =()=>{}
   storage.set("lastWortList", worteList, 3);
   console.clear();
   msg.allPrint();
@@ -138,7 +144,7 @@ async function finish() {
 }
 
 await loadBase()
-  .then(appRun())
+  .then(appStarter())
   .catch((err) => {
     console.log(err, "m:getModuls, p:loadBase.then()");
   });

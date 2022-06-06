@@ -218,6 +218,7 @@ const getImg = async () => {
   if (index < len && api.status !== false) {
     getImg();
   } else {
-    byController.image = true;
+    callNext()
+    //byController.image = true;
   }
 };
