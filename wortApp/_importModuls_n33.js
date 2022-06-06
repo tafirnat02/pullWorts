@@ -13,10 +13,10 @@ import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alin
 import { getImg } from "./module/_img_b04.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b02.js"; //dil islemlerini yapar
 import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
-import { baseFun } from "./module/_zBase_c17.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
+import { baseFun } from "./module/_zBase_c18.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import sonrasi ilgili ögeler yürütülür...
 
-let maxTime = 1500;
+//let maxTime = 1500;
 
 async function appStarter() {
   console.clear();
@@ -97,7 +97,7 @@ async function  _worteList  () {
 
 async function getHTMLdoc() {
   //delete byController.wortList
-  maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
+  //maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
   callNext= wortObj
   getDoc();
