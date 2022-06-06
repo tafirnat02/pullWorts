@@ -94,7 +94,7 @@ function setItems() {
     },
     allPrint: function () {
       if (this.container.length < 1){
-        this.print("Sorgu Sonucu",'Kelimelere ait veri sonuclari:', false);
+        this.print(0,"Sorgu Sonucu",'Kelimelere ait veri sonuclari:', false);
         return;
       } 
       this.container.sort();
