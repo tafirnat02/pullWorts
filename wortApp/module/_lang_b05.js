@@ -3,7 +3,7 @@
 export { getLang };
 
 /*-------- Modul icerigindeki Ögeler ---------*/
-let gapiAllLimit,index,len;
+var gapiAllLimit,index,len;
 //wortObjArr'da tutulan wortObj de TRlang kontrol edilir. Bos ise gapi den cevirisi alinmak üzere diger functionlara yönlendirilir
 
 const isEmptyLang = () => {
