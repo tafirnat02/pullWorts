@@ -114,10 +114,46 @@ function setItems() {
       );
     },
   };
+  
+  //bir ögenin sayfada olup olmadigini kontrol eder...________
+  const checkEl = (e) => {
+    return e === null ? false : true;
+  };
+
+  //local storage'e key, value degeri olarak js objenin saklanmasi,geri alinmasi ve silinmesi
+  const storage = {
+    obj: {
+      name: null,
+      value: null,
+      date: null, // new Date(..obj.date) olarak tarihe cevrilerek kullanilmali
+      //ör:   new Date(storage.get("gapiLang").date) > new Date()
+    },
+    set: function (name, value, hour=5) {
+      this.obj.name = `@ri5: ${name}`;
+      this.obj.value = value;
+      this.addHour(hour);
+      //olusturulan nesne local storagee aktarilir
+      window.localStorage.setItem(this.obj.name, JSON.stringify(this.obj));
+    },
+    get: function (name) {
+      let localObj = JSON.parse(window.localStorage.getItem(`@ri5: ${name}`))
+      if(!localObj) return false 
+      if(new Date(localObj.date) > new Date())  return localObj;// key ve tarih gecerli ise geriye obje dönderilir...
+      this.remove(name)//tarih güncel olmadiginda lokaldeki obje kaldrilir.
+      return false; 
+    },
+    remove: function (name) {
+      window.localStorage.removeItem(`@ri5: ${name}`);
+    },
+    addHour: function (hour) {
+      //olusturulan zaman damgasi ile local storagedeki objenin güncelligi kontrol edilir.
+      this.obj.date = new Date(
+        new Date().setTime(new Date().getTime() + hour * 60 * 60 * 1000) // saat >> 
+      );
+    },
+  };
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
-  const byController = {}; //nesne bos, property kullanilirken ilgili modülde atanir ve islem teyidi sonrasi silinir..
   //global scope a aktarilir...===============================
-  window.byController = byController;
   window.runBar = runBar;
   window.checkEl = checkEl;
   window.storage = storage;
