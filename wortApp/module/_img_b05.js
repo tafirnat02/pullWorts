@@ -7,10 +7,10 @@ export { getImg };
 //ugulamanin basinda api sayfaya dahil edilir
 //ugulamanin basinda api sayfaya dahil edilir
 
-let url,
-  imgArr = [],
-  index = 0,
-  len = undefined;
+var imgArr = [],
+  url,
+  index,
+  len;
 const api = {
     index: 0,
     cse: 0,
@@ -206,7 +206,10 @@ const searchImg = async () => {
 };
 
 const getImg = async () => {
-  if (len === undefined) len = wortObjsArr.length;
+  if (len === undefined) {
+    len = wortObjsArr.length;
+    index = 0;
+  }
   imgArr.length = 0;
   api.cse = 0; //aramadaki kelime grubu sifirlanir...
   if (!!wortObjsArr[index].status.Substantiv[0]) {
@@ -218,7 +221,8 @@ const getImg = async () => {
   if (index < len && api.status !== false) {
     getImg();
   } else {
-    callNext()
+    index = 0;
+    callNext();
     //byController.image = true;
   }
 };

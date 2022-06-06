@@ -7,7 +7,6 @@ var gapiAllLimit, index, len;
 //wortObjArr'da tutulan wortObj de TRlang kontrol edilir. Bos ise gapi den cevirisi alinmak üzere diger functionlara yönlendirilir
 
 const isEmptyLang = () => {
-  console.log("isEmptyLang ceviri kontrolu yapiliyor...");
   if (!gapiAllLimit && wortObjsArr[index].lang_TR === "") {
     checkLang(wortObjsArr[index]);
   } else {
@@ -20,9 +19,7 @@ const isEmptyLang = () => {
 const trLang = () => {
   runBar.set(8, index, len);
   index++;
-  console.log("trLang index: ", index);
   if (index >= len) {
-    console.log("trLang islem bitti cikis yapildi..");
     callNext(); //
   } else {
     isEmptyLang(); //sonraki wortObj'deki trLang kontrol edilir
@@ -31,7 +28,6 @@ const trLang = () => {
 
 //modul erisimi ile wortObjArr dizini uzunlu tespit edilip routerLang ile islem yapilir
 const getLang = () => {
-  console.log("getLang modül runn edilmeye baslandi...");
   gapiAllLimit = false;
   index = 0;
   len = wortObjsArr.length;
@@ -39,7 +35,6 @@ const getLang = () => {
 };
 
 async function checkLang(wortObj) {
-  console.log("checkLang ile ceviri sonucu aliniyor...");
   try {
     await gapiTranslate(wortObj)
       .catch((error) => {
