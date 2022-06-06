@@ -23,22 +23,20 @@ async function loadBase() {
     setTimeout(() => {
       if (typeof abfrage === "object") resolve();
       reject(
-        `baseFun modülü ${duration} ms icerisinde sayfaya import edilemedi!\nSüreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.(m:importModul, f:loadBase)`
+        `Modüller ${duration} ms icerisinde sayfaya import edilemedi!\nSüreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.(m:importModul, f:loadBase)`
       );
     }, duration);
   });
 }
 
 //burada loadbase ile temel ögeler yüklendikten sonra kullanicidan kelime girisi yapilmasi istenilir...
-const reorganizer = () =>{
+const reorganizer = clear =>{
     window.reorganizer=reorganizer
-    console.clear()
+    if(clear)console.clear()
     msg.print(0,"Kelime Girisi Yapin",
     "\nYeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) girin.\n(Coklu kelime sorgusu icin her kelime arasina virgü-',' konulmali. )",
     ' abfrage.neu="Tüte"   oder   \n abfrage.neu="Tüte, Haus, Fenster"')
 }
-
-//abfrage.neu = ""; // console: 'hello_world set to test'
 
 async function appStarter() {
   await controller()
@@ -49,10 +47,12 @@ async function appStarter() {
         );
         if (!tryAgain){
           console.clear();
-          return console.warn(
+           console.warn(
             "Kelimeler icin islem tekrarlanmasi iptal edildi.\n",
             worteList
           );
+          reorganizer(false)
+          return
         }
         return finish(); //son alinan wortObj tekrar ekrana basilir...
       }
@@ -62,10 +62,11 @@ async function appStarter() {
     })
     .catch((error) => {
       if (error === "notWort") {
+        console.clear()       
         console.warn(
           "Islem yapilacak kelime bulunamadi!\n'abfrage.neu' ile yeni kelime girisi yapin!"
         );
-        reorganizer()
+        reorganizer(false)
       } else {
         console.log(error);
       }
@@ -134,7 +135,7 @@ async function finish() {
 }
 
 await loadBase()
-  .then( reorganizer()) //.then(appStarter())
+  .then( reorganizer(true)) //.then(appStarter())
   .catch((err) => {
     console.log(err, "m:getModuls, p:loadBase.then()");
   });
