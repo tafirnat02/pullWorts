@@ -62,7 +62,7 @@ async function controller() {
     worteList.length=0
     worteList = [...new Set (neueAbfrage.replaceAll(" ","").split(","))];
 
-    if(typeof wortObj === "undefined") resolve(true)
+    if(typeof wortObj === "undefined") resolve(false)
     const lastWortList = storage.get("lastWortList")
       ? storage.get("lastWortList").value
       : [];
