@@ -93,10 +93,13 @@ function setItems() {
       if (!!add) console[typ == 3 ? "error" : typ == 2 ? "warn" : "info"](add);
     },
     allPrint: function () {
-      if (this.container.length < 1) return;
+      if (this.container.length < 1){
+        this.print("Sorgu Sonucu",'Kelimelere ait veri sonuclari:', false);
+        return;
+      } 
       this.container.sort();
       //islem kayit sonuclari gruplu(false=>acik) olarak gösterilir
-      this.group(0, "Rapor", "Isleme dair aciklamalar:", false);
+      this.group(0, "Sorgu Sonucu", "Alinan hatalara dair aciklamalar:", false);
       this.container.forEach((msg) => {
         let msgTyp, title, text, add;
         [msgTyp, title, text, add] = msg; //degiskenlere array degerleri atanir
