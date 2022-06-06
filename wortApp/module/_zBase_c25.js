@@ -166,8 +166,8 @@ function setItems() {
         for (const k in abfrageObj) delete abfrageObj[k]; //value eger "cleanObject" ise abfrageObj'deki tüm propertyler silinir
         return;
       }
-      if (abfrageObj.neu === value) return; //degisiklik kontrol edilir
-      if (value === "wiederholen") value = abfrageObj.neu  //son kelime grubuyla tekrar islem yapmak sitenilirse...
+     /* if (abfrageObj.neu === value) return; //degisiklik kontrol edilir
+      if (value === "wiederholen") value = abfrageObj.neu  //son kelime grubuyla tekrar islem yapmak sitenilirse...*/
       target[key] = value; //yeni deger isleme alinir....
       appStarter() //yeni kelimeler icin sorgu yapilir...
     },
