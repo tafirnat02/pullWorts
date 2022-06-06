@@ -54,12 +54,13 @@ async function controller() {
   return new Promise((resolve, reject) => {
     if (neueAbfrage == "") reject("notWort");
 
-    if (typeof worteList === "undefined") new Promise(res => {const worteList = []; window.worteList = worteList; res()});
-    /*if (typeof worteList === "undefined") {
+    //if (typeof worteList === "undefined") new Promise(res => {const worteList = []; window.worteList = worteList; res()});
+    if (typeof worteList === "undefined") {
       const worteList = [];
       window.worteList = worteList;
-    }*/
-    worteList = new Set (neueAbfrage.replaceAll(" ","").split(","));
+    }
+    worteList.length=0
+    worteList = [...new Set (neueAbfrage.replaceAll(" ","").split(","))];
     const lastWortList = storage.get("lastWortList")
       ? storage.get("lastWortList").value
       : [];
