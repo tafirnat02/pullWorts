@@ -35,7 +35,7 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: function (wObj) {
-      for( key in wObj)console.log(key, wObj[key])
+      for( let key in wObj)console.log(key, wObj[key])
       try {
         this.wObj = wObj;
         this.mF();
