@@ -35,7 +35,7 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: function (wObj) {
-     if(index<2) await new Promise(resolve => setTimeout(resolve, 50));//hata olusmasini engellemek icin...
+     if(index<2) async()=>{await new Promise(resolve => setTimeout(resolve, 50))};//hata olusmasini engellemek icin...
       try {
         this.wObj = wObj;
         this.mF();
