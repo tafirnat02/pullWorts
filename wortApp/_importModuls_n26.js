@@ -64,6 +64,7 @@ async function controller() {
     const lastWortList = storage.get("lastWortList")
       ? storage.get("lastWortList").value
       : [];
+    if(typeof wortObj === "undefined") resolve(true)
     resolve(
       worteList.length === lastWortList.length &&
         worteList.every((val, index) => val === lastWortList[index])
