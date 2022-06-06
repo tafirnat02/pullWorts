@@ -116,6 +116,9 @@ const cseUrl = async (text) => {
 };
 
 const setObj = async (wObj) => {
+  console.log('bekleniyor...')
+  await new Promise(resolve => setTimeout(resolve, 3500));
+  console.log('yürütüldü....')
   return new Promise((resolve, reject) => {
     qW.run(wObj);
     cseUrl();
