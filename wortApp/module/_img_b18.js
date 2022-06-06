@@ -36,10 +36,10 @@ const api = {
 
     run: async function (wObj) {
       console.log('index', index)
-      let ms = index==0?4000:index==1?2000:10;
-      console.log('ms:', ms)
-      await new Promise(resolve => setTimeout(resolve, ms))//hata olusmasini engellemek icin es konulur...
       try {
+        let ms = index==0?4000:index==1?2000:10;
+        console.log('ms:', ms)
+        await new Promise(resolve => setTimeout(resolve, ms))//hata olusmasini engellemek icin es konulur...
         this.wObj = wObj;
         this.mF();
         this.eF();
