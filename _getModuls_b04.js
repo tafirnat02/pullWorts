@@ -20,6 +20,7 @@ async function newRun(){
     //modul import edilditen sonra wortList degisikligi halinde yeni sorgu yapilir...
      console.log('liste degisti, yeniden cagrilacak...')
      console.log("🚩running... ▱▱▱▱▱▱▱▱▱▱▱ 0%"); //baslama bildirimi...
+     runBar.lastIndex=0
      await localStorageControl(true) //storagedeki wortlist silinir
      HTMLdocs.length=0 //doc sifirlanir
      getHTMLdoc()      
