@@ -35,10 +35,15 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: function (wObj) {
-      this.wObj = wObj;
-      this.mF();
-      this.eF();
-      this.dF();
+      console.log(wObj)
+      try {
+        this.wObj = wObj;
+        this.mF();
+        this.eF();
+        this.dF();
+      } catch (error) {
+        msg.add(3,wObj.wrt.wort,'Hata Olustu', error)
+      }
     },
     q: function (text) {
       return (text + this.excludedURL)
