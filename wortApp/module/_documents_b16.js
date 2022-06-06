@@ -35,7 +35,7 @@ const getDoc = async () => {
           //storage.remove("wortList"); //islem tamamlanmasi sonrasi index local storageden kaldirilir.
           finishDoc(HTMLdocuments); //tamamlanan kelime sayfalarindan "Wort" sinifindan nesne olusturulur.
         } else {
-          runBar.set(5, strt - 1, max); //%10 durumu...
+          runBar.set(4, strt - 1, max); //%10 durumu...
           nextDoc();
         }
       })

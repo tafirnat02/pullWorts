@@ -17,7 +17,7 @@ const isEmptyLang = () => {
 
 //wortObjArr dizinindeki tüm ögeler icin routerLang ile islem yapilir
 const trLang = () => {
-  runBar.set(8, index, len);
+  runBar.set(10, index, len);
   index++;
   if (index >= len) {
     callNext(); //

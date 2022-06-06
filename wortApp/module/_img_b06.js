@@ -216,7 +216,7 @@ const getImg = async () => {
     await setObj(wortObjsArr[index]);
     await searchImg();
   }
-  runBar.set(10, index, len);
+  runBar.set(7, index, len);
   index++;
   if (index < len && api.status !== false) {
     getImg();

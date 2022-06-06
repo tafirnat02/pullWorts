@@ -8,10 +8,10 @@ genetiv kismini tam olarak alinmali....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b15.js"; //document/HTML dizin olarak ham verileri tutar
+import { getDoc } from "./module/_documents_b16.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
-import { getImg } from "./module/_img_b05.js"; //image islemlerini yapar
-import { getLang } from "./module/_lang_b07.js"; //dil islemlerini yapar
+import { getImg } from "./module/_img_b06.js"; //image islemlerini yapar
+import { getLang } from "./module/_lang_b08.js"; //dil islemlerini yapar
 import { baseFun } from "./module/_zBase_c23.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
 //import sonrasi ilgili ögeler yürütülür...
@@ -34,7 +34,6 @@ async function loadBase() {
 }
 
 async function appStarter() {
-  runBar.clear(true)
   await controller()
     .then((result) => {
       if (result) {
@@ -42,12 +41,14 @@ async function appStarter() {
           "Girilen kelimeler icin islem yapildi!\nIslem tekrarlansin mi?"
         );
         if (!tryAgain)
+        console.clear();
           return console.warn(
             "Kelimeler icin islem tekrarlanmasi iptal edildi.\n",
             worteList
           );
         return finish(); //son alinan wortObj tekrar ekrana basilir...
       }
+      runBar.clear(true)
       storage.remove("lastWortList");
       getHTMLdoc();
     })
@@ -93,19 +94,19 @@ async function getHTMLdoc() {
   getDoc();
 }
 async function wortObj() {
-  callNext=get_langTR
+  callNext =get_Image;
   getWortObject(runApp);
+}
+
+async function get_Image() {
+   callNext=get_langTR
+  getImg(); //görseller alinir...
 }
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 async function get_langTR() {
-  callNext =get_Image;
-  getLang(); //Türkce karsiligi...
-}
-
-async function get_Image() {
   callNext =finish
-  getImg(); //görseller alinir...
+  getLang(); //Türkce karsiligi...
 }
 
 async function finish() {
