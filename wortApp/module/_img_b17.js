@@ -35,7 +35,9 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: async function (wObj) {
-      let ms = index==0?200:index==1?100:10;
+      console.log('index', index)
+      let ms = index==0?4000:index==1?2000:10;
+      console.log('ms:', ms)
       await new Promise(resolve => setTimeout(resolve, ms))//hata olusmasini engellemek icin es konulur...
       try {
         this.wObj = wObj;
@@ -202,9 +204,9 @@ const searchImg = async () => {
         default: // diger hatalar
           msg.add(
             //cikis yapilir
-            1,
+            3,
             `${currentWort}`,
-            `Görsel alinirken hata olustu! (f:getImg-searchImg) ${url}`,
+            `Görsel alinirken hata olustu! (m:_img, f:searchImg) ${url}`,
             err
           );
           break;
