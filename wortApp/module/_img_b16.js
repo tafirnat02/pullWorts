@@ -35,7 +35,7 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: async function (wObj) {
-      let ms = index==0?50:index==1?10:0;
+      let ms = index==0?200:index==1?100:10;
       await new Promise(resolve => setTimeout(resolve, ms))//hata olusmasini engellemek icin es konulur...
       try {
         this.wObj = wObj;
