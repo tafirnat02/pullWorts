@@ -9,16 +9,12 @@ let gapiAllLimit = false, //api limiti halinde translate islemi döngüde atlani
 //wortObjArr'da tutulan wortObj de TRlang kontrol edilir. Bos ise gapi den cevirisi alinmak üzere diger functionlara yönlendirilir
 
 const isEmptyLang = () => {
-  if (wortObjsArr[index].lang_TR == "") {
-    if (gapiAllLimit) {
-      //eger api limitine ulasilmis ise ekrana msg gösterimi yapilir isleme devam edilmez...
-      gapiKeyEnd(wortObjsArr[index].wrt.wort);
-      trLang(); //sonraki kelimelerdeki TR_lang durumunun bildirilmesi icin bu islem tekrarlanir sadece...
-      return;
-    }
+  console.log('isEmptyLang ceviri kontrolu yapiliyor...')
+  if (!gapiAllLimit && wortObjsArr[index].lang_TR === "") {
     checkLang(wortObjsArr[index]);
   } else {
-    trLang(); //sonraki wortObj'ye gecilir...
+    if (gapiAllLimit) gapiKeyEnd(wortObjsArr[index].wrt.wort); //eger api limitine ulasilmis ise ekrana msg gösterimi yapilir isleme devam edilmez...
+    trLang(); //sonraki kelimelerdeki TR_lang durumunun bildirilmesi icin bu islem tekrarlanir sadece...
   }
 };
 
@@ -26,8 +22,10 @@ const isEmptyLang = () => {
 const trLang = () => {
   runBar.set(8, index, len);
   index++;
+  console.log('trLang index: ', index)
   if (index >= len) {
-    callNext() //byController.trLang = true; //item.search() ile bu asamnin tamamlandigini teyit icin controlObj'de trLang propertysi olusturulur...
+    console.log('trLang islem bitti cikis yapildi..')
+    callNext(); //
   } else {
     isEmptyLang(); //sonraki wortObj'deki trLang kontrol edilir
   }
@@ -35,12 +33,13 @@ const trLang = () => {
 
 //modul erisimi ile wortObjArr dizini uzunlu tespit edilip routerLang ile islem yapilir
 const getLang = () => {
+  console.log('getLang modül runn edilmeye baslandi...')
   len = wortObjsArr.length;
   if (len > index) isEmptyLang();
-
 };
 
 async function checkLang(wortObj) {
+  console.log('checkLang ile ceviri sonucu aliniyor...')
   try {
     await gapiTranslate(wortObj)
       .catch((error) => {
@@ -158,8 +157,8 @@ async function gapiKey(wortObj) {
       let keyIndex = 0;
       //öncelikle localStorage'de aon 24 saatte kullanilan bir index var mi kontrol edilir yoksa 0 gönderilir...
       if (localStorage) {
-          gapiAllLimit = true; //sonraki kelimler icinde limit sebebiyle translate islemi yapilmaz....
-        keyIndex = localStorage.value  /// storage.get("gapiLang").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
+        gapiAllLimit = true; //sonraki kelimler icinde limit sebebiyle translate islemi yapilmaz....
+        keyIndex = localStorage.value; /// storage.get("gapiLang").index; //eger storagede tutulan bir deger varsa buradan devam edilir...
         if (keyIndex >= gapi.length) {
           gapiAllLimit = true; //sonraki kelimler icinde limit sebebiyle translate islemi yapilmaz....
           resolve();
