@@ -62,7 +62,7 @@ const getDoc = async () => {
   nextDoc.call(); //alt fonksiyon cagrilir
 };
 
-const finishDoc = (docsVal) => {
+const finishDoc = (docsVal,callback) => {
   if (typeof getDoc === "undefined") window.getDoc = getDoc;
   if (typeof HTMLdocs === "undefined") {
     const HTMLdocs = docsVal;

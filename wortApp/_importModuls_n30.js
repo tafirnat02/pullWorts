@@ -8,7 +8,7 @@ genetiv kismini tam olarak alinmali....
 
 /**  --- import edilen ögeler --- */
 import { runApp } from "./module/_creatWortObj_e11.js"; //HTML'den wort nesnesinin icerigini toplar
-import { getDoc } from "./module/_documents_b12.js"; //document/HTML dizin olarak ham verileri tutar
+import { getDoc } from "./module/_documents_b13.js"; //document/HTML dizin olarak ham verileri tutar
 import { getWortObject } from "./module/_getWortObj_b09.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b03.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b01.js"; //dil islemlerini yapar
