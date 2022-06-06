@@ -18,6 +18,21 @@ import { baseFun } from "./module/_zBase_c20.js"; //bu bir dizin altindaki tüm 
 
 //let maxTime = 1500;
 
+
+async function loadBase() {
+  return new Promise((resolve, reject) => {
+    window.appStarter = appStarter;
+    baseFun();
+    let duration = 10;
+    setTimeout(() => {
+      if (typeof msg === "object") resolve();
+      reject(
+        `baseFun modülü ${duration} ms icerisinde sayfaya import edilemedi!\nSüreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.(m:importModul, f:loadBase)`
+      );
+    }, duration);
+  });
+}
+
 async function appStarter() {
   console.clear();
   await controller()
@@ -74,59 +89,28 @@ async function controller() {
   });
 }
 
-async function loadBase() {
-  return new Promise((resolve, reject) => {
-    window.appStarter = appStarter;
-    baseFun();
-    let duration = 10;
-    setTimeout(() => {
-      if (typeof item === "object") resolve();
-      reject(
-        `baseFun modülü ${duration} ms icerisinde sayfaya import edilemedi!\nSüreyi artirarak dene! Hata devam etmesi halinde modul pathini check et.(m:importModul, f:loadBase)`
-      );
-    }, duration);
-  });
-}
-
-/*
-async function  _worteList  () {
-  getWorteList();
-  item.search("byController.wortList", item.typ.variabel, getHTMLdoc,maxTime);
-};
-*/
-
 async function getHTMLdoc() {
-  //delete byController.wortList
-  //maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
   callNext= wortObj
   getDoc();
-  //item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
 }
 async function wortObj() {
-  //delete byController.docs;
   callNext=get_langTR
   getWortObject(runApp);
-  //item.search("byController.worts", item.typ.variabel, get_langTR, maxTime);
 }
 
 //wortObjsArr dizininde tutulunan wortObj'ler icin lang_TR durumu kontrol edilir ve yoksa gapi ile Türkcesi alinir.
 async function get_langTR() {
-  //delete byController.worts; //kontrol islemi sonrasi controlObj'deki worts property kaldirilir...
   callNext =get_Image;
   getLang(); //Türkce karsiligi...
-  //item.search("byController.trLang", item.typ.variabel, get_Image, maxTime);
 }
 
 async function get_Image() {
-  //delete byController.trLang; //kontrol islemi sonrasi controlObj'deki trLang property kaldirilir...
   callNext =finish
   getImg(); //görseller alinir...
-  //item.search("byController.image", item.typ.variabel, finish, maxTime);
 }
 
 async function finish() {
-  //delete byController.image;
   callNext =()=>{}
   storage.set("lastWortList", worteList, 3);
   console.clear();
