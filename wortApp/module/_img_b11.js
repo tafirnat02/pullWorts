@@ -42,11 +42,13 @@ const api = {
         this.eF();
         this.dF();
       } catch (error) {
-        let posTex = 'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())'
+        console.log('hata olustu...')
+        console.log(error)
+        let posText = 'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())'
         try {
-          msg.add(3,wObj.wrt.wort,'Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())', error)
+          msg.add(3,wObj.wrt.wort,posText, error)
         } catch (err) {
-          msg.add(3,'Error | wObj? ','Görsel alinirken hata meydana geldi! (m:img_, o:qW.run())', error)
+          msg.add(3,'Error | wObj? ',posText, error)
         }
       }
     },
