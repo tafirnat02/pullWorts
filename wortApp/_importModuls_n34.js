@@ -12,7 +12,7 @@ import { getDoc } from "./module/_documents_b15.js"; //document/HTML dizin olara
 import { getWortObject } from "./module/_getWortObj_b10.js"; //HTML  olarak alinan dizin ögelerini nesne olusturmaya yönlendirir
 import { getImg } from "./module/_img_b04.js"; //image islemlerini yapar
 import { getLang } from "./module/_lang_b02.js"; //dil islemlerini yapar
-import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
+//import { getWorteList } from "./module/_wortList_c010.js"; //kullanilacak kelimleri alir
 import { baseFun } from "./module/_zBase_c18.js"; //bu bir dizin altindaki tüm ögleri 'base' adli degiskene export eder...
 //import sonrasi ilgili ögeler yürütülür...
 
