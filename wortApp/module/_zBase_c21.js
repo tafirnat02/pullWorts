@@ -153,7 +153,9 @@ function setItems() {
     },
   };
   //uygulama icerisinde yürütülen sürecin olup olmadigini kontrolü ve beklemesi icin
+  const byController={}
   //global scope a aktarilir...===============================
+  window.byController=byController;
   window.runBar = runBar;
   window.checkEl = checkEl;
   window.storage = storage;
