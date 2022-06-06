@@ -57,7 +57,7 @@ async function controller() {
       const worteList = [];
       window.worteList = worteList;
     }
-    worteList = neueAbfrage.split(",");
+    worteList = new Set (neueAbfrage.split(","));
     const lastWortList = storage.get("lastWortList")
       ? storage.get("lastWortList").value
       : [];
@@ -91,7 +91,7 @@ async function  _worteList  () {
 
 async function getHTMLdoc() {
   //delete byController.wortList
-  maxTime = worteList.length < 5 ? maxTime : 300 * worteList.length;
+  maxTime = worteList.length < 5 ? maxTime : 500 * worteList.length;
   if (typeof HTMLdocs !== "undefined") HTMLdocs.length = 0; //doc sifirlanir
   getDoc();
   item.search(" byController.docs", item.typ.variabel, wortObj, maxTime);
