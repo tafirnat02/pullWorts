@@ -120,7 +120,6 @@ function setItems() {
   window.byController = byController;
   window.runBar = runBar;
   window.checkEl = checkEl;
-  window.item = item;
   window.storage = storage;
   window.msg = msg;
   return true;
