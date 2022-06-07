@@ -32,9 +32,8 @@ async function loadBase() {
 //burada loadbase ile temel ögeler yüklendikten sonra kullanicidan kelime girisi yapilmasi istenilir...
 const reorganizer = clear =>{
     window.reorganizer=reorganizer
-    console.log('\n')
     if(clear)console.clear()
-    msg.print(0,"\nYeni Sorgulama Yap",
+    msg.print(0,"Yeni Sorgulama Yap",
     "\nYeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) girin.\n(Coklu kelime sorgusu icin her kelime arasina virgü-',' konulmali. )",
     ' abfrage.neu = " Tüte "   oder   \n abfrage.neu = " Tüte, Haus, Fenster "')
 }
@@ -133,6 +132,7 @@ async function finish() {
     });
     result.then(msg.group());
   });
+  console.log('\n')
   reorganizer(false)
 }
 
