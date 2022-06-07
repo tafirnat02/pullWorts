@@ -32,8 +32,9 @@ async function loadBase() {
 //burada loadbase ile temel ögeler yüklendikten sonra kullanicidan kelime girisi yapilmasi istenilir...
 const reorganizer = clear =>{
     window.reorganizer=reorganizer
+    console.log('\n')
     if(clear)console.clear()
-    msg.print(0,"Yeni Sorgulama Yap",
+    msg.print(0,"\nYeni Sorgulama Yap",
     "\nYeni sorgusu yapmak icin 'abfrage.neu' ile alttaki örnekte oldugu gibi kelime(leri) girin.\n(Coklu kelime sorgusu icin her kelime arasina virgü-',' konulmali. )",
     ' abfrage.neu = " Tüte "   oder   \n abfrage.neu = " Tüte, Haus, Fenster "')
 }
@@ -142,27 +143,6 @@ await loadBase()
   });
 
 //_______________________-
-
-/* --- cdn dosyasini kontrol eder --- */
-/*
-async function checkFile(url, pos = "(m:appStarter, f:checkFile)") {
-  urlChecker.url = false; //obje degeri default hale getirilir...
-  await fetch(url)
-    .then((response) => {
-      if (response.status === 404) throw 404;
-      urlChecker.url = true;
-    })
-    .catch((err) => {
-      let txt_404 = [
-          "warn",
-          `Dosya konumu hatali! Url'yi kontrol edin. ${pos}\n${url}\n`,
-        ],
-        txt_e = ["error", `Hata meydana geldi! ${pos}\n`],
-        txt = err === 404 ? txt_404 : txt_e;
-      window.console[txt[0]](txt[1], err);
-    });
-}
-*/
 /*
 Dizin Yapisi:
 📂

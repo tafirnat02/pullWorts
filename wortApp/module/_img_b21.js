@@ -35,7 +35,6 @@ const api = {
       " OR -logo -inurl:[www.verbformen.com] -inurl:[www.verbformen.de] -inurl:[www.verbformen.es] -inurl:[www.verbformen.ru] -inurl:[www.verbformen.pt] -inurl:[www.duden.de]",
 
     run: async function (wObj) {
-      console.log('index', index)
       try {
         this.wObj = wObj;
         this.mF();
