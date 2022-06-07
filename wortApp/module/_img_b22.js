@@ -220,6 +220,10 @@ const searchImg = async () => {
 };
 
 const getImg = async () => {
+  //gApi sismesini önlemek icin engelendi. Normal calisiyor sonraki kodalar...
+  callNext();
+  return
+
   if (len === undefined) {
     len = wortObjsArr.length;
     index = 0;
