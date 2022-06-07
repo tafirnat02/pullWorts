@@ -77,7 +77,7 @@ class Wort {
     Praedikativ: { txt: "als Prädikativ" },
     Pronomen: { txt: "Deklination des Pronomens" },
     Artikel:{txt: "Deklination von Artikel"},
-    Nomen: {txt: `Deklination von ${this.wrt.wort}` }
+    Nomen: {}
   };
 }
 
@@ -382,9 +382,11 @@ function getDeklinationTbls() {
         }else if (cnt.includes(newWortObj.othrTbls.Artikel.txt)) {
           addTrVal(itm, "Artikel");
           delete newWortObj.othrTbls.Artikel.txt;
-        }else if (cnt.includes(newWortObj.othrTbls.Artikel.txt)) {
+        }else{
           addTrVal(itm, "Nomen");
-          delete newWortObj.othrTbls.Nomen.txt;
+        /*if (cnt.includes(newWortObj.othrTbls.Nomen.txt)) {
+          addTrVal(itm, "Nomen");
+          delete newWortObj.othrTbls.Nomen.txt;*/
         }
       });
       resolve();
