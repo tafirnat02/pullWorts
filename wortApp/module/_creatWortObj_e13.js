@@ -8,6 +8,7 @@ class Wort {
   wrt = {
     wort: "",
     plural: "",
+    genetiv:"",
     prefix: "",
     suffix: "",
     artikel: "",
@@ -75,6 +76,8 @@ class Wort {
     Gemischte: { txt: "gemischte Deklination" },
     Praedikativ: { txt: "als Prädikativ" },
     Pronomen: { txt: "Deklination des Pronomens" },
+    Artikel:{txt: "Deklination von Artikel"},
+    Nomen: {txt: `Deklination von ${this.wrt.wort}` }
   };
 }
 
@@ -374,6 +377,13 @@ function getAdjTbls() {
         } else if (cnt.includes(newWortObj.othrTbls.Pronomen.txt)) {
           addTrVal(itm, "Pronomen");
           delete newWortObj.othrTbls.Pronomen.txt;
+          //diger seceneklerde eklendi tablo icin..
+        }else if (cnt.includes(newWortObj.othrTbls.Artikel.txt)) {
+          addTrVal(itm, "Artikel");
+          delete newWortObj.othrTbls.Artikel.txt;
+        }else if (cnt.includes(newWortObj.othrTbls.Artikel.txt)) {
+          addTrVal(itm, "Nomen");
+          delete newWortObj.othrTbls.Nomen.txt;
         }
       });
       resolve();
@@ -394,15 +404,18 @@ function getAdjTbls() {
         });
       });
     };
-
+/*
     let callCal =
       newWortObj.status.Adjektiv[0] == "Adjektiv" ||
       newWortObj.status.Pronomen[0] == "Pronomen"
         ? true
         : false;
-    if (callCal) {
+      if (callCal) { ...  
+        */
+    if (newWortObj.status.Situation[0] == "Deklination") {
       othrTbls();
     } else {
+      //Konjugation ise tbl ile alinmakta...
       resolve();
     }
   });
@@ -474,6 +487,14 @@ function getLang() {
     resolve();
   });
 }
+
+//Ismin hallerine dair tablo alinir
+function deklinationTbl(){
+  return new Promise((resolve) => {
+
+    resolve();
+  });
+} 
 /*
 function getPostDetails() {
   return new Promise((resolve) => {
