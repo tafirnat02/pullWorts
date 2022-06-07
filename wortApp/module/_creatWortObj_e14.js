@@ -128,13 +128,14 @@ async function getObject(dcmnt) {
       await setTbls().catch((error) => {
         throw { err: error, fun: "setTbls" };
       });
-    }
-    if (newWortObj.status.Adjektiv[0] !== "") {
-      await getAdj().catch((error) => {
-        throw { err: error, fun: "getAdj" };
-      });
-      await getAdjTbls().catch((error) => {
-        throw { err: error, fun: "getAdjTbls" };
+    }else{
+      if (newWortObj.status.Adjektiv[0] !== "") {
+        await getAdj().catch((error) => {
+          throw { err: error, fun: "getAdj" };
+        });
+      }
+      await getDeklinationTbls().catch((error) => {
+        throw { err: error, fun: "getDeklinationTbls" };
       });
     }
     await getSatze().catch((error) => {
@@ -356,7 +357,7 @@ function getAdj() {
 }
 
 /****** sifartlarin/pronomen cekimlerine dair tablolar alinir **********/
-function getAdjTbls() {
+function getDeklinationTbls() {
   return new Promise((resolve) => {
     const othrTbls = () => {
       let allContent = doc.querySelectorAll("div>div>section>header");
@@ -411,13 +412,15 @@ function getAdjTbls() {
         ? true
         : false;
       if (callCal) { ...  
-        */
+        
     if (newWortObj.status.Situation[0] == "Deklination") {
       othrTbls();
     } else {
       //Konjugation ise tbl ile alinmakta...
       resolve();
-    }
+    }*/
+
+    othrTbls.call()
   });
 }
 
