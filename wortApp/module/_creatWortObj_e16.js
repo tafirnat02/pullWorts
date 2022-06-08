@@ -63,11 +63,7 @@ class Wort {
   lang_TR = "";
   lang_DE = "";
   lang_En = "";
-  tbl = {
-    prasens: "",
-    praterium: "",
-    perfekt: "",
-  };
+  tbl = {};
   zB = [];
   img = [];
   othrTbls = {
@@ -77,7 +73,7 @@ class Wort {
     Praedikativ: { txt: "als Prädikativ" },
     Pronomen: { txt: "Deklination des Pronomens" },
     Artikel:{txt: "Deklination von Artikel"},
-    Nomen: {}
+    Nomen: {},
   };
 }
 
@@ -331,6 +327,15 @@ function setFall() {
 /**** verb olmasi halinde fiil cekimlerine dair tablolar alinir. */
 function setTbls() {
   return new Promise((resolve) => {
+    let allContent = doc.querySelectorAll('div[class="vTbl"]');
+      allContent.forEach((itm) => {
+          let headTag = itm.querySelector('h2')!= null?'h2':'h3';
+          let tblHead = itm.querySelector(headTag).innerText;
+           if( typeof newWortObj.tbl[tblHead] === 'undefined'){
+               newWortObj.tbl[tblHead] =itm.querySelector('table').innerHTML
+           }
+      });
+    /*
     newWortObj.tbl.prasens = doc
       .querySelector("a[href*='indikativ/praesens']")
       .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, "");
@@ -340,6 +345,7 @@ function setTbls() {
     newWortObj.tbl.perfekt = doc
       .querySelector("a[href*='indikativ/perfekt']")
       .parentNode.nextElementSibling.innerHTML.replaceAll(rpRegExp, "");
+      */
     resolve();
   });
 }
@@ -356,7 +362,7 @@ function getAdj() {
   });
 }
 
-/****** sifartlarin/pronomen cekimlerine dair tablolar alinir **********/
+/****** isim ögelerinin cekimlerine dair tablolar alinir **********/
 function getDeklinationTbls() {
   return new Promise((resolve) => {
     const othrTbls = () => {
@@ -378,15 +384,11 @@ function getDeklinationTbls() {
         } else if (cnt.includes(newWortObj.othrTbls.Pronomen.txt)) {
           addTrVal(itm, "Pronomen");
           delete newWortObj.othrTbls.Pronomen.txt;
-          //diger seceneklerde eklendi tablo icin..
         }else if (cnt.includes(newWortObj.othrTbls.Artikel.txt)) {
           addTrVal(itm, "Artikel");
           delete newWortObj.othrTbls.Artikel.txt;
         }else{
           addTrVal(itm, "Nomen");
-        /*if (cnt.includes(newWortObj.othrTbls.Nomen.txt)) {
-          addTrVal(itm, "Nomen");
-          delete newWortObj.othrTbls.Nomen.txt;*/
         }
       });
       resolve();
@@ -407,21 +409,6 @@ function getDeklinationTbls() {
         });
       });
     };
-/*
-    let callCal =
-      newWortObj.status.Adjektiv[0] == "Adjektiv" ||
-      newWortObj.status.Pronomen[0] == "Pronomen"
-        ? true
-        : false;
-      if (callCal) { ...  
-        
-    if (newWortObj.status.Situation[0] == "Deklination") {
-      othrTbls();
-    } else {
-      //Konjugation ise tbl ile alinmakta...
-      resolve();
-    }*/
-
     othrTbls.call()
   });
 }
